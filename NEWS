@@ -1,0 +1,14 @@
+Package: listenv
+================
+
+Version: 0.2.0 [2015-05-19]
+o Moved list environments from an in-house package to its own package.
+
+
+Version: 0.1.4 [2015-05-02]
+o Added print() for listenv:s.
+o CLEANUP: Using tempvar() of R.utils.
+
+
+Version: 0.1.0 [2015-02-07]
+o Created.
