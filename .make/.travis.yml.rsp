@@ -175,7 +175,7 @@ after_success:
   - $RENV dump_logs_by_extension out
   - if [[ "$_R_COVR_" == "TRUE" && -f ".coveralls.R" ]]; then
       $RENV install_devtools;
-      $RENV install_github HenrikBengtsson/covr;
+      $RENV install_github jimhester/covr;
       curl -OL https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/covr-utils.R;
       $RENV run_script .coveralls.R;
     fi
