@@ -2,6 +2,9 @@
 #'
 #' @param x A list environment.
 #' @param name The name or index of element of interest.
+#' @param mustExist If TRUE, an error is generated if \code{name}
+#'       does not exist.
+#' @param create If TRUE, element \code{name} is created if missing.
 #'
 #' @return The name of the underlying variable
 #'
@@ -12,7 +15,7 @@ get_variable <- function(...) UseMethod("get_variable")
 
 #' @importFrom R.utils tempvar
 #' @export
-get_variable.listenv <- function(x, name, create=TRUE, ...) {
+get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ...) {
 ##  str(list(method="get_variable", name))
   if (length(name) != 1L) {
     stop("Subscript must be a scalar: ", length(name), .call=FALSE)
@@ -28,7 +31,11 @@ get_variable.listenv <- function(x, name, create=TRUE, ...) {
 
   ## Existing variable?
   var <- map[name]
-  if (!is.na(var)) return(var)
+  if (length(var) == 1L && !is.na(var)) return(var)
+
+  if (mustExist) {
+    stop(sprintf("No such %s element: %s", sQuote(class(x)[1]), name))
+  }
 
   ## Create new variable
   if (is.character(name)) {

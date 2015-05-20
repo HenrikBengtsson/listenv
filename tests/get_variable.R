@@ -51,11 +51,24 @@ print(map(x))
 x <- listenv(length=3L)
 names(x) <- c("a", "b", "c")
 
+## Non-existing element
+res <- try(var <- get_variable(x, "z", mustExist=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+## Out-of-bound element
+res <- try(var <- get_variable(x, 0L, mustExist=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+## Out-of-bound element
+res <- try(var <- get_variable(x, length(x) + 1L, mustExist=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
 res <- try(var <- get_variable(x, c("a", "b")), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
 res <- try(var <- get_variable(x, 1+2i), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
+
 
 
 ## Cleanup

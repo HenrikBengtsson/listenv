@@ -1,6 +1,10 @@
 Package: listenv
 ================
 
+Version: 0.2.1 [2015-05-19]
+o get_variable() gained argument 'mustExist'.
+
+
 Version: 0.2.0 [2015-05-19]
 o Moved list environments from an in-house package to its own package.
 

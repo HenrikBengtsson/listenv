@@ -1,15 +1,15 @@
 Package: listenv
-Version: 0.2.0
+Version: 0.2.1
 Depends:
   R (>= 3.1.2)
 Imports:
-  R.utils (>= 2.0.2),
+  R.utils (>= 2.0.2)
 Title: Environments Behaving As Lists
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
 Author: Henrik Bengtsson [aut, cre, cph]
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
-Description: List Environments are environments that can be subsetted as lists, e.g. 'x <- listenv(); x[[2]] <- "b"; names(x)[2] <- "B"; print(x$B)'. 
+Description: List Environments are environments that can be subsetted as lists, e.g. 'x <- listenv(); x[[2]] <- "b"; names(x)[2] <- "B"; print(x$B)'.
 License: LGPL (>= 2.1)
 LazyLoad: TRUE
 URL: https://github.com/HenrikBengtsson/listenv
