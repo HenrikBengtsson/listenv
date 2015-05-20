@@ -64,9 +64,13 @@ stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
 
+print(x)
+
+
 x <- listenv()
 for (ii in 1:3) {
   x[[ii]] <- letters[ii]
+  print(x[[ii]])
 }
 names(x) <- sprintf("item%d", seq_along(x))
 y <- as.list(x)
@@ -86,6 +90,8 @@ names(x) <- c("a", "b", "c")
 x$b <- TRUE
 stopifnot(identical(x[[1]], 1))
 stopifnot(identical(x[[2]], TRUE))
+stopifnot(identical(x$b, TRUE))
+stopifnot(identical(x[["b"]], TRUE))
 y <- as.list(x)
 str(y)
 stopifnot(length(y) == 3)
@@ -129,6 +135,54 @@ x[["3"]] <- 3
 print(names(x))
 stopifnot(identical(names(x), c("1", "3")))
 
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Exception handling
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv(length=3L)
+names(x) <- c("a", "b", "c")
+
+res <- try(names(x) <- c("a", "b"), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[1:2]], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[0]], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[length(x)+1]], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[1+2i]], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[1+2i]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[integer(0L)]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[1:2]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[Inf]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[0]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[-1]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[character(0L)]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[c("a", "b")]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[[""]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
 
 
 ## Cleanup

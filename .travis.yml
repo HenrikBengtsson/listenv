@@ -29,7 +29,7 @@ env:
   matrix:
     - RVERSION=3.1.3
     - RVERSION=3.2.0
-    - RVERSION=devel _R_CHECK_FULL_=TRUE
+    - RVERSION=devel _R_COVR_=TRUE _R_CHECK_FULL_=TRUE
 
 
 before_install:
@@ -57,7 +57,7 @@ script:
 
 after_success:
   - $RENV dump_logs_by_extension out
-  - if [ -f ".coveralls.R" ]; then
+  - if [[ "$_R_COVR_" == "TRUE" && -f ".coveralls.R" ]]; then
       $RENV install_devtools;
       $RENV install_github HenrikBengtsson/covr;
       curl -OL https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/covr-utils.R;

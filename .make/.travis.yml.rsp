@@ -141,7 +141,7 @@ env:
 rversion <- c(
   "3.1.3" = "3.1.3",
   "3.2.0" = "3.2.0",
-  "3.3.0" = "devel _R_CHECK_FULL_=TRUE"
+  "3.3.0" = "devel _R_COVR_=TRUE _R_CHECK_FULL_=TRUE"
 )
 for (v in names(rversion))
   if (support_R(v)) cat(sprintf("    - RVERSION=%s\n", rversion[v]))
@@ -173,7 +173,7 @@ script:
 
 after_success:
   - $RENV dump_logs_by_extension out
-  - if [ -f ".coveralls.R" ]; then
+  - if [[ "$_R_COVR_" == "TRUE" && -f ".coveralls.R" ]]; then
       $RENV install_devtools;
       $RENV install_github HenrikBengtsson/covr;
       curl -OL https://raw.githubusercontent.com/HenrikBengtsson/covr-utils/master/covr-utils.R;
