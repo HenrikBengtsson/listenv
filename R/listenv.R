@@ -262,6 +262,7 @@ assignByIndex.listenv <- function(x, i, value) {
   } else if (is.numeric(i)) {
     x <- assignByIndex(x, i=i, value=value)
   } else if (is.symbol(i)) {
+    ## Can this ever occur? /HB 2015-05-19
     name <- eval(i, envir=parent.frame())
     x <- assignByName(x, name=name, value=value)
   } else {
