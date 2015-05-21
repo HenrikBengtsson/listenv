@@ -2,7 +2,7 @@ Package: listenv
 ================
 
 Version: 0.2.1-9000 [2015-05-19]
-o ...
+o Now listenv() always allocates internal variable.
 
 
 Version: 0.2.1 [2015-05-19]

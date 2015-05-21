@@ -11,6 +11,14 @@ listenv <- function(length=0L) {
   metaenv$.listenv.map <- rep(NA_character_, times=length)
   env <- new.env(parent=metaenv)
   class(env) <- c("listenv", class(env))
+
+  ## Allocate variables
+  if (length > 0L) {
+    maps <- sprintf("var%004d", seq_len(length))
+    for (map in maps) assign(map, value=NULL, envir=env, inherits=FALSE)
+    metaenv$.listenv.map <- maps
+  }
+
   env
 }
 
@@ -143,7 +151,7 @@ as.list.listenv <- function(x, ...) {
 
   n <- length(map)
   if (i < 1L || i > n) {
-    stop(sprintf("Subscript out of bounds [%d,%d]: %d", min(0,n), n, i), call.=FALSE)
+    stop(sprintf("Subscript out of bounds [%d,%d]: %d", min(1,n), n, i), call.=FALSE)
   }
 
   var <- map[i]
