@@ -1,4 +1,4 @@
-# listenv: Environments Behaving As Lists
+# listenv: Environments Behaving (Almost) As Lists
 
 Copyright Henrik Bengtsson, 2015
 

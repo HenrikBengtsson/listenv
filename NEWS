@@ -1,6 +1,10 @@
 Package: listenv
 ================
 
+Version: 0.2.2 [2015-05-20]
+o Now listenv(length=...) always allocates internal variables.
+
+
 Version: 0.2.1 [2015-05-19]
 o get_variable() gained argument 'mustExist'.
 
