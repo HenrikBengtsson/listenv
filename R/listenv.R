@@ -8,16 +8,14 @@
 listenv <- function(length=0L) {
   stopifnot(length >= 0L)
   metaenv <- new.env(parent=parent.frame())
-  metaenv$.listenv.map <- rep(NA_character_, times=length)
   env <- new.env(parent=metaenv)
-  class(env) <- c("listenv", class(env))
 
-  ## Allocate variables
-  if (length > 0L) {
-    maps <- sprintf("var%004d", seq_len(length))
-    for (map in maps) assign(map, value=NULL, envir=env, inherits=FALSE)
-    metaenv$.listenv.map <- maps
-  }
+  ## Allocate internal variables
+  maps <- sprintf("var%004d", seq_len(length))
+  for (map in maps) assign(map, value=NULL, envir=env, inherits=FALSE)
+  metaenv$.listenv.map <- maps
+
+  class(env) <- c("listenv", class(env))
 
   env
 }
