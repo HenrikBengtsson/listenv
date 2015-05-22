@@ -22,7 +22,22 @@ listenv <- function(length=0L) {
 
 #' @export
 print.listenv <- function(x, ...) {
-  s <- sprintf("`%s` with %d elements: %s\n", class(x)[1L], length(x), hpaste(names(x)))
+  n <- length(x)
+  if (n == 0) {
+    s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
+  } else {
+    if (n == 1) {
+      s <- sprintf("`%s` with 1 element", class(x)[1L])
+    } else {
+      s <- sprintf("`%s` with %d elements", class(x)[1L], n)
+    }
+    names <- names(x)
+    if (is.null(names)) {
+      s <- sprintf("%s that are not named.\n", s)
+    } else {
+      s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
+    }
+  }
   cat(s)
 }
 
