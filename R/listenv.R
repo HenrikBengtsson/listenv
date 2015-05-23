@@ -176,10 +176,10 @@ as.list.listenv <- function(x, ...) {
 }
 
 
-assignByName <- function(...) UseMethod("assignByName")
+assign_by_name <- function(...) UseMethod("assign_by_name")
 
 #' @importFrom R.utils hpaste
-assignByName.listenv <- function(x, name, value) {
+assign_by_name.listenv <- function(x, name, value) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot assign value. Zero-length name.", call.=FALSE)
@@ -214,14 +214,14 @@ assignByName.listenv <- function(x, name, value) {
   assign(var, value, envir=x, inherits=FALSE)
 
   invisible(x)
-} # assignByName()
+} # assign_by_name()
 
 
-assignByIndex <- function(...) UseMethod("assignByIndex")
+assign_by_index <- function(...) UseMethod("assign_by_index")
 
 #' @importFrom R.utils tempvar
 #' @importFrom R.utils hpaste
-assignByIndex.listenv <- function(x, i, value) {
+assign_by_index.listenv <- function(x, i, value) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot assign value. Zero-length index.", call.=FALSE)
@@ -258,7 +258,7 @@ assignByIndex.listenv <- function(x, i, value) {
   }
 
   invisible(x)
-} # assignByIndex()
+} # assign_by_index()
 
 
 
@@ -272,20 +272,20 @@ assignByIndex.listenv <- function(x, i, value) {
 #' @export
 #' @keywords internal
 `$<-.listenv` <- function(x, name, value) {
-  assignByName(x, name=name, value=value)
+  assign_by_name(x, name=name, value=value)
 }
 
 #' @export
 `[[<-.listenv` <- function(x, i, value) {
 ##  str(list(method="[[<-", i=i, value=value))
   if (is.character(i)) {
-    x <- assignByName(x, name=i, value=value)
+    x <- assign_by_name(x, name=i, value=value)
   } else if (is.numeric(i)) {
-    x <- assignByIndex(x, i=i, value=value)
+    x <- assign_by_index(x, i=i, value=value)
   } else if (is.symbol(i)) {
     ## Can this ever occur? /HB 2015-05-19
     name <- eval(i, envir=parent.frame())
-    x <- assignByName(x, name=name, value=value)
+    x <- assign_by_name(x, name=name, value=value)
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
