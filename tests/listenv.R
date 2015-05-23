@@ -5,11 +5,13 @@ oopts <- options(warn=1)
 
 
 x <- listenv()
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 0)
 
 x$a <- 1
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 1)
@@ -17,6 +19,7 @@ stopifnot(identical(names(x), c("a")))
 stopifnot(identical(x$a, 1), is.null(x$b))
 
 x$b <- 2
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 2)
@@ -24,6 +27,7 @@ stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$b, 2))
 
 x$a <- 0
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 2)
@@ -31,6 +35,7 @@ stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x[["a"]], 0))
 
 x$"a" <- 1
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 2)
@@ -38,6 +43,7 @@ stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$a, 1))
 
 x[["a"]] <- 0
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 2)
@@ -53,6 +59,7 @@ stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$b, 3), identical(x[["b"]], 3), identical(x[[key]], 3))
 
 x[[3]] <- 3.14
+print(x)
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
@@ -64,15 +71,16 @@ stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
 
-print(x)
-
 
 x <- listenv()
 for (ii in 1:3) {
   x[[ii]] <- letters[ii]
   print(x[[ii]])
 }
+print(x)
 names(x) <- sprintf("item%d", seq_along(x))
+print(x)
+
 y <- as.list(x)
 str(y)
 stopifnot(identical(names(y), c("item1", "item2", "item3")))
@@ -86,7 +94,9 @@ x[[1]] <- { 1 }
 x[[3]] <- { "Hello world!" }
 stopifnot(length(x) == 3)
 stopifnot(identical(seq_along(x), seq_len(length(x))))
+print(x)
 names(x) <- c("a", "b", "c")
+print(x)
 x$b <- TRUE
 stopifnot(identical(x[[1]], 1))
 stopifnot(identical(x[[2]], TRUE))

@@ -1,6 +1,10 @@
 Package: listenv
 ================
 
+Version: 0.2.4 [2015-05-22]
+o Added helper function parse_env_subset().
+
+
 Version: 0.2.3 [2015-05-21]
 o print() on listenv() handles empty and no-named listenv:s better.
 
