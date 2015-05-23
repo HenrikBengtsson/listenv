@@ -21,13 +21,13 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   } else if (is.character(expr)) {
     ## Variable specified as a name
     if (length(expr) > 1L) {
-      stop(sprintf("Does specify a single variable, but %d: %s", length(expr), hpaste(sQuote(expr), collapse=", ")), call.=FALSE)
+      stop(sprintf("Does not specify a single variable, but %d: %s", length(expr), hpaste(sQuote(expr), collapse=", ")), call.=FALSE)
     }
     res$name <- expr
   } else if (is.numeric(expr)) {
     ## Variable specified as a subset of envir
     if (length(expr) > 1L) {
-      stop(sprintf("Does specify a single index, but %d: %s", length(expr), hpaste(sQuote(expr), collapse=", ")), call.=FALSE)
+      stop(sprintf("Does not specify a single index, but %d: %s", length(expr), hpaste(sQuote(expr), collapse=", ")), call.=FALSE)
     }
     res$subset <- expr
   } else {
