@@ -1,6 +1,10 @@
 Package: listenv
 ================
 
+Version: 0.3.0 [2015-05-23]
+o Package no longer depend on other packages.
+
+
 Version: 0.2.4 [2015-05-22]
 o Added helper function parse_env_subset().
 

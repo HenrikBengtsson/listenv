@@ -178,7 +178,6 @@ as.list.listenv <- function(x, ...) {
 
 assign_by_name <- function(...) UseMethod("assign_by_name")
 
-#' @importFrom R.utils hpaste
 assign_by_name.listenv <- function(x, name, value) {
   ## Argument 'name':
   if (length(name) == 0L) {
@@ -219,8 +218,6 @@ assign_by_name.listenv <- function(x, name, value) {
 
 assign_by_index <- function(...) UseMethod("assign_by_index")
 
-#' @importFrom R.utils tempvar
-#' @importFrom R.utils hpaste
 assign_by_index.listenv <- function(x, i, value) {
   ## Argument 'i':
   if (length(i) == 0L) {
