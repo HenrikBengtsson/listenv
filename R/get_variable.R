@@ -13,7 +13,6 @@
 #' @keywords internal
 get_variable <- function(...) UseMethod("get_variable")
 
-#' @importFrom R.utils tempvar
 #' @export
 get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ...) {
 ##  str(list(method="get_variable", name))
