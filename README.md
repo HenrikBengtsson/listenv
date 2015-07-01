@@ -57,7 +57,7 @@ install.packages('listenv')
 ```
 
 
-## Software quality
+## Software status
 
 | Resource:     | CRAN        | Travis CI     | Appveyor         |
 | ------------- | ------------------- | ------------- | ---------------- |
