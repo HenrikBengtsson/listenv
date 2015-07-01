@@ -134,7 +134,6 @@ as.list.listenv <- function(x, ...) {
 #' @keywords internal
 `$.listenv` <- function(x, name) {
 #' @keywords internal
-##  str(list(method="$<-", name=name))
   map <- map(x)
   var <- map[name]
 
@@ -149,7 +148,6 @@ as.list.listenv <- function(x, ...) {
 `[[.listenv` <- function(x, i, ...) {
   map <- map(x)
 
-##  str(list(method="[[", i=i))
   if (is.character(i)) {
     name <- i
     i <- match(name, table=names(map))
@@ -274,7 +272,6 @@ assign_by_index.listenv <- function(x, i, value) {
 
 #' @export
 `[[<-.listenv` <- function(x, i, value) {
-##  str(list(method="[[<-", i=i, value=value))
   if (is.character(i)) {
     x <- assign_by_name(x, name=i, value=value)
   } else if (is.numeric(i)) {

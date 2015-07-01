@@ -123,7 +123,6 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
 
   ## Validate
   if (is.na(res$idx) && !nzchar(res$name)) {
-      str(res)
     stop("Invalid subset: ", sQuote(code), call.=TRUE)
   }
 
