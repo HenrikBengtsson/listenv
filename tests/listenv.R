@@ -4,6 +4,9 @@ ovars <- ls(envir=globalenv())
 oopts <- options(warn=1)
 
 
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Allocation and single-element assignments
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
 print(x)
 print(length(x))
@@ -72,6 +75,100 @@ stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
 
 
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Removing elements
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x[["a"]] <- NULL
+print(x)
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("b", "c")))
+
+x[[3L]] <- NULL
+print(x)
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("b", "c")))
+
+x[[2L]] <- NULL
+print(x)
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 1)
+stopifnot(identical(names(x), c("b")))
+
+x$b <- NULL
+print(x)
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 0)
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Assigning NULL
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x[2L] <- list(NULL)
+print(x)
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("", "")))
+
+x['c'] <- list(NULL)
+print(x)
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("", "", "c")))
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Assigning multiple elements at once
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+x[c('a', 'b', 'c')] <- 1:3
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("a", "b", "c")))
+stopifnot(identical(as.list(x), list(a=1L, b=2L, c=3L)))
+
+x[c('c', 'b')] <- 2:3
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("a", "b", "c")))
+stopifnot(identical(as.list(x), list(a=1L, b=3L, c=2L)))
+
+x[c('a', 'c')] <- 1L
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("a", "b", "c")))
+stopifnot(identical(as.list(x), list(a=1L, b=3L, c=1L)))
+
+x[c('d', 'e')] <- 4:5
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 5)
+stopifnot(identical(names(x), c("a", "b", "c", "d", "e")))
+stopifnot(identical(as.list(x), list(a=1L, b=3L, c=1L, d=4L, e=5L)))
+
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Expanding
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
 for (ii in 1:3) {
   x[[ii]] <- letters[ii]
@@ -144,6 +241,30 @@ x[["1"]] <- 1
 x[["3"]] <- 3
 print(names(x))
 stopifnot(identical(names(x), c("1", "3")))
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Warnings
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+x[1:3] <- 1:3
+res <- tryCatch(x[1:2] <- 1:4, warning=function(w) {
+  class(w) <- "try-warning"
+  w
+})
+stopifnot(inherits(res, "try-warning"))
+
+res <- tryCatch(x[1:3] <- 1:2, warning=function(w) {
+  class(w) <- "try-warning"
+  w
+})
+stopifnot(inherits(res, "try-warning"))
+
+res <- tryCatch(x[integer(0L)] <- 1, warning=function(w) {
+  class(w) <- "try-warning"
+  w
+})
+stopifnot(!inherits(res, "try-warning"))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
