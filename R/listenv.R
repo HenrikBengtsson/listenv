@@ -256,6 +256,64 @@ assign_by_index.listenv <- function(x, i, value) {
 } # assign_by_index()
 
 
+remove_by_name <- function(...) UseMethod("remove_by_name")
+
+remove_by_name.listenv <- function(x, name) {
+  ## Argument 'name':
+  if (length(name) == 0L) {
+    stop("Cannot remove element. Zero-length name.", call.=FALSE)
+  } else if (length(name) > 1L) {
+    stop("Cannot remove element. More than one name specified: ", hpaste(name), call.=FALSE)
+  } else if (nchar(name) == 0L) {
+    stop("Cannot remove element. Empty name specific: ", name, call.=FALSE)
+  }
+
+  map <- map(x)
+
+  ## Position in names map?
+  idx <- match(name, names(map))
+
+  ## Nothing to do?
+  if (is.na(idx)) return(invisible(x))
+
+  var <- map[idx]
+  remove(list=var, envir=x, inherits=FALSE)
+  map <- map[-idx]
+  map(x) <- map
+
+  invisible(x)
+} # remove_by_name()
+
+
+remove_by_index <- function(...) UseMethod("remove_by_index")
+
+remove_by_index.listenv <- function(x, i) {
+  ## Argument 'i':
+  if (length(i) == 0L) {
+    stop("Cannot remove element. Zero-length index.", call.=FALSE)
+  } else if (length(i) > 1L) {
+    stop("Cannot remove element. More than one index specified: ", hpaste(i), call.=FALSE)
+  } else if (!is.finite(i)) {
+    stop("Cannot remove element. Non-finite index: ", i, call.=FALSE)
+  } else if (i < 1L) {
+    stop("Cannot remove element. Non-positive index: ", i, call.=FALSE)
+  }
+
+  map <- map(x)
+
+  ## Nothing to do?
+  if (i > length(map)) return(invisible(x))
+
+  var <- map[i]
+  remove(list=var, envir=x, inherits=FALSE)
+  map <- map[-i]
+  map(x) <- map
+
+  invisible(x)
+} # remove_by_index()
+
+
+
 
 #' Set an element of list environment
 #'
@@ -264,24 +322,70 @@ assign_by_index.listenv <- function(x, i, value) {
 #' @param value The value to assign to the element
 #'
 #' @aliases [[<-.listenv
+#' @aliases [<-.listenv
 #' @export
 #' @keywords internal
 `$<-.listenv` <- function(x, name, value) {
-  assign_by_name(x, name=name, value=value)
+  if (is.null(value)) {
+    remove_by_name(x, name=name)
+  } else {
+    assign_by_name(x, name=name, value=value)
+  }
 }
 
 #' @export
 `[[<-.listenv` <- function(x, i, value) {
   if (is.character(i)) {
-    x <- assign_by_name(x, name=i, value=value)
+    if (is.null(value)) {
+      x <- remove_by_name(x, name=i)
+    } else {
+      x <- assign_by_name(x, name=i, value=value)
+    }
   } else if (is.numeric(i)) {
-    x <- assign_by_index(x, i=i, value=value)
+    if (is.null(value)) {
+      x <- remove_by_index(x, i=i)
+    } else {
+      x <- assign_by_index(x, i=i, value=value)
+    }
   } else if (is.symbol(i)) {
     ## Can this ever occur? /HB 2015-05-19
     name <- eval(i, envir=parent.frame())
     x <- assign_by_name(x, name=name, value=value)
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
+  }
+  return(invisible(x))
+}
+
+
+#' @export
+`[<-.listenv` <- function(x, i, value) {
+  ni <- length(i)
+
+  # Nothing to do?
+  if (ni == 0L) return(invisible(x))
+
+  nvalue <- length(value)
+  if (nvalue == 0L) stop("Replacement has zero length", call.=FALSE)
+
+  if (ni != nvalue) {
+    if (ni < nvalue || ni %% nvalue != 0) {
+      warning(sprintf("Number of items to replace is not a multiple of replacement length: %d != %d", ni, nvalue), call.=FALSE)
+    }
+    value <- rep(value, length.out=ni)
+    nvalue <- length(value)
+  }
+
+  if (is.character(i)) {
+    for (kk in seq_len(ni)) {
+      x <- assign_by_name(x, name=i[kk], value=value[[kk]])
+    }
+  } else if (is.numeric(i)) {
+    for (kk in seq_len(ni)) {
+      x <- assign_by_index(x, i=i[kk], value=value[[kk]])
+    }
+  } else {
+    stop(sprintf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
   return(invisible(x))
 }

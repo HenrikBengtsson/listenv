@@ -2,6 +2,7 @@
 
 S3method("$",listenv)
 S3method("$<-",listenv)
+S3method("[<-",listenv)
 S3method("[[",listenv)
 S3method("[[<-",listenv)
 S3method("map<-",listenv)
