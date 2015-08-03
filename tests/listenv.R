@@ -79,9 +79,7 @@ stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.1
 ## Multi-element subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
-x$a <- 1
-x$b <- 2
-x$c <- 3
+x[c('a', 'b', 'c')] <- list(1, NULL, 3)
 
 y <- x[NULL]
 print(y)
@@ -129,7 +127,7 @@ y <- x[-c(1,3)]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(b=2)))
+stopifnot(identical(z, list(b=NULL)))
 
 y <- x[rep(1L, times=6L)]
 print(y)

@@ -217,7 +217,8 @@ as.list.listenv <- function(x, ...) {
   ## Ignore out-of-range indices
   i <- i[i <= nmap]
   for (kk in seq_along(i)) {
-    res[[kk]] <- x[[i[kk]]]
+    value <- x[[i[kk]]]
+    if (!is.null(value)) res[[kk]] <- value
   }
 
   res
