@@ -199,9 +199,6 @@ as.list.listenv <- function(x, ...) {
   ## Ignore indices out of range
   i <- i[i <= nmap]
 
-  ## Keep only unique indices
-  i <- unique(i)
-
   ## Nothing to do?
   ni <- length(i)
 

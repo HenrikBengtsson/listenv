@@ -107,6 +107,12 @@ z <- as.list(y)
 print(z)
 stopifnot(identical(z, list(a=1, c=3)))
 
+y <- x[c("c","a")]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(c=3, a=1)))
+
 y <- x[c(1,3)]
 print(y)
 z <- as.list(y)
@@ -124,6 +130,12 @@ print(y)
 z <- as.list(y)
 print(z)
 stopifnot(identical(z, list(b=2)))
+
+y <- x[rep(1L, times=6L)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, rep(list(a=1), times=6L)))
 
 y <- x[1:100]
 print(y)
