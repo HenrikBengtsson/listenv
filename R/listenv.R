@@ -192,6 +192,9 @@ as.list.listenv <- function(x, ...) {
     if (length(i) > 0L && i[1L] < 0) {
       i <- setdiff(seq_len(nmap), -i)
     }
+  } else if (is.logical(i)) {
+    if (length(i) < nmap) i <- rep(i, length.out=nmap)
+    i <- which(i)
   } else {
     return(NextMethod("["))
   }

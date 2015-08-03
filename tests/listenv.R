@@ -144,6 +144,39 @@ print(z)
 stopifnot(identical(z, c(as.list(x), rep(list(NULL), times=7L))))
 
 
+y <- x[c(TRUE, FALSE, TRUE)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(a=1, c=3)))
+
+y <- x[c(TRUE, FALSE)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(a=1, c=3)))
+
+y <- x[TRUE]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, as.list(x)))
+
+y <- x[FALSE]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list()))
+
+
+y <- x[rep(TRUE, times=5L)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
+
+
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Removing elements
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
