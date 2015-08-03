@@ -267,6 +267,36 @@ stopifnot(identical(names(x), c("a", "b", "c", "d", "e")))
 stopifnot(identical(as.list(x), list(a=1L, b=3L, c=1L, d=4L, e=5L)))
 
 
+x <- listenv()
+x[c('a', 'b')] <- 1:2
+x[c(TRUE,FALSE)] <- 2L
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("a", "b")))
+stopifnot(identical(as.list(x), list(a=2L, b=2L)))
+
+x[c(TRUE)] <- 1L
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("a", "b")))
+stopifnot(identical(as.list(x), list(a=1L, b=1L)))
+
+x[c(TRUE,FALSE,TRUE,FALSE)] <- 3L
+print(x)
+str(as.list(x))
+print(length(x))
+print(names(x))
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("a", "b", "")))
+stopifnot(identical(as.list(x), list(a=3L, b=1L, 3L)))
+
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Expanding

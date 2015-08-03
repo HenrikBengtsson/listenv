@@ -398,10 +398,6 @@ remove_by_index.listenv <- function(x, i) {
     } else {
       x <- assign_by_index(x, i=i, value=value)
     }
-  } else if (is.symbol(i)) {
-    ## Can this ever occur? /HB 2015-05-19
-    name <- eval(i, envir=parent.frame())
-    x <- assign_by_name(x, name=name, value=value)
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
@@ -411,6 +407,12 @@ remove_by_index.listenv <- function(x, i) {
 
 #' @export
 `[<-.listenv` <- function(x, i, value) {
+  if (is.logical(i)) {
+    n <- length(x)
+    if (length(i) < n) i <- rep(i, length.out=n)
+    i <- which(i)
+  }
+
   ni <- length(i)
 
   # Nothing to do?
