@@ -390,7 +390,13 @@ stopifnot(inherits(res, "try-error"))
 res <- try(x[[1+2i]], silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
+res <- try(x[1+2i], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
 res <- try(x[[1+2i]] <- 1, silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[1+2i] <- 1, silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
 res <- try(x[[integer(0L)]] <- 1, silent=TRUE)
