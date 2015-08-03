@@ -5,7 +5,7 @@ oopts <- options(warn=1)
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-## Allocation and single-element assignments
+## Single-element assignments and subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
 print(x)
@@ -73,6 +73,63 @@ names(x) <- c("a", "b", "c")
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Multi-element subsetting
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+x$a <- 1
+x$b <- 2
+x$c <- 3
+
+y <- x[NULL]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list()))
+
+y <- x[integer(0L)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list()))
+
+y <- x["a"]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(a=1)))
+
+y <- x[c("a","c")]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(a=1, c=3)))
+
+y <- x[c(1,3)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(a=1, c=3)))
+
+y <- x[-2]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(a=1, c=3)))
+
+y <- x[-c(1,3)]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, list(b=2)))
+
+y <- x[1:100]
+print(y)
+z <- as.list(y)
+print(z)
+stopifnot(identical(z, as.list(x)))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -2,6 +2,8 @@ Package: listenv
 ================
 
 Version: 0.3.0-9000 [2015-08-03]
+o Add support for subsetting with [(), which returns another
+  list environment, e.g. x[2:3] and x[-1].
 o CONSISTENCY: Assigning NULL now removes element just as lists,
   e.g. x$a <- NULL.  To assign value NULL, use x['a'] <- NULL.
 o Add [<- assignment, e.g. x['a'] <- 1 and x[2:3] <- c(3,8).

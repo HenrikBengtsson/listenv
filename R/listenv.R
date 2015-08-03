@@ -93,7 +93,7 @@ names.listenv <- function(x) {
   map <- map(x)
   if (is.null(value)) {
   } else if (length(value) != length(map)) {
-    stop(sprintf("Number of names does not match the number of elments: %s != %s", length(value), length(map)))
+    stop(sprintf("Number of names does not match the number of elements: %s != %s", length(value), length(map)))
   }
 ##  if (any(duplicated(value))) {
 ##    stop("Environments cannot have duplicate names on elements")
@@ -130,6 +130,7 @@ as.list.listenv <- function(x, ...) {
 #' @return The value of an element or NULL if the element does not exist
 #'
 #' @aliases [[.listenv
+#' @aliases [.listenv
 #' @export
 #' @keywords internal
 `$.listenv` <- function(x, name) {
@@ -172,6 +173,52 @@ as.list.listenv <- function(x, ...) {
 
   get(var, envir=x, inherits=FALSE)
 }
+
+
+#' @export
+`[.listenv` <- function(x, i) {
+  map <- map(x)
+  nmap <- length(map)
+
+  if (is.null(i)) {
+    i <- integer(0L)
+  } else if (is.character(i)) {
+    name <- i
+    i <- match(name, table=names(map))
+  } else if (is.numeric(i)) {
+    if (!(all(i > 0) || all(i < 0))) {
+      stop("Only 0's may be mixed with negative subscripts")
+    }
+    if (length(i) > 0L && i[1L] < 0) {
+      i <- setdiff(seq_len(nmap), -i)
+    }
+  } else {
+    return(NextMethod("["))
+  }
+
+  ## Ignore indices out of range
+  i <- i[i <= nmap]
+
+  ## Keep only unique indices
+  i <- unique(i)
+
+  ## Nothing to do?
+  ni <- length(i)
+
+  ## Allocate result
+  res <- structure(listenv(length=ni), class=class(x))
+
+  ## Nothing to do?
+  if (ni == 0L) {
+    return(res)
+  }
+
+  for (kk in seq_along(i)) res[[kk]] <- x[[i[kk]]]
+  names(res) <- names(x)[i]
+
+  res
+}
+
 
 
 assign_by_name <- function(...) UseMethod("assign_by_name")
