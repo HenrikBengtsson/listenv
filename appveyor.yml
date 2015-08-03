@@ -25,7 +25,8 @@ install:
 # Adapt as necessary starting from here
 
 build_script:
-  - echo CD=%CD%
+  - echo Current directory: %CD%
+
 
 
 
