@@ -196,9 +196,6 @@ as.list.listenv <- function(x, ...) {
     return(NextMethod("["))
   }
 
-  ## Ignore indices out of range
-  i <- i[i <= nmap]
-
   ## Nothing to do?
   ni <- length(i)
 
@@ -210,8 +207,15 @@ as.list.listenv <- function(x, ...) {
     return(res)
   }
 
-  for (kk in seq_along(i)) res[[kk]] <- x[[i[kk]]]
-  names(res) <- names(x)[i]
+  names <- names(x)[i]
+  names[i > nmap] <- ""
+  names(res) <- names
+
+  ## Ignore out-of-range indices
+  i <- i[i <= nmap]
+  for (kk in seq_along(i)) {
+    res[[kk]] <- x[[i[kk]]]
+  }
 
   res
 }

@@ -137,11 +137,11 @@ z <- as.list(y)
 print(z)
 stopifnot(identical(z, rep(list(a=1), times=6L)))
 
-y <- x[1:100]
+y <- x[1:10]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, as.list(x)))
+stopifnot(identical(z, c(as.list(x), rep(list(NULL), times=7L))))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
