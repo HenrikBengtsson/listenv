@@ -49,9 +49,14 @@ List of 2
 
 It is possible to also specify the length upfront, e.g.
 ```r
-> x <- listenv(length=4)
+> x <- listenv(length=3)
 > seq_along(x)
-[1] 1 2 3 4
+[1] 1 2 3
+> str(as.list(x))
+List of 3
+ $ : NULL
+ $ : NULL
+ $ : NULL
 ```
 
 ## Installation
