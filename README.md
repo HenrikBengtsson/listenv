@@ -29,18 +29,22 @@ Here is a longer set of examples illustrating what the list environments provide
 > seq_along(x)
 [1] 1 2 3
 > names(x) <- c("a", "b", "c")
+> x[['b']]
+NULL
 > x$b <- TRUE
 > x[[1]]
 1
-> as.list(x)
-$a
-[1] 1
-
-$b
-[1] TRUE
-
-$c
-[1] "Hello world!"
+> str(as.list(x))
+List of 3
+ $ a: num 1
+ $ b: logi TRUE
+ $ c: chr "Hello world!"
+> x[c('a', 'c')] <- list(2, "Hello again!")
+> y <- x[3:2]
+> str(as.list(y))
+List of 2
+ $ c: chr "Hello again!"
+ $ b: logi TRUE
 ```
 
 It is possible to also specify the length upfront, e.g.
