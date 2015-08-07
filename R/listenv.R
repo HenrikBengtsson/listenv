@@ -1,9 +1,11 @@
 #' Create a list environment
 #'
 #' @param length The number of NULL elements from start.
+#' @param ... The object to coerce and optional arguments.
 #'
 #' @return An environment of class `listenv`.
 #'
+#' @aliases as.listenv
 #' @export
 listenv <- function(length=0L) {
   stopifnot(length >= 0L)
@@ -19,6 +21,37 @@ listenv <- function(length=0L) {
 
   env
 }
+
+#' @export
+#' @rdname listenv
+as.listenv <- function(...) UseMethod("as.listenv")
+
+#' @export
+as.listenv.listenv <- function(x, ...) {
+  x
+}
+
+#' @export
+as.listenv.list <- function(x, ...) {
+  nx <- length(x)
+  res <- listenv(length=nx)
+  names(res) <- names(x)
+  for (kk in seq_len(nx)) {
+    res[[kk]] <- x[[kk]]
+  }
+  res
+}
+
+#' @export
+as.listenv.environment <- function(x, ...) {
+  as.listenv(as.list(x, ...))
+}
+
+#' @export
+as.listenv.default <- function(x, ...) {
+  as.listenv(as.list(x, ...))
+}
+
 
 #' @export
 print.listenv <- function(x, ...) {
