@@ -12,6 +12,8 @@ str(x)
 y <- as.listenv(x)
 print(y)
 stopifnot(identical(as.list(y), x))
+z <- as.listenv(y)
+stopifnot(identical(as.list(y), as.list(z)))
 
 e <- new.env()
 e$a <- 1
