@@ -1,7 +1,7 @@
 Package: listenv
 ================
 
-Version: 0.3.0-9000 [2015-08-07]
+Version: 0.4.0 [2015-08-08]
 o Added as.listenv().
 o CONSISTENCY: Assigning NULL now removes element just as lists,
   e.g. x$a <- NULL. To assign value NULL, do x['a'] <- list(NULL).

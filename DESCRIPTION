@@ -1,11 +1,11 @@
 Package: listenv
-Version: 0.3.0-9000
+Version: 0.4.0
 Depends:
   R (>= 3.1.2)
 Title: Environments Behaving (Almost) as Lists
 Authors@R: c(person("Henrik", "Bengtsson", role=c("aut", "cre", "cph"),
                                           email = "henrikb@braju.com"))
-Description: List Environments are environments that can be indexed similarly to lists, e.g. 'x <- listenv(); x[[2]] <- "b"; names(x)[2] <- "B"; print(x$B)'.
+Description: List environments are environments that can be indexed similarly to lists, e.g. 'x <- listenv(); x[[2]] <- "b"; names(x)[2] <- "B"; print(x$B)'.
 License: LGPL (>= 2.1)
 LazyLoad: TRUE
 URL: https://github.com/HenrikBengtsson/listenv
