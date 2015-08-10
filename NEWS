@@ -1,6 +1,16 @@
 Package: listenv
 ================
 
+Version: 0.4.0 [2015-08-08]
+o Added as.listenv().
+o CONSISTENCY: Assigning NULL now removes element just as lists,
+  e.g. x$a <- NULL. To assign value NULL, do x['a'] <- list(NULL).
+o Added support for subsetting with [(), which returns another
+  list environment, e.g. x[2:3], x[-1] and x[c(TRUE, FALSE)].
+o Added [<- assignment, e.g. x['a'] <- 1 and x[2:3] <- c(3,8).
+o CLEANUP: Dropped stray debug code.
+
+
 Version: 0.3.0 [2015-05-23]
 o Package no longer depends on other packages.
 

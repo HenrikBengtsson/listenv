@@ -15,7 +15,6 @@ get_variable <- function(...) UseMethod("get_variable")
 
 #' @export
 get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ...) {
-##  str(list(method="get_variable", name))
   if (length(name) != 1L) {
     stop("Subscript must be a scalar: ", length(name), .call=FALSE)
   }

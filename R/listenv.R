@@ -1,9 +1,11 @@
 #' Create a list environment
 #'
 #' @param length The number of NULL elements from start.
+#' @param ... The object to coerce and optional arguments.
 #'
 #' @return An environment of class `listenv`.
 #'
+#' @aliases as.listenv
 #' @export
 listenv <- function(length=0L) {
   stopifnot(length >= 0L)
@@ -19,6 +21,37 @@ listenv <- function(length=0L) {
 
   env
 }
+
+#' @export
+#' @rdname listenv
+as.listenv <- function(...) UseMethod("as.listenv")
+
+#' @export
+as.listenv.listenv <- function(x, ...) {
+  x
+}
+
+#' @export
+as.listenv.list <- function(x, ...) {
+  nx <- length(x)
+  res <- listenv(length=nx)
+  names(res) <- names(x)
+  for (kk in seq_len(nx)) {
+    res[[kk]] <- x[[kk]]
+  }
+  res
+}
+
+#' @export
+as.listenv.environment <- function(x, ...) {
+  as.listenv(as.list(x, ...))
+}
+
+#' @export
+as.listenv.default <- function(x, ...) {
+  as.listenv(as.list(x, ...))
+}
+
 
 #' @export
 print.listenv <- function(x, ...) {
@@ -93,7 +126,7 @@ names.listenv <- function(x) {
   map <- map(x)
   if (is.null(value)) {
   } else if (length(value) != length(map)) {
-    stop(sprintf("Number of names does not match the number of elments: %s != %s", length(value), length(map)))
+    stop(sprintf("Number of names does not match the number of elements: %s != %s", length(value), length(map)))
   }
 ##  if (any(duplicated(value))) {
 ##    stop("Environments cannot have duplicate names on elements")
@@ -130,11 +163,11 @@ as.list.listenv <- function(x, ...) {
 #' @return The value of an element or NULL if the element does not exist
 #'
 #' @aliases [[.listenv
+#' @aliases [.listenv
 #' @export
 #' @keywords internal
 `$.listenv` <- function(x, name) {
 #' @keywords internal
-##  str(list(method="$<-", name=name))
   map <- map(x)
   var <- map[name]
 
@@ -149,7 +182,6 @@ as.list.listenv <- function(x, ...) {
 `[[.listenv` <- function(x, i, ...) {
   map <- map(x)
 
-##  str(list(method="[[", i=i))
   if (is.character(i)) {
     name <- i
     i <- match(name, table=names(map))
@@ -174,6 +206,57 @@ as.list.listenv <- function(x, ...) {
 
   get(var, envir=x, inherits=FALSE)
 }
+
+
+#' @export
+`[.listenv` <- function(x, i) {
+  map <- map(x)
+  nmap <- length(map)
+
+  if (is.null(i)) {
+    i <- integer(0L)
+  } else if (is.character(i)) {
+    name <- i
+    i <- match(name, table=names(map))
+  } else if (is.numeric(i)) {
+    if (!(all(i > 0) || all(i < 0))) {
+      stop("Only 0's may be mixed with negative subscripts")
+    }
+    if (length(i) > 0L && i[1L] < 0) {
+      i <- setdiff(seq_len(nmap), -i)
+    }
+  } else if (is.logical(i)) {
+    if (length(i) < nmap) i <- rep(i, length.out=nmap)
+    i <- which(i)
+  } else {
+    return(NextMethod("["))
+  }
+
+  ## Nothing to do?
+  ni <- length(i)
+
+  ## Allocate result
+  res <- structure(listenv(length=ni), class=class(x))
+
+  ## Nothing to do?
+  if (ni == 0L) {
+    return(res)
+  }
+
+  names <- names(x)[i]
+  names[i > nmap] <- ""
+  names(res) <- names
+
+  ## Ignore out-of-range indices
+  i <- i[i <= nmap]
+  for (kk in seq_along(i)) {
+    value <- x[[i[kk]]]
+    if (!is.null(value)) res[[kk]] <- value
+  }
+
+  res
+}
+
 
 
 assign_by_name <- function(...) UseMethod("assign_by_name")
@@ -258,6 +341,64 @@ assign_by_index.listenv <- function(x, i, value) {
 } # assign_by_index()
 
 
+remove_by_name <- function(...) UseMethod("remove_by_name")
+
+remove_by_name.listenv <- function(x, name) {
+  ## Argument 'name':
+  if (length(name) == 0L) {
+    stop("Cannot remove element. Zero-length name.", call.=FALSE)
+  } else if (length(name) > 1L) {
+    stop("Cannot remove element. More than one name specified: ", hpaste(name), call.=FALSE)
+  } else if (nchar(name) == 0L) {
+    stop("Cannot remove element. Empty name specific: ", name, call.=FALSE)
+  }
+
+  map <- map(x)
+
+  ## Position in names map?
+  idx <- match(name, names(map))
+
+  ## Nothing to do?
+  if (is.na(idx)) return(invisible(x))
+
+  var <- map[idx]
+  remove(list=var, envir=x, inherits=FALSE)
+  map <- map[-idx]
+  map(x) <- map
+
+  invisible(x)
+} # remove_by_name()
+
+
+remove_by_index <- function(...) UseMethod("remove_by_index")
+
+remove_by_index.listenv <- function(x, i) {
+  ## Argument 'i':
+  if (length(i) == 0L) {
+    stop("Cannot remove element. Zero-length index.", call.=FALSE)
+  } else if (length(i) > 1L) {
+    stop("Cannot remove element. More than one index specified: ", hpaste(i), call.=FALSE)
+  } else if (!is.finite(i)) {
+    stop("Cannot remove element. Non-finite index: ", i, call.=FALSE)
+  } else if (i < 1L) {
+    stop("Cannot remove element. Non-positive index: ", i, call.=FALSE)
+  }
+
+  map <- map(x)
+
+  ## Nothing to do?
+  if (i > length(map)) return(invisible(x))
+
+  var <- map[i]
+  remove(list=var, envir=x, inherits=FALSE)
+  map <- map[-i]
+  map(x) <- map
+
+  invisible(x)
+} # remove_by_index()
+
+
+
 
 #' Set an element of list environment
 #'
@@ -266,25 +407,72 @@ assign_by_index.listenv <- function(x, i, value) {
 #' @param value The value to assign to the element
 #'
 #' @aliases [[<-.listenv
+#' @aliases [<-.listenv
 #' @export
 #' @keywords internal
 `$<-.listenv` <- function(x, name, value) {
-  assign_by_name(x, name=name, value=value)
+  if (is.null(value)) {
+    remove_by_name(x, name=name)
+  } else {
+    assign_by_name(x, name=name, value=value)
+  }
 }
 
 #' @export
 `[[<-.listenv` <- function(x, i, value) {
-##  str(list(method="[[<-", i=i, value=value))
   if (is.character(i)) {
-    x <- assign_by_name(x, name=i, value=value)
+    if (is.null(value)) {
+      x <- remove_by_name(x, name=i)
+    } else {
+      x <- assign_by_name(x, name=i, value=value)
+    }
   } else if (is.numeric(i)) {
-    x <- assign_by_index(x, i=i, value=value)
-  } else if (is.symbol(i)) {
-    ## Can this ever occur? /HB 2015-05-19
-    name <- eval(i, envir=parent.frame())
-    x <- assign_by_name(x, name=name, value=value)
+    if (is.null(value)) {
+      x <- remove_by_index(x, i=i)
+    } else {
+      x <- assign_by_index(x, i=i, value=value)
+    }
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
+  }
+  return(invisible(x))
+}
+
+
+#' @export
+`[<-.listenv` <- function(x, i, value) {
+  if (is.logical(i)) {
+    n <- length(x)
+    if (length(i) < n) i <- rep(i, length.out=n)
+    i <- which(i)
+  }
+
+  ni <- length(i)
+
+  # Nothing to do?
+  if (ni == 0L) return(invisible(x))
+
+  nvalue <- length(value)
+  if (nvalue == 0L) stop("Replacement has zero length", call.=FALSE)
+
+  if (ni != nvalue) {
+    if (ni < nvalue || ni %% nvalue != 0) {
+      warning(sprintf("Number of items to replace is not a multiple of replacement length: %d != %d", ni, nvalue), call.=FALSE)
+    }
+    value <- rep(value, length.out=ni)
+    nvalue <- length(value)
+  }
+
+  if (is.character(i)) {
+    for (kk in seq_len(ni)) {
+      x <- assign_by_name(x, name=i[kk], value=value[[kk]])
+    }
+  } else if (is.numeric(i)) {
+    for (kk in seq_len(ni)) {
+      x <- assign_by_index(x, i=i[kk], value=value[[kk]])
+    }
+  } else {
+    stop(sprintf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
   return(invisible(x))
 }
