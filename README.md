@@ -53,6 +53,15 @@ R package listenv is available on [CRAN](http://cran.r-project.org/package=liste
 install.packages('listenv')
 ```
 
+### Pre-release version
+
+To install the pre-release version that is available in branch `develop`, use:
+```r
+source('http://callr.org/install#HenrikBengtsson/listenv@develop')
+```
+This will install the package from source.  
+
+
 
 ## Software status
 
