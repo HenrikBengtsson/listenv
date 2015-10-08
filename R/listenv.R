@@ -110,6 +110,36 @@ length.listenv <- function(x) {
   length(map(x))
 }
 
+#' @export
+`length<-.listenv` <- function(x, value) {
+  map <- map(x)
+  n <- length(map)
+  value <- as.numeric(value)
+
+  if (value < 0) stop("invalid value")
+
+  ## Nothing to do?
+  if (value == n) return(invisible(x))
+
+  ## Expand or shrink?
+  if (value > n) {
+    ## Add place holders for added elements
+    extra <- rep(NA_character_, times=value-n)
+    map <- c(map, extra)
+  } else {
+    ## Drop existing variables
+    drop <- (value+1):n
+    var <- map[drop]
+    var <- na.omit(var)
+    remove(list=var, envir=x, inherits=FALSE)
+    map <- map[-drop]
+  }
+  map(x) <- map
+
+  invisible(x)
+}
+
+
 #' Names of elements in list environment
 #'
 #' @param x A list environment.
