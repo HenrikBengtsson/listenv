@@ -476,6 +476,11 @@ x <- listenv(); x$a <- list(B=1:3); x$b <- as.listenv(list(C=1:3, D=4:5))
 y3 <- unlist(x, recursive=TRUE)
 stopifnot(identical(y3, y1))
 
+x <- listenv()
+y <- unlist(x)
+stopifnot(length(y) == 0)
+stopifnot(is.null(y))
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Warnings
