@@ -394,6 +394,33 @@ print(names(x))
 stopifnot(identical(names(x), c("1", "3")))
 
 
+## Expand and shrink
+x <- listenv()
+stopifnot(length(x) == 0L)
+length(x) <- 3L
+stopifnot(length(x) == 3L)
+stopifnot(is.null(names(x)))
+
+names(x) <- c("a", "b", "c")
+x$a <- 2
+stopifnot(identical(x$a, 2))
+x[c("a", "c")] <- c(2,1)
+stopifnot(identical(x$a, 2), identical(x$c, 1))
+
+length(x) <- 4L
+stopifnot(length(x) == 4L)
+stopifnot(identical(names(x), c("a", "b", "c", "")))
+
+length(x) <- 1L
+stopifnot(length(x) == 1L)
+stopifnot(identical(names(x), c("a")))
+stopifnot(identical(x$a, 2))
+
+length(x) <- 0L
+stopifnot(length(x) == 0L)
+stopifnot(length(names(x)) == 0) ## Actually, character(0), cf. lists
+
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Flatten
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
