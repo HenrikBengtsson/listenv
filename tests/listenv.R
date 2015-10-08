@@ -374,6 +374,21 @@ stopifnot(identical(names(x), c("1", "3")))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Flatten
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- list(); x$a <- list(B=1:3); x$b <- list(C=1:3, D=4:5)
+y1 <- unlist(x)
+
+x <- listenv(); x$a <- list(B=1:3); x$b <- list(C=1:3, D=4:5)
+y2 <- unlist(x)
+stopifnot(identical(y2, y1))
+
+x <- listenv(); x$a <- list(B=1:3); x$b <- as.listenv(list(C=1:3, D=4:5))
+y3 <- unlist(x)
+stopifnot(identical(y3, y1))
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Warnings
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()

@@ -476,3 +476,23 @@ remove_by_index.listenv <- function(x, i) {
   }
   return(invisible(x))
 }
+
+
+#' @export
+#' @method unlist listenv
+unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
+  x <- as.list(x)
+  if (recursive) {
+    repeat {
+      x <- unlist(x, recursive=TRUE, use.names=use.names)
+      idxs <- which(unlist(lapply(x, FUN=inherits, "listenv"), use.names=FALSE))
+      if (length(idxs) == 0L) break
+      for (ii in idxs) {
+        x[[ii]] <- unlist(x[[ii]], recursive=TRUE, use.names=use.names)
+      }
+    }
+    x
+  } else {
+    unlist(x, recursive=FALSE, use.names=use.names)
+  }
+}

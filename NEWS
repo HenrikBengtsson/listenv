@@ -1,6 +1,10 @@
 Package: listenv
 ================
 
+Version: 0.4.0-9000 [2015-10-07]
+o Add unlist() for list environments.
+
+
 Version: 0.4.0 [2015-08-08]
 o Added as.listenv().
 o CONSISTENCY: Assigning NULL now removes element just as lists,
