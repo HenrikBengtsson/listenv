@@ -3,6 +3,8 @@ Package: listenv
 
 Version: 0.4.0-9000 [2015-10-07]
 o Add unlist() for list environments.
+o BUG FIX: x[idxs], x[name] <- y and x$<name> <- y would introduce
+  NA names for non-named list environments.
 
 
 Version: 0.4.0 [2015-08-08]

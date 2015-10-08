@@ -78,6 +78,29 @@ stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.1
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Multi-element subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Assert than no false names are introduced
+x <- listenv()
+x[1:3] <- list(1, NULL, 3)
+print(x)
+stopifnot(is.null(names(x)))
+
+y <- x[1]
+print(y)
+stopifnot(is.null(names(y)))
+
+y <- x[2:3]
+print(y)
+stopifnot(is.null(names(y)))
+
+y <- x[-1]
+print(y)
+stopifnot(is.null(names(y)))
+
+x[c('a', 'b', 'c')] <- list(1, NULL, 3)
+print(x)
+stopifnot(identical(names(x), c("", "", "", "a", "b", "c")))
+
+
 x <- listenv()
 x[c('a', 'b', 'c')] <- list(1, NULL, 3)
 
@@ -166,13 +189,11 @@ z <- as.list(y)
 print(z)
 stopifnot(identical(z, list()))
 
-
 y <- x[rep(TRUE, times=5L)]
 print(y)
 z <- as.list(y)
 print(z)
 stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
-
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
