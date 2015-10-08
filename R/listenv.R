@@ -209,7 +209,7 @@ as.list.listenv <- function(x, ...) {
 
 
 #' @export
-`[.listenv` <- function(x, i) {
+`[.listenv` <- function(x, i, ...) {
   map <- map(x)
   nmap <- length(map)
 
@@ -419,7 +419,7 @@ remove_by_index.listenv <- function(x, i) {
 }
 
 #' @export
-`[[<-.listenv` <- function(x, i, value) {
+`[[<-.listenv` <- function(x, i, ..., value) {
   if (is.character(i)) {
     if (is.null(value)) {
       x <- remove_by_name(x, name=i)
@@ -440,7 +440,7 @@ remove_by_index.listenv <- function(x, i) {
 
 
 #' @export
-`[<-.listenv` <- function(x, i, value) {
+`[<-.listenv` <- function(x, i, ..., value) {
   if (is.logical(i)) {
     n <- length(x)
     if (length(i) < n) i <- rep(i, length.out=n)
