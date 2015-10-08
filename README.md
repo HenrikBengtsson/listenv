@@ -47,18 +47,6 @@ List of 2
  $ b: logi TRUE
 ```
 
-It is possible to also specify the length upfront, e.g.
-```r
-> x <- listenv(length=3)
-> seq_along(x)
-[1] 1 2 3
-> str(as.list(x))
-List of 3
- $ : NULL
- $ : NULL
- $ : NULL
-```
-
 ## Installation
 R package listenv is available on [CRAN](http://cran.r-project.org/package=listenv) and can be installed in R as:
 ```r

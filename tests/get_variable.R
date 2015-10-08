@@ -3,7 +3,8 @@ library("listenv")
 ovars <- ls(envir=globalenv())
 oopts <- options(warn=1)
 
-x <- listenv(length=3L)
+x <- listenv()
+length(x) <- 3L
 names(x) <- c("a", "b", "c")
 stopifnot(length(x) == 3L)
 print(map(x))
@@ -47,7 +48,8 @@ print(map(x))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Allocation
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- listenv(length=3L)
+x <- listenv()
+length(x) <- 3L
 print(x[[1]])
 print(x[[2]])
 print(x[[3]])
@@ -60,9 +62,9 @@ stopifnot(inherits(res, "try-error"))
 res <- try(x[[4]], silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
-print(get_variable(x, 1L, mustExist=TRUE))
-print(get_variable(x, 2L, mustExist=TRUE))
-print(get_variable(x, 3L, mustExist=TRUE))
+print(get_variable(x, 1L, mustExist=FALSE))
+print(get_variable(x, 2L, mustExist=FALSE))
+print(get_variable(x, 3L, mustExist=FALSE))
 
 ## Out-of-bound element
 res <- try(var <- get_variable(x, 0L, mustExist=TRUE), silent=TRUE)
@@ -76,7 +78,8 @@ stopifnot(inherits(res, "try-error"))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- listenv(length=3L)
+x <- listenv()
+length(x) <- 3L
 names(x) <- c("a", "b", "c")
 
 ## Non-existing element

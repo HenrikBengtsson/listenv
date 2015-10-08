@@ -1,20 +1,40 @@
 #' Create a list environment
 #'
-#' @param length The number of NULL elements from start.
-#' @param ... The object to coerce and optional arguments.
+#' @param ... (optional) Named and/or unnamed objects to be
+#' assigned to the list environment.
 #'
 #' @return An environment of class `listenv`.
 #'
 #' @aliases as.listenv
 #' @export
-listenv <- function(length=0L) {
-  stopifnot(length >= 0L)
+listenv <- function(...) {
+  args <- list(...)
+  nargs <- length(args)
+  names <- names(args)
+
+  ## Allocate empty list environment
   metaenv <- new.env(parent=parent.frame())
   env <- new.env(parent=metaenv)
 
+  ## Add elements?
+  if (nargs > 0L) {
+    ## Backward compatibility
+    if (nargs == 1L && identical(names[1L], "length")) {
+      .Deprecated(msg="Use of x <- listenv(length=n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")
+      length <- args$length
+      stopifnot(length >= 0L)
+      args <- vector("list", length=length)
+      nargs <- length
+      names <- NULL
+    }
+  }
+
   ## Allocate internal variables
-  maps <- sprintf("var%004d", seq_len(length))
-  for (map in maps) assign(map, value=NULL, envir=env, inherits=FALSE)
+  maps <- sprintf("var%004d", seq_len(nargs))
+  names(maps) <- names
+  for (kk in seq_len(nargs)) {
+    assign(maps[kk], value=args[[kk]], envir=env, inherits=FALSE)
+  }
   metaenv$.listenv.map <- maps
 
   class(env) <- c("listenv", class(env))
@@ -34,7 +54,8 @@ as.listenv.listenv <- function(x, ...) {
 #' @export
 as.listenv.list <- function(x, ...) {
   nx <- length(x)
-  res <- listenv(length=nx)
+  res <- listenv()
+  length(res) <- nx
   names(res) <- names(x)
   for (kk in seq_len(nx)) {
     res[[kk]] <- x[[kk]]
@@ -267,7 +288,9 @@ as.list.listenv <- function(x, ...) {
   ni <- length(i)
 
   ## Allocate result
-  res <- structure(listenv(length=ni), class=class(x))
+  res <- listenv()
+  length(res) <- ni
+  res <- structure(res, class=class(x))
 
   ## Nothing to do?
   if (ni == 0L) {
