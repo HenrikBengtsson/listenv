@@ -5,6 +5,45 @@ oopts <- options(warn=1)
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Allocation
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+print(x)
+stopifnot(length(x) == 0)
+stopifnot(is.null(names(x)))
+
+x <- listenv(a=1)
+print(x)
+stopifnot(length(x) == 1)
+stopifnot(identical(names(x), c("a")))
+stopifnot(identical(x$a, 1))
+
+x <- listenv(a=1, b=2:3)
+print(x)
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("a", "b")))
+stopifnot(identical(x$a, 1), identical(x$b, 2:3))
+
+
+x <- listenv(length=3, a=1)
+print(x)
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("length", "a")))
+stopifnot(identical(x$length, 3), identical(x$a, 1))
+
+
+withCallingHandlers({
+  x <- listenv(length=3)
+}, warning = function(warn) {
+  cat("WARNING:", warn$message)
+  invokeRestart("muffleWarning")
+})
+print(x)
+stopifnot(length(x) == 3)
+stopifnot(is.null(names(x)))
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Single-element assignments and subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
@@ -465,7 +504,8 @@ stopifnot(!inherits(res, "try-warning"))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- listenv(length=3L)
+x <- listenv()
+length(x) <- 3L
 names(x) <- c("a", "b", "c")
 
 res <- try(names(x) <- c("a", "b"), silent=TRUE)

@@ -5,14 +5,13 @@
 \alias{listenv}
 \title{Create a list environment}
 \usage{
-listenv(length = 0L)
+listenv(...)
 
 as.listenv(...)
 }
 \arguments{
-\item{length}{The number of NULL elements from start.}
-
-\item{...}{The object to coerce and optional arguments.}
+\item{...}{(optional) Named and/or unnamed objects to be
+assigned to the list environment.}
 }
 \value{
 An environment of class `listenv`.

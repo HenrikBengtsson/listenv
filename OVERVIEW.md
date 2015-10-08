@@ -44,15 +44,3 @@ List of 2
  $ c: chr "Hello again!"
  $ b: logi TRUE
 ```
-
-It is possible to also specify the length upfront, e.g.
-```r
-> x <- listenv(length=3)
-> seq_along(x)
-[1] 1 2 3
-> str(as.list(x))
-List of 3
- $ : NULL
- $ : NULL
- $ : NULL
-```
