@@ -262,12 +262,13 @@ as.list.listenv <- function(x, ...) {
 
   map <- map(x)
   nmap <- length(map)
+  names <- names(map)
 
   if (is.null(i)) {
     i <- integer(0L)
   } else if (is.character(i)) {
     name <- i
-    i <- match(name, table=names(map))
+    i <- match(name, table=names)
   } else if (is.numeric(i)) {
     if (!(all(i > 0) || all(i < 0))) {
       stop("Only 0's may be mixed with negative subscripts")
@@ -293,9 +294,12 @@ as.list.listenv <- function(x, ...) {
     return(res)
   }
 
-  names <- names(x)[i]
-  names[i > nmap] <- ""
-  names(res) <- names
+  ## Add names?
+  if (!is.null(names)) {
+    names2 <- names[i]
+    names2[i > nmap] <- ""
+    names(res) <- names2
+  }
 
   ## Ignore out-of-range indices
   i <- i[i <= nmap]
@@ -322,9 +326,10 @@ assign_by_name.listenv <- function(x, name, value) {
   }
 
   map <- map(x)
+  names <- names(map)
 
   ## Map to an existing or a new element?
-  if (is.element(name, names(map))) {
+  if (is.element(name, names)) {
     var <- map[name]
 
     ## A new variable?
@@ -338,7 +343,9 @@ assign_by_name.listenv <- function(x, name, value) {
 
     ## Append to map
     map <- c(map, var)
-    names(map)[length(map)] <- var
+    if (is.null(names)) names <- rep("", times=length(map))
+    names[length(map)] <- var
+    names(map) <- names
     map(x) <- map
   }
 
