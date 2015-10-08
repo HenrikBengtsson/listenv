@@ -130,7 +130,7 @@ length.listenv <- function(x) {
     ## Drop existing variables
     drop <- (value+1):n
     var <- map[drop]
-    var <- na.omit(var)
+    var <- var[!is.na(var)]
     remove(list=var, envir=x, inherits=FALSE)
     map <- map[-drop]
   }
