@@ -229,6 +229,49 @@ as.list.listenv <- function(x, ...) {
 }
 
 
+## [[i,j,...]] -> [[idx]]
+toIndex <- function(x, idxs) {
+  nidxs <- length(idxs)
+
+  dim <- dim(x)
+  if (is.null(dim)) dim <- length(x)
+  ndim <- length(dim)
+  if (ndim != nidxs) {
+    stop("incorrect number of dimensions")
+  }
+  dimnames <- dimnames(x)
+
+  ## Indexing scale factor per dimension
+  scale <- c(1L, cumprod(dim[-ndim]))
+
+  ## Subset
+  idx <- 1
+  for (kk in 1:nidxs) {
+    i <- idxs[[kk]]
+    ni <- length(i)
+    if (ni != 1L) stop("attempt to select more than one element")
+    if (is.character(i)) {
+      name <- i
+      i <- match(name, table=dimnames[[kk]])
+      if (is.na(i)) stop("subscript out of bounds")
+    } else if (is.logical(i)) {
+      d <- dim[kk]
+      i <- rep(i, length.out=d)
+      i <- which(i)
+    } else if (is.numeric(i)) {
+      d <- dim[kk]
+      if (i < 0) stop("attempt to select less than one element")
+      if (i > d) stop("subscript out of bounds")
+    } else {
+      stop("invalid subscript type", sQuote(typeof(i)))
+    }
+    idx <- idx + scale[kk]*(i - 1)
+  } # for (kk ...)
+
+  idx
+} # toIndex()
+
+
 #' @export
 `[[.listenv` <- function(x, ...) {
   map <- map(x)
@@ -239,42 +282,7 @@ as.list.listenv <- function(x, ...) {
 
   ## Subsetting by multiple dimensions?
   if (nidxs > 1L) {
-    dim <- dim(x)
-    if (is.null(dim)) dim <- n
-
-    ndim <- length(dim)
-    if (ndim != nidxs) {
-      stop("incorrect number of dimensions")
-    }
-    dimnames <- dimnames(x)
-
-    ## Subset
-    for (kk in 1:nidxs) {
-      i <- idxs[[kk]]
-      ni <- length(i)
-      if (ni != 1L) stop("attempt to select more than one element")
-      if (is.character(i)) {
-        name <- i
-        i <- match(name, table=dimnames[[kk]])
-        if (is.na(i)) stop("subscript out of bounds")
-        idxs[[kk]] <- i
-      } else if (is.logical(i)) {
-        d <- dim[kk]
-        i <- rep(i, length.out=d)
-        i <- which(i)
-        idxs[[kk]] <- i
-      } else if (is.numeric(i)) {
-        d <- dim[kk]
-        if (i < 0) stop("attempt to select less than one element")
-        if (i > d) stop("subscript out of bounds")
-      } else {
-        stop("invalid subscript type", sQuote(typeof(i)))
-      }
-    }
-
-    idxs <- unlist(idxs, use.names=FALSE)
-    scale <- c(1L, cumprod(dim[-ndim]))
-    i <- sum(scale * (idxs-1L)) + 1
+    i <- toIndex(x, idxs)
   } else {
     i <- idxs[[1L]]
     if (is.character(i)) {
@@ -529,19 +537,29 @@ remove_by_index.listenv <- function(x, i) {
 }
 
 #' @export
-`[[<-.listenv` <- function(x, i, ..., value) {
+`[[<-.listenv` <- function(x, ..., value) {
+  map <- map(x)
+  n <- length(map)
+
   idxs <- list(...)
-  if (length(idxs) > 0L) {
-    stop("Not supported")
+  nidxs <- length(idxs)
+
+  ## Subsetting by multiple dimensions?
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
+    if (is.character(i)) {
+      if (is.null(value)) {
+        x <- remove_by_name(x, name=i)
+      } else {
+        x <- assign_by_name(x, name=i, value=value)
+      }
+      return(invisible(x))
+    }
   }
 
-  if (is.character(i)) {
-    if (is.null(value)) {
-      x <- remove_by_name(x, name=i)
-    } else {
-      x <- assign_by_name(x, name=i, value=value)
-    }
-  } else if (is.numeric(i)) {
+  if (is.numeric(i)) {
     if (is.null(value)) {
       x <- remove_by_index(x, i=i)
     } else {
@@ -550,6 +568,7 @@ remove_by_index.listenv <- function(x, i) {
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
+
   return(invisible(x))
 }
 
