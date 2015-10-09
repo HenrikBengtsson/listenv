@@ -23,9 +23,21 @@ print(x)
 stopifnot(identical(dim(x), c(2L,3L)))
 stopifnot(identical(dimnames(x), list(c("a", "b"), NULL)))
 
+dimnames(x) <- NULL
+stopifnot(is.null(dimnames(x)))
+dimnames(x) <- list(c("a", "b"), NULL)
+
+dim(x) <- NULL
+print(x)
+stopifnot(is.null(dim(x)))
+stopifnot(is.null(dimnames(x)))
+
 
 ## Extract single element
 message("* y <- x[[i,j]] ...")
+dim(x) <- c(2,3)
+dimnames(x) <- list(c("a", "b"), NULL)
+
 y <- x[[3]]
 stopifnot(identical(y, 3L))
 
@@ -53,6 +65,47 @@ stopifnot(identical(x[[6]], -6L))
 
 x[["a",3]] <- -x[["a",3]]
 stopifnot(identical(x[[1,3]], -5L))
+
+
+message("* Exceptions ...")
+x <- listenv()
+res <- try(dim(x) <- c(2,3), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+length(x) <- 6
+dim(x) <- c(2,3)
+res <- try(dimnames(x) <- NA)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(dimnames(x) <- list("a", "b", "c"))
+stopifnot(inherits(res, "try-error"))
+
+res <- try(dimnames(x) <- list("a", NULL))
+stopifnot(inherits(res, "try-error"))
+
+dimnames(x) <- list(c("a", "b"), NULL)
+
+
+message("* Changing dim(x) and dimnames(x) ...")
+x <- listenv()
+x[1:12] <- 1:12
+dim(x) <- c(2,2,3)
+dimnames(x) <- list(c("a", "b"), NULL, NULL)
+print(x)
+stopifnot(identical(dim(x), c(2L,2L,3L)))
+stopifnot(identical(dimnames(x), list(c("a", "b"), NULL, NULL)))
+x[[2,1,2]] <- -x[[2,1,2]]
+y <- unlist(x)
+print(y)
+
+dim(x) <- c(4,3)
+print(x)
+stopifnot(identical(dim(x), c(4L,3L)))
+stopifnot(is.null(dimnames(x)))
+x[[2,2]] <- -x[[2,2]]
+y <- unlist(x)
+print(y)
+stopifnot(identical(y, 1:12))
 
 
 message("* List environment and multiple dimensions ... DONE")

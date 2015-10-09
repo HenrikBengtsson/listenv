@@ -651,6 +651,12 @@ dim.listenv <- function(x) attr(x, "dim.")
       stop(sprintf("dims [product %d] do not match the length of object [%d]", p, n))
     }
   }
+
+  if (!is.null(attr(x, "dim."))) {
+    ## Always reset names of dimensions if they are changed
+    dimnames(x) <- NULL
+  }
+
   attr(x, "dim.") <- value
   x
 }
