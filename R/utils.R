@@ -1,34 +1,4 @@
 ## From R.utils 2.0.2 (2015-05-23)
-tempvar <- function(prefix="var", value, envir=parent.frame(), inherits=FALSE) {
-  maxTries <- 1e6
-  maxInt <- .Machine$integer.max
-
-  ii <- 0L
-  while (ii < maxTries) {
-    # Generate random variable name
-    idx <- sample.int(maxInt, size=1L)
-    name <- sprintf("%s%d", prefix, idx)
-
-    # Is it available?
-    if (!exists(name, envir=envir, inherits=inherits)) {
-      # Assign a value?
-      if (!missing(value)) {
-        assign(name, value, envir=envir, inherits=inherits)
-      }
-      return(name)
-    }
-
-    # Next try
-    ii <- ii + 1L
-  }
-
-  # Failed to find a unique temporary variable name
-  stop(sprintf("Failed to generate a unique non-existing temporary variable with prefix '%s'", prefix))
-} # tempvar()
-
-
-
-## From R.utils 2.0.2 (2015-05-23)
 hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL, maxHead=if (missing(lastCollapse)) 3 else Inf, maxTail=if (is.finite(maxHead)) 1 else Inf, abbreviate="...") {
   if (is.null(lastCollapse)) lastCollapse <- collapse
 

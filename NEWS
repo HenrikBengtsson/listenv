@@ -1,7 +1,7 @@
 Package: listenv
 ================
 
-Version: 0.4.0-9000 [2015-10-07]
+Version: 0.4.0-9000 [2015-10-17]
 o Add support for assigning elements when creating list environment
   similarly how to lists work, e.g. x <- listenv(a=1, b=2).
 o DEPRECATED: Deprecated x <- listenv(length=n). Instead use 

@@ -30,12 +30,14 @@ listenv <- function(...) {
   }
 
   ## Allocate internal variables
-  maps <- sprintf("var%004d", seq_len(nargs))
+  maps <- sprintf(".listenv_var_%d", seq_len(nargs))
   names(maps) <- names
   for (kk in seq_len(nargs)) {
     assign(maps[kk], value=args[[kk]], envir=env, inherits=FALSE)
   }
   metaenv$.listenv.map <- maps
+
+  assign(".listenv_var_count", nargs, envir=env, inherits=FALSE)
 
   class(env) <- c("listenv", class(env))
 
@@ -315,6 +317,21 @@ as.list.listenv <- function(x, ...) {
 }
 
 
+new_variable <- function(envir, value) {
+  count <- get(".listenv_var_count", envir=envir, inherits=FALSE)
+
+  count <- count + 1L
+  name <- sprintf(".listenv_var_%f", count)
+
+  if (!missing(value)) {
+    assign(name, value, envir=envir, inherits=FALSE)
+  }
+
+  assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+
+  name
+} # new_variable()
+
 
 assign_by_name <- function(...) UseMethod("assign_by_name")
 
@@ -387,9 +404,8 @@ assign_by_index.listenv <- function(x, i, value) {
       map <- c(map, extra)
     }
 
-    ## Create internal variable name
-    var <- tempvar(value=value, envir=x, inherits=FALSE)
-    map[i] <- var
+    ## Create internal variable
+    map[i] <- new_variable(x, value=value)
 
     ## Update map
     map(x) <- map
