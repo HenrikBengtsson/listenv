@@ -333,9 +333,7 @@ new_variable <- function(envir, value) {
 } # new_variable()
 
 
-assign_by_name <- function(...) UseMethod("assign_by_name")
-
-assign_by_name.listenv <- function(x, name, value) {
+assign_by_name <- function(x, name, value) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot assign value. Zero-length name.", call.=FALSE)
@@ -376,9 +374,7 @@ assign_by_name.listenv <- function(x, name, value) {
 } # assign_by_name()
 
 
-assign_by_index <- function(...) UseMethod("assign_by_index")
-
-assign_by_index.listenv <- function(x, i, value) {
+assign_by_index <- function(x, i, value) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot assign value. Zero-length index.", call.=FALSE)
@@ -417,9 +413,7 @@ assign_by_index.listenv <- function(x, i, value) {
 } # assign_by_index()
 
 
-remove_by_name <- function(...) UseMethod("remove_by_name")
-
-remove_by_name.listenv <- function(x, name) {
+remove_by_name <- function(x, name) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call.=FALSE)
@@ -446,9 +440,7 @@ remove_by_name.listenv <- function(x, name) {
 } # remove_by_name()
 
 
-remove_by_index <- function(...) UseMethod("remove_by_index")
-
-remove_by_index.listenv <- function(x, i) {
+remove_by_index <- function(x, i) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot remove element. Zero-length index.", call.=FALSE)
