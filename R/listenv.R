@@ -103,21 +103,14 @@ print.listenv <- function(x, ...) {
 #'
 #' @return The a named character vector
 #'
-#' @aliases map.listenv map<- map<-.listenv
+#' @aliases map.listenv
 #' @export
 #' @keywords internal
-map <- function(...) UseMethod("map")
-
-#' @export
-map.listenv <- function(x, ...) {
+map <- function(x, ...) {
   get(".listenv.map", envir=parent.env(x), inherits=FALSE)
 }
 
-#' @export
-`map<-` <- function(x, value) UseMethod("map<-")
-
-#' @export
-`map<-.listenv` <- function(x, value) {
+`map<-` <- function(x, value) {
   stopifnot(is.character(value))
   assign(".listenv.map", value, envir=parent.env(x), inherits=FALSE)
   invisible(x)

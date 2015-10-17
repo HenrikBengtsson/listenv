@@ -3,11 +3,9 @@
 \name{map}
 \alias{map}
 \alias{map.listenv}
-\alias{map<-}
-\alias{map<-.listenv}
 \title{Variable name map for elements of list environment}
 \usage{
-map(...)
+map(x, ...)
 }
 \arguments{
 \item{x}{A list environment.}
