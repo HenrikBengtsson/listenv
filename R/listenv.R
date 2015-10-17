@@ -110,7 +110,7 @@ map <- function(...) UseMethod("map")
 
 #' @export
 map.listenv <- function(x, ...) {
-  get(".listenv.map", envir=x, inherits=TRUE)
+  get(".listenv.map", envir=parent.env(x), inherits=FALSE)
 }
 
 #' @export
@@ -119,7 +119,7 @@ map.listenv <- function(x, ...) {
 #' @export
 `map<-.listenv` <- function(x, value) {
   stopifnot(is.character(value))
-  assign(".listenv.map", value, envir=x, inherits=TRUE)
+  assign(".listenv.map", value, envir=parent.env(x), inherits=FALSE)
   invisible(x)
 }
 
