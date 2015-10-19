@@ -133,8 +133,30 @@ stopifnot(identical(target$envir, x), target$name == "a", target$idx  == 1, targ
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Multi-dimensional subsetting
+## - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+length(x) <- 6
+dim(x) <- c(2,3)
+
+target <- parse_env_subset(x[[2]], substitute=TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx == 2, target$exists)
+
+target <- parse_env_subset(x[[1,2]], substitute=TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx == 1:2, target$exists)
+
+target <- parse_env_subset(x[[1,4]], substitute=TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx == c(1L,4L), !target$exists)
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+
 res <- try(target <- parse_env_subset(x[[""]], substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
@@ -153,8 +175,22 @@ stopifnot(inherits(res, "try-error"))
 res <- try(target <- parse_env_subset(x@a, substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
-## Multidimensional subsetting (not yet supported)
+## Multidimensional subsetting on 'x' without dimensions
 res <- try(target <- parse_env_subset(x[[1,2]], substitute=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+## Multi-dimensional subsetting
+x <- listenv()
+length(x) <- 6
+dim(x) <- c(2,3)
+
+res <- try(target <- parse_env_subset(x[[0]], substitute=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(target <- parse_env_subset(x[[1,0]], substitute=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(target <- parse_env_subset(x[[1,2,3]], substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
 

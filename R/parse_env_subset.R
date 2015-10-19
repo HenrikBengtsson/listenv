@@ -29,7 +29,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     if (length(expr) > 1L) {
       stop(sprintf("Does not specify a single index, but %d: %s", length(expr), hpaste(sQuote(expr), collapse=", ")), call.=FALSE)
     }
-    res$subset <- expr
+    res$subset <- list(expr)
   } else {
     n <- length(expr)
 #    if (n == 1L) {
@@ -91,53 +91,94 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   ## Validate subsetting, e.g. x[[1]], x[["a"]], and x$a, iff any
   subset <- res$subset
   if (!is.null(subset)) {
-    if (is.list(subset)) {
-      nsubset <- length(subset)
-      if (nsubset == 0L) {
-        stop(sprintf("Subsetting of at least on element is required: %s", sQuote(code)), call.=FALSE)
-      } else if (nsubset > 1L) {
-        stop(sprintf("Subsetting of more than one dimension is currently not implemented: %s", sQuote(code)), call.=FALSE)
-      }
-      subset <- subset[[1L]]
+    if (!is.list(subset)) {
+      stop(sprintf("INTERNAL ERROR (expected 'subset' to be a list): %s", sQuote(code)), call.=FALSE)
+    }
+    if (length(subset) == 0L) {
+      stop(sprintf("Subsetting of at least on element is required: %s", sQuote(code)), call.=FALSE)
     }
 
-    if (is.na(subset)) {
-      stop("Invalid subsetting. Subset must not be a missing value.")
-    } else if (is.character(subset)) {
-      if (!nzchar(subset)) {
-        stop("Invalid subset. Subset must not be an empty name.")
+    for (kk in seq_along(subset)) {
+      subsetKK <- subset[[kk]]
+      if (is.na(subsetKK)) {
+        stop(sprintf("Invalid subsetting. Subset must not be a missing value: %s", sQuote(code)), call.=FALSE)
+      } else if (is.character(subsetKK)) {
+        if (!nzchar(subsetKK)) {
+          stop(sprintf("Invalid subset. Subset must not be an empty name: %s", sQuote(code)), call.=FALSE)
+        }
+      } else if (is.numeric(subsetKK)) {
+      } else {
+        stop(sprintf("Invalid subset of type %s: %s", sQuote(typeof(subsetKK)), sQuote(code)), call.=FALSE)
       }
-    } else if (!is.numeric(subset)) {
-      stop(sprintf("Invalid subset of type %s: %s", sQuote(typeof(subset)), sQuote(code)), call.=FALSE)
-    }
+    } # for (kk ...)
+
 
     ## Special: listenv:s
     envir <- res$envir
+    stopifnot(is.environment(envir))
+
     if (inherits(envir, "listenv")) {
       names <- names(envir)
-      if (is.numeric(subset)) {
-        res$idx <- subset
-        res$exists <- (res$idx >= 1 && res$idx <= length(envir))
-        res$name <- names[subset]
+      map <- map(envir)
+      dim <- dim(envir)
+
+      ## Multi-dimensional subsetting?
+      if (length(subset) > 1L) {
+        if (is.null(dim)) {
+          stop("Multi-dimensional subsetting on list environment without dimensions: ", sQuote(code), call.=TRUE)
+        }
+        dimnames <- dimnames(envir)
+        exists <- TRUE
+        for (kk in seq_along(subset)) {
+          subsetKK <- subset[[kk]]
+          if (is.numeric(subsetKK)) {
+            if (subsetKK == 0) {
+              stop("Invalid subset: ", sQuote(code), call.=TRUE)
+            }
+            exists <- exists && (subsetKK >= 1 && subsetKK <= dim[kk])
+          } else if (is.character(subsetKK)) {
+            subsetKK <- match(subsetKK, dimnames[kk])
+            exists <- exists && (!is.na(subsetKK) && !is.na(map[subsetKK]))
+            subset[[kk]] <- subsetKK
+          }
+        }
+        res$exists <- exists
+        res$idx <- unlist(subset, use.names=FALSE)
+        res$name <- names[res$idx]
         if (length(res$name) == 0L) res$name <- ""
-      } else if (is.character(subset)) {
-        res$idx <- match(subset, names)
-        res$exists <- !is.na(res$idx) && !is.na(map(envir)[res$idx])
+      } else {
+        subset <- subset[[1L]]
+        if (is.numeric(subset)) {
+          if (subset == 0) {
+            stop("Invalid subset: ", sQuote(code), call.=TRUE)
+          }
+          res$idx <- subset
+          res$exists <- (res$idx >= 1 && res$idx <= length(envir))
+          res$name <- names[subset]
+          if (length(res$name) == 0L) res$name <- ""
+        } else if (is.character(subset)) {
+          res$idx <- match(subset, names)
+          res$exists <- !is.na(res$idx) && !is.na(map[res$idx])
+        }
       }
+    } else {
+      if (length(subset) > 1L) {
+        stop("Invalid subset: ", sQuote(code), call.=TRUE)
+      }
+      subset <- subset[[1L]]
     }
     if (is.character(subset)) res$name <- subset
   }
 
-
   ## Identify index?
-  if (is.na(res$idx) && nzchar(res$name) && inherits(res$envir, "listenv")) {
+  if (inherits(res$envir, "listenv") && any(is.na(res$idx)) && nzchar(res$name)) {
     envir <- res$envir
     res$idx <- match(res$name, names(envir))
-    res$exists <- !is.na(res$idx) && !is.na(map(envir)[res$idx])
+    res$exists <- !any(is.na(res$idx)) && !any(is.na(map(envir)[res$idx]))
   }
 
   ## Validate
-  if (is.na(res$idx) && !nzchar(res$name)) {
+  if (any(is.na(res$idx)) && !nzchar(res$name)) {
     stop("Invalid subset: ", sQuote(code), call.=TRUE)
   }
 
@@ -148,7 +189,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   ## Sanity check
   stopifnot(is.environment(res$envir))
   stopifnot(is.character(res$name))
-  stopifnot(is.null(res$idx) || is.numeric(res$idx))
+  stopifnot(is.null(res$idx) || all(is.numeric(res$idx)))
   stopifnot(is.logical(res$exists), !is.na(res$exists))
 
   res
