@@ -153,6 +153,10 @@ stopifnot(inherits(res, "try-error"))
 res <- try(target <- parse_env_subset(x@a, substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
+## Multidimensional subsetting (not yet supported)
+res <- try(target <- parse_env_subset(x[[1,2]], substitute=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
 
 ## Cleanup
 rm(list=setdiff(ls(envir=globalenv()), ovars), envir=globalenv())

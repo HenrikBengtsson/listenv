@@ -32,47 +32,55 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     res$subset <- expr
   } else {
     n <- length(expr)
-    if (n != 1L && n != 3L) {
-      stop("Invalid syntax: ", sQuote(code), call.=FALSE)
-    }
+#    if (n == 1L) {
+#    } else if (n != 3L) {
+#      stop("Invalid syntax: ", sQuote(code), call.=FALSE)
+#    }
 
     if (n == 1L) {
       res$name <- code
-    } else if (n == 3L) {
+    } else if (n >= 3L) {
       ## Assignment to enviroment via $ and [[
       op <- expr[[1]]
-      if (op == "$" || op == "[[") {
-        ## Target
-        objname <- deparse(expr[[2]])
-        if (!exists(objname, envir=envir, inherits=TRUE)) {
-          stop(sprintf("Object %s not found: %s", sQuote(objname), sQuote(code)), call.=FALSE)
-        }
-
-        obj <- get(objname, envir=envir, inherits=TRUE)
-        if (!is.environment(obj)) {
-          stop(sprintf("Subsetting can not be done on a %s; only to an environment: %s", sQuote(mode(obj)), sQuote(code)), call.=FALSE)
-        }
-        res$envir <- obj
-
-        ## Subset
-        subset <- expr[[3]]
-        if (is.symbol(subset)) {
-          subset <- deparse(subset)
-          if (op == "[[") {
-            if (!exists(subset, envir=envir, inherits=TRUE)) {
-              stop(sprintf("Object %s not found: %s", sQuote(subset), sQuote(code)), call.=FALSE)
-            }
-            subset <- get(subset, envir=envir, inherits=TRUE)
-          }
-        } else if (is.language(subset)) {
-          subset <- eval(subset, envir=envir)
-        }
-        res$subset <- subset
-      } else {
+      if (op == "$" && n > 3L) {
         stop("Invalid syntax: ", sQuote(code), call.=FALSE)
-      } # if (op == ...)
+      } else if (op != "$" && op != "[[") {
+        stop("Invalid syntax: ", sQuote(code), call.=FALSE)
+      }
+
+      ## Target
+      objname <- deparse(expr[[2]])
+      if (!exists(objname, envir=envir, inherits=TRUE)) {
+        stop(sprintf("Object %s not found: %s", sQuote(objname), sQuote(code)), call.=FALSE)
+      }
+
+      obj <- get(objname, envir=envir, inherits=TRUE)
+      if (!is.environment(obj)) {
+        stop(sprintf("Subsetting can not be done on a %s; only to an environment: %s", sQuote(mode(obj)), sQuote(code)), call.=FALSE)
+      }
+      res$envir <- obj
+
+      ## Subset
+      subset <- list()
+      for (kk in 3:n) {
+        subsetKK <- expr[[kk]]
+        if (is.symbol(subsetKK)) {
+          subsetKK <- deparse(subsetKK)
+          if (op == "[[") {
+            if (!exists(subsetKK, envir=envir, inherits=TRUE)) {
+              stop(sprintf("Object %s not found: %s", sQuote(subsetKK), sQuote(code)), call.=FALSE)
+            }
+            subsetKK <- get(subsetKK, envir=envir, inherits=TRUE)
+          }
+        } else if (is.language(subsetKK)) {
+          subsetKK <- eval(subsetKK, envir=envir)
+        }
+        subset <- c(subset, subsetKK)
+      }
+
+      res$subset <- subset
     } # if (n == ...)
-  }
+  } # if (is.symbol(expr))
 
 
   ## Validat name, iff any
@@ -83,9 +91,17 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   ## Validate subsetting, e.g. x[[1]], x[["a"]], and x$a, iff any
   subset <- res$subset
   if (!is.null(subset)) {
-    if (length(subset) != 1L) {
-      stop(sprintf("Subsetting can only be done on a single element at the time, not %d: %s", length(subset), sQuote(code)), call.=FALSE)
-    } else if (is.na(subset)) {
+    if (is.list(subset)) {
+      nsubset <- length(subset)
+      if (nsubset == 0L) {
+        stop(sprintf("Subsetting of at least on element is required: %s", sQuote(code)), call.=FALSE)
+      } else if (nsubset > 1L) {
+        stop(sprintf("Subsetting of more than one dimension is currently not implemented: %s", sQuote(code)), call.=FALSE)
+      }
+      subset <- subset[[1L]]
+    }
+
+    if (is.na(subset)) {
       stop("Invalid subsetting. Subset must not be a missing value.")
     } else if (is.character(subset)) {
       if (!nzchar(subset)) {
@@ -94,7 +110,6 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     } else if (!is.numeric(subset)) {
       stop(sprintf("Invalid subset of type %s: %s", sQuote(typeof(subset)), sQuote(code)), call.=FALSE)
     }
-
 
     ## Special: listenv:s
     envir <- res$envir
