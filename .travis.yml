@@ -50,14 +50,7 @@ before_install:
     fi
 
 install:
-
-
-
-
-
-
-
-
+ - $RENV install_r R.rsp
 
 script:
   - $RENV run_build

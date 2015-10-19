@@ -1,11 +1,10 @@
 # listenv: Environments Behaving (Almost) as Lists
 
-Copyright Henrik Bengtsson, 2015
-
-## List environments
+## Introduction
 _List environments_ are environments that behaves as lists by
 overriding the subsetting functions for environments such that they
-also emulates some of the index subsetting that lists have.  For example,
+also emulates some of the index subsetting that lists have.
+For example,
 ```r
 x <- listenv()
 for (i in 1:3) {
@@ -46,6 +45,10 @@ List of 2
  $ c: chr "Hello again!"
  $ b: logi TRUE
 ```
+
+
+[listenv]: http://cran.r-project.org/package=listenv
+
 
 ## Installation
 R package listenv is available on [CRAN](http://cran.r-project.org/package=listenv) and can be installed in R as:

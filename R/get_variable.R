@@ -51,8 +51,8 @@ get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ..
       extra <- rep(NA_character_, times=i-length(map))
       map <- c(map, extra)
     }
-    ## Create internal variable name
-    var <- tempvar(value=NULL, envir=x, inherits=FALSE)
+    ## Create internal variable
+    var <- new_variable(x, value=NULL)
     map[i] <- var
   }
 

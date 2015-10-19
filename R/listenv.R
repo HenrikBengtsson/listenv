@@ -1,6 +1,6 @@
 #' Create a list environment
 #'
-#' @param ... (optional) Named and/or unnamed objects to be
+#' @param \dots (optional) Named and/or unnamed objects to be
 #' assigned to the list environment.
 #'
 #' @return An environment of class `listenv`.
@@ -30,12 +30,14 @@ listenv <- function(...) {
   }
 
   ## Allocate internal variables
-  maps <- sprintf("var%004d", seq_len(nargs))
+  maps <- sprintf(".listenv_var_%d", seq_len(nargs))
   names(maps) <- names
   for (kk in seq_len(nargs)) {
     assign(maps[kk], value=args[[kk]], envir=env, inherits=FALSE)
   }
   metaenv$.listenv.map <- maps
+
+  assign(".listenv_var_count", nargs, envir=env, inherits=FALSE)
 
   class(env) <- c("listenv", class(env))
 
@@ -101,23 +103,16 @@ print.listenv <- function(x, ...) {
 #'
 #' @return The a named character vector
 #'
-#' @aliases map.listenv map<- map<-.listenv
+#' @aliases map.listenv
 #' @export
 #' @keywords internal
-map <- function(...) UseMethod("map")
-
-#' @export
-map.listenv <- function(x, ...) {
-  get(".listenv.map", envir=x, inherits=TRUE)
+map <- function(x, ...) {
+  get(".listenv.map", envir=parent.env(x), inherits=FALSE)
 }
 
-#' @export
-`map<-` <- function(x, value) UseMethod("map<-")
-
-#' @export
-`map<-.listenv` <- function(x, value) {
+`map<-` <- function(x, value) {
   stopifnot(is.character(value))
-  assign(".listenv.map", value, envir=x, inherits=TRUE)
+  assign(".listenv.map", value, envir=parent.env(x), inherits=FALSE)
   invisible(x)
 }
 
@@ -373,10 +368,23 @@ toIndex <- function(x, idxs) {
 }
 
 
+new_variable <- function(envir, value) {
+  count <- get(".listenv_var_count", envir=envir, inherits=FALSE)
 
-assign_by_name <- function(...) UseMethod("assign_by_name")
+  count <- count + 1L
+  name <- sprintf(".listenv_var_%f", count)
 
-assign_by_name.listenv <- function(x, name, value) {
+  if (!missing(value)) {
+    assign(name, value, envir=envir, inherits=FALSE)
+  }
+
+  assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+
+  name
+} # new_variable()
+
+
+assign_by_name <- function(x, name, value) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot assign value. Zero-length name.", call.=FALSE)
@@ -417,9 +425,7 @@ assign_by_name.listenv <- function(x, name, value) {
 } # assign_by_name()
 
 
-assign_by_index <- function(...) UseMethod("assign_by_index")
-
-assign_by_index.listenv <- function(x, i, value) {
+assign_by_index <- function(x, i, value) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot assign value. Zero-length index.", call.=FALSE)
@@ -445,9 +451,8 @@ assign_by_index.listenv <- function(x, i, value) {
       map <- c(map, extra)
     }
 
-    ## Create internal variable name
-    var <- tempvar(value=value, envir=x, inherits=FALSE)
-    map[i] <- var
+    ## Create internal variable
+    map[i] <- new_variable(x, value=value)
 
     ## Update map
     map(x) <- map
@@ -459,9 +464,7 @@ assign_by_index.listenv <- function(x, i, value) {
 } # assign_by_index()
 
 
-remove_by_name <- function(...) UseMethod("remove_by_name")
-
-remove_by_name.listenv <- function(x, name) {
+remove_by_name <- function(x, name) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call.=FALSE)
@@ -488,9 +491,7 @@ remove_by_name.listenv <- function(x, name) {
 } # remove_by_name()
 
 
-remove_by_index <- function(...) UseMethod("remove_by_index")
-
-remove_by_index.listenv <- function(x, i) {
+remove_by_index <- function(x, i) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot remove element. Zero-length index.", call.=FALSE)
