@@ -1,6 +1,6 @@
 #' Create a list environment
 #'
-#' @param ... (optional) Named and/or unnamed objects to be
+#' @param \dots (optional) Named and/or unnamed objects to be
 #' assigned to the list environment.
 #'
 #' @return An environment of class `listenv`.

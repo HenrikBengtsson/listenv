@@ -10,7 +10,7 @@ listenv(...)
 as.listenv(...)
 }
 \arguments{
-\item{...}{(optional) Named and/or unnamed objects to be
+\item{\dots}{(optional) Named and/or unnamed objects to be
 assigned to the list environment.}
 }
 \value{
