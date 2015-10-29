@@ -187,18 +187,45 @@ names.listenv <- function(x) {
 #' List representation of a list environment
 #'
 #' @param x A list environment.
+#' @param all.names If \code{TRUE}, variable names starting with
+#'        a period are included, otherwise not.
+#' @param sorted If \code{TRUE}, elements are ordered by their names
+#'        before being compared, otherwise not.
 #' @param ... Not used.
 #'
 #' @return A list.
 #'
 #' @export
 #' @keywords internal
-as.list.listenv <- function(x, ...) {
+as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   vars <- map(x)
+  names <- names(x)
+
+  ## Drop names starting with a period
+  if (!all.names) {
+    keep <- !grepl("^[.]", names)
+    vars <- vars[keep]
+    names <- names[keep]
+  }
+
+  ## Nothing to do?
+  if (length(vars) == 0) {
+    return(list())
+  }
+
+  ## Sort by names?
+  if (sorted) {
+    o <- order(names)
+    vars <- vars[o]
+    names <- names[o]
+  }
+
+  ## Collect as a named list
   res <- vector("list", length=length(vars))
-  names(res) <- names(x)
+  names(res) <- names
   ok <- !is.na(vars)
   res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
+
   res
 }
 
@@ -566,7 +593,23 @@ unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
 #' @method all.equal listenv
 all.equal.listenv <- function(target, current, all.names=TRUE, sorted=FALSE, ...) {
   if (identical(target, current)) return(TRUE)
+
+  ## Coerce to lists
   target <- as.list(target, all.names=all.names, sorted=sorted)
-  current <- as.list(target, all.names=all.names, sorted=sorted)
+  current <- as.list(current, all.names=all.names, sorted=sorted)
+
+  ## Not all as.list() methods support 'all.names'
+  if (!all.names) {
+    keep <-
+    target <- target[!grepl("^[.]", names(target))]
+    current <- current[!grepl("^[.]", names(current))]
+  }
+
+  ## Not all as.list() methods support 'sorted'
+  if (sorted) {
+    target <- target[order(names(target))]
+    current <- current[order(names(current))]
+  }
+
   all.equal(target=target, current=current, ...)
 }

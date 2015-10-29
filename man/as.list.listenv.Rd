@@ -4,10 +4,16 @@
 \alias{as.list.listenv}
 \title{List representation of a list environment}
 \usage{
-\method{as.list}{listenv}(x, ...)
+\method{as.list}{listenv}(x, all.names = TRUE, sorted = FALSE, ...)
 }
 \arguments{
 \item{x}{A list environment.}
+
+\item{all.names}{If \code{TRUE}, variable names starting with
+a period are included, otherwise not.}
+
+\item{sorted}{If \code{TRUE}, elements are ordered by their names
+before being compared, otherwise not.}
 
 \item{...}{Not used.}
 }
