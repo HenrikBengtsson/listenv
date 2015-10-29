@@ -5,6 +5,8 @@
 #'
 #' @return An environment of class `listenv`.
 #'
+#' @example incl/listenv.R
+#'
 #' @aliases as.listenv
 #' @export
 listenv <- function(...) {
