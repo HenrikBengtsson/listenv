@@ -1,7 +1,7 @@
-x <- listenv(a=2, b=3, c="hello")
+x <- listenv(c=2, a=3, d="hello")
 print(names(x))
-names(x)[2] <- "B"
-x$d <- 5:8
+names(x)[2] <- "A"
+x$b <- 5:8
 
 y <- as.list(x)
 str(y)

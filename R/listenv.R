@@ -561,3 +561,12 @@ unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
     unlist(x, recursive=FALSE, use.names=use.names)
   }
 }
+
+#' @export
+#' @method all.equal listenv
+all.equal.listenv <- function(target, current, all.names=TRUE, sorted=FALSE, ...) {
+  if (identical(target, current)) return(TRUE)
+  target <- as.list(target, all.names=all.names, sorted=sorted)
+  current <- as.list(target, all.names=all.names, sorted=sorted)
+  all.equal(target=target, current=current, ...)
+}
