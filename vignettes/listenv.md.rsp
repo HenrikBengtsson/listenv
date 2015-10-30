@@ -35,26 +35,36 @@ For example,
 
 ### Coercing to lists and vectors
 
-Coercing to a list:
+Coercing a list environment to a list:
 ```r
-> str(as.list(x))
+> x <- listenv(a=2, b=3, c="hello")
+`listenv` with 3 elements: 'a', 'b', 'c'
+> y <- as.list(x)
+> str(y)
 List of 4
- $ a: num 1
- $ b: num 2
- $ c: chr "HELLO
- $ d: num 3
+ $ a: num 2
+ $ b: num 3
+ $ c: chr "hello"
 ```
 
-Coercing to a vector ("unlisting"):
+Coercing a list to a list environment:
+```r
+> z <- as.listenv(y)
+`listenv` with 3 elements: 'a', 'b', 'c'
+> all.equal(z, x)
+[1] TRUE
+```
+
+Coercing a list environment to a vector ("unlisting"):
 ```r
 > unlist(x)
-      a       b       c       d
-    "1"     "2" "HELLO"     "3"
+      a       b       c
+    "2"     "3" "hello"
 > unlist(x[-3])
-a b d
-1 2 3
+a b
+2 3
 > unlist(x[1:2], use.names=FALSE)
-[1] 1 2
+[1] 2 3
 ```
 
 
