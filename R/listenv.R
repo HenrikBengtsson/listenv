@@ -1,21 +1,45 @@
 #' Create a list environment
 #'
-#' @param length The number of NULL elements from start.
-#' @param ... The object to coerce and optional arguments.
+#' @param \dots (optional) Named and/or unnamed objects to be
+#' assigned to the list environment.
 #'
 #' @return An environment of class `listenv`.
 #'
+#' @example incl/listenv.R
+#'
 #' @aliases as.listenv
 #' @export
-listenv <- function(length=0L) {
-  stopifnot(length >= 0L)
+listenv <- function(...) {
+  args <- list(...)
+  nargs <- length(args)
+  names <- names(args)
+
+  ## Allocate empty list environment
   metaenv <- new.env(parent=parent.frame())
   env <- new.env(parent=metaenv)
 
+  ## Add elements?
+  if (nargs > 0L) {
+    ## Backward compatibility
+    if (nargs == 1L && identical(names[1L], "length")) {
+      .Deprecated(msg="Use of x <- listenv(length=n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")
+      length <- args$length
+      stopifnot(length >= 0L)
+      args <- vector("list", length=length)
+      nargs <- length
+      names <- NULL
+    }
+  }
+
   ## Allocate internal variables
-  maps <- sprintf("var%004d", seq_len(length))
-  for (map in maps) assign(map, value=NULL, envir=env, inherits=FALSE)
+  maps <- sprintf(".listenv_var_%d", seq_len(nargs))
+  names(maps) <- names
+  for (kk in seq_len(nargs)) {
+    assign(maps[kk], value=args[[kk]], envir=env, inherits=FALSE)
+  }
   metaenv$.listenv.map <- maps
+
+  assign(".listenv_var_count", nargs, envir=env, inherits=FALSE)
 
   class(env) <- c("listenv", class(env))
 
@@ -34,10 +58,13 @@ as.listenv.listenv <- function(x, ...) {
 #' @export
 as.listenv.list <- function(x, ...) {
   nx <- length(x)
-  res <- listenv(length=nx)
+  res <- listenv()
+  length(res) <- nx
   names(res) <- names(x)
   for (kk in seq_len(nx)) {
-    res[[kk]] <- x[[kk]]
+    value <- x[[kk]]
+    if (is.null(value)) value <- list(NULL)
+    res[[kk]] <- value
   }
   res
 }
@@ -80,23 +107,16 @@ print.listenv <- function(x, ...) {
 #'
 #' @return The a named character vector
 #'
-#' @aliases map.listenv map<- map<-.listenv
+#' @aliases map.listenv
 #' @export
 #' @keywords internal
-map <- function(...) UseMethod("map")
-
-#' @export
-map.listenv <- function(x, ...) {
-  get(".listenv.map", envir=x, inherits=TRUE)
+map <- function(x, ...) {
+  get(".listenv.map", envir=parent.env(x), inherits=FALSE)
 }
 
-#' @export
-`map<-` <- function(x, value) UseMethod("map<-")
-
-#' @export
-`map<-.listenv` <- function(x, value) {
+`map<-` <- function(x, value) {
   stopifnot(is.character(value))
-  assign(".listenv.map", value, envir=x, inherits=TRUE)
+  assign(".listenv.map", value, envir=parent.env(x), inherits=FALSE)
   invisible(x)
 }
 
@@ -109,6 +129,36 @@ map.listenv <- function(x, ...) {
 length.listenv <- function(x) {
   length(map(x))
 }
+
+#' @export
+`length<-.listenv` <- function(x, value) {
+  map <- map(x)
+  n <- length(map)
+  value <- as.numeric(value)
+
+  if (value < 0) stop("invalid value")
+
+  ## Nothing to do?
+  if (value == n) return(invisible(x))
+
+  ## Expand or shrink?
+  if (value > n) {
+    ## Add place holders for added elements
+    extra <- rep(NA_character_, times=value-n)
+    map <- c(map, extra)
+  } else {
+    ## Drop existing variables
+    drop <- (value+1):n
+    var <- map[drop]
+    var <- var[!is.na(var)]
+    remove(list=var, envir=x, inherits=FALSE)
+    map <- map[-drop]
+  }
+  map(x) <- map
+
+  invisible(x)
+}
+
 
 #' Names of elements in list environment
 #'
@@ -139,18 +189,45 @@ names.listenv <- function(x) {
 #' List representation of a list environment
 #'
 #' @param x A list environment.
+#' @param all.names If \code{TRUE}, variable names starting with
+#'        a period are included, otherwise not.
+#' @param sorted If \code{TRUE}, elements are ordered by their names
+#'        before being compared, otherwise not.
 #' @param ... Not used.
 #'
 #' @return A list.
 #'
 #' @export
 #' @keywords internal
-as.list.listenv <- function(x, ...) {
+as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   vars <- map(x)
+  names <- names(x)
+
+  ## Drop names starting with a period
+  if (!all.names) {
+    keep <- !grepl("^[.]", names)
+    vars <- vars[keep]
+    names <- names[keep]
+  }
+
+  ## Nothing to do?
+  if (length(vars) == 0) {
+    return(list())
+  }
+
+  ## Sort by names?
+  if (sorted) {
+    o <- order(names)
+    vars <- vars[o]
+    names <- names[o]
+  }
+
+  ## Collect as a named list
   res <- vector("list", length=length(vars))
-  names(res) <- names(x)
+  names(res) <- names
   ok <- !is.na(vars)
   res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
+
   res
 }
 
@@ -212,12 +289,13 @@ as.list.listenv <- function(x, ...) {
 `[.listenv` <- function(x, i) {
   map <- map(x)
   nmap <- length(map)
+  names <- names(map)
 
   if (is.null(i)) {
     i <- integer(0L)
   } else if (is.character(i)) {
     name <- i
-    i <- match(name, table=names(map))
+    i <- match(name, table=names)
   } else if (is.numeric(i)) {
     if (!(all(i > 0) || all(i < 0))) {
       stop("Only 0's may be mixed with negative subscripts")
@@ -236,16 +314,21 @@ as.list.listenv <- function(x, ...) {
   ni <- length(i)
 
   ## Allocate result
-  res <- structure(listenv(length=ni), class=class(x))
+  res <- listenv()
+  length(res) <- ni
+  res <- structure(res, class=class(x))
 
   ## Nothing to do?
   if (ni == 0L) {
     return(res)
   }
 
-  names <- names(x)[i]
-  names[i > nmap] <- ""
-  names(res) <- names
+  ## Add names?
+  if (!is.null(names)) {
+    names2 <- names[i]
+    names2[i > nmap] <- ""
+    names(res) <- names2
+  }
 
   ## Ignore out-of-range indices
   i <- i[i <= nmap]
@@ -258,10 +341,23 @@ as.list.listenv <- function(x, ...) {
 }
 
 
+new_variable <- function(envir, value) {
+  count <- get(".listenv_var_count", envir=envir, inherits=FALSE)
 
-assign_by_name <- function(...) UseMethod("assign_by_name")
+  count <- count + 1L
+  name <- sprintf(".listenv_var_%f", count)
 
-assign_by_name.listenv <- function(x, name, value) {
+  if (!missing(value)) {
+    assign(name, value, envir=envir, inherits=FALSE)
+  }
+
+  assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+
+  name
+} # new_variable()
+
+
+assign_by_name <- function(x, name, value) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot assign value. Zero-length name.", call.=FALSE)
@@ -272,9 +368,10 @@ assign_by_name.listenv <- function(x, name, value) {
   }
 
   map <- map(x)
+  names <- names(map)
 
   ## Map to an existing or a new element?
-  if (is.element(name, names(map))) {
+  if (is.element(name, names)) {
     var <- map[name]
 
     ## A new variable?
@@ -288,7 +385,9 @@ assign_by_name.listenv <- function(x, name, value) {
 
     ## Append to map
     map <- c(map, var)
-    names(map)[length(map)] <- var
+    if (is.null(names)) names <- rep("", times=length(map))
+    names[length(map)] <- var
+    names(map) <- names
     map(x) <- map
   }
 
@@ -299,9 +398,7 @@ assign_by_name.listenv <- function(x, name, value) {
 } # assign_by_name()
 
 
-assign_by_index <- function(...) UseMethod("assign_by_index")
-
-assign_by_index.listenv <- function(x, i, value) {
+assign_by_index <- function(x, i, value) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot assign value. Zero-length index.", call.=FALSE)
@@ -327,9 +424,8 @@ assign_by_index.listenv <- function(x, i, value) {
       map <- c(map, extra)
     }
 
-    ## Create internal variable name
-    var <- tempvar(value=value, envir=x, inherits=FALSE)
-    map[i] <- var
+    ## Create internal variable
+    map[i] <- new_variable(x, value=value)
 
     ## Update map
     map(x) <- map
@@ -341,9 +437,7 @@ assign_by_index.listenv <- function(x, i, value) {
 } # assign_by_index()
 
 
-remove_by_name <- function(...) UseMethod("remove_by_name")
-
-remove_by_name.listenv <- function(x, name) {
+remove_by_name <- function(x, name) {
   ## Argument 'name':
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call.=FALSE)
@@ -370,9 +464,7 @@ remove_by_name.listenv <- function(x, name) {
 } # remove_by_name()
 
 
-remove_by_index <- function(...) UseMethod("remove_by_index")
-
-remove_by_index.listenv <- function(x, i) {
+remove_by_index <- function(x, i) {
   ## Argument 'i':
   if (length(i) == 0L) {
     stop("Cannot remove element. Zero-length index.", call.=FALSE)
@@ -475,4 +567,51 @@ remove_by_index.listenv <- function(x, i) {
     stop(sprintf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
   return(invisible(x))
+}
+
+
+#' @export
+#' @method unlist listenv
+unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
+  x <- as.list(x)
+  if (recursive) {
+    repeat {
+      x <- unlist(x, recursive=TRUE, use.names=use.names)
+      idxs <- unlist(lapply(x, FUN=inherits, "listenv"), use.names=FALSE)
+      if (length(idxs) == 0L) break
+      idxs <- which(idxs)
+      if (length(idxs) == 0L) break
+      for (ii in idxs) {
+        x[[ii]] <- unlist(x[[ii]], recursive=TRUE, use.names=use.names)
+      }
+    }
+    x
+  } else {
+    unlist(x, recursive=FALSE, use.names=use.names)
+  }
+}
+
+#' @export
+#' @method all.equal listenv
+all.equal.listenv <- function(target, current, all.names=TRUE, sorted=FALSE, ...) {
+  if (identical(target, current)) return(TRUE)
+
+  ## Coerce to lists
+  target <- as.list(target, all.names=all.names, sorted=sorted)
+  current <- as.list(current, all.names=all.names, sorted=sorted)
+
+  ## Not all as.list() methods support 'all.names'
+  if (!all.names) {
+    keep <-
+    target <- target[!grepl("^[.]", names(target))]
+    current <- current[!grepl("^[.]", names(current))]
+  }
+
+  ## Not all as.list() methods support 'sorted'
+  if (sorted) {
+    target <- target[order(names(target))]
+    current <- current[order(names(current))]
+  }
+
+  all.equal(target=target, current=current, ...)
 }

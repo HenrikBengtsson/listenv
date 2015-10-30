@@ -5,6 +5,52 @@ oopts <- options(warn=1)
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Allocation
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv()
+print(x)
+stopifnot(length(x) == 0)
+stopifnot(is.null(names(x)))
+
+x <- listenv(a=1)
+print(x)
+stopifnot(length(x) == 1)
+stopifnot(identical(names(x), c("a")))
+stopifnot(identical(x$a, 1))
+
+x <- listenv(a=1, b=2:3)
+print(x)
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("a", "b")))
+stopifnot(identical(x$a, 1), identical(x$b, 2:3))
+
+
+x <- listenv(b=2:3, .a=1)
+print(x)
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("b", ".a")))
+stopifnot(identical(x$.a, 1), identical(x$b, 2:3))
+
+
+x <- listenv(length=3, a=1)
+print(x)
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("length", "a")))
+stopifnot(identical(x$length, 3), identical(x$a, 1))
+
+
+withCallingHandlers({
+  x <- listenv(length=3)
+}, warning = function(warn) {
+  cat("WARNING:", warn$message)
+  invokeRestart("muffleWarning")
+})
+print(x)
+stopifnot(length(x) == 3)
+stopifnot(is.null(names(x)))
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Single-element assignments and subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
@@ -78,6 +124,45 @@ stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.1
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Multi-element subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Assert than no false names are introduced
+x <- listenv()
+x[1:3] <- list(1, NULL, 3)
+print(x)
+stopifnot(is.null(names(x)))
+
+y <- x[1]
+print(y)
+stopifnot(is.null(names(y)))
+
+y <- x[2:3]
+print(y)
+stopifnot(is.null(names(y)))
+
+y <- x[-1]
+print(y)
+stopifnot(is.null(names(y)))
+
+x[c('c', '.a', 'b')] <- list(NULL, 3, 1)
+print(x)
+stopifnot(identical(names(x), c("", "", "", "c", ".a", "b")))
+
+y <- as.list(x)
+str(y)
+stopifnot(identical(names(y), c("", "", "", "c", ".a", "b")))
+
+y <- as.list(x, all.names=FALSE)
+str(y)
+stopifnot(identical(names(y), c("", "", "", "c", "b")))
+
+y <- as.list(x, sorted=TRUE)
+str(y)
+stopifnot(identical(names(y), c("", "", "", ".a", "b", "c")))
+
+y <- as.list(x, all.names=FALSE, sorted=TRUE)
+str(y)
+stopifnot(identical(names(y), c("", "", "", "b", "c")))
+
+
 x <- listenv()
 x[c('a', 'b', 'c')] <- list(1, NULL, 3)
 
@@ -165,7 +250,6 @@ print(y)
 z <- as.list(y)
 print(z)
 stopifnot(identical(z, list()))
-
 
 y <- x[rep(TRUE, times=5L)]
 print(y)
@@ -373,6 +457,88 @@ print(names(x))
 stopifnot(identical(names(x), c("1", "3")))
 
 
+## Expand and shrink
+x <- listenv()
+stopifnot(length(x) == 0L)
+length(x) <- 3L
+stopifnot(length(x) == 3L)
+stopifnot(is.null(names(x)))
+
+names(x) <- c("a", "b", "c")
+x$a <- 2
+stopifnot(identical(x$a, 2))
+x[c("a", "c")] <- c(2,1)
+stopifnot(identical(x$a, 2), identical(x$c, 1))
+
+length(x) <- 4L
+stopifnot(length(x) == 4L)
+stopifnot(identical(names(x), c("a", "b", "c", "")))
+
+length(x) <- 1L
+stopifnot(length(x) == 1L)
+stopifnot(identical(names(x), c("a")))
+stopifnot(identical(x$a, 2))
+
+length(x) <- 0L
+stopifnot(length(x) == 0L)
+stopifnot(length(names(x)) == 0) ## Actually, character(0), cf. lists
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Flatten
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+for (recursive in c(FALSE, TRUE)) {
+  x <- list(); x$a <- list(B=1:3); x$b <- list(C=1:3, D=4:5)
+  y1 <- unlist(x, recursive=recursive)
+
+  x <- listenv(); x$a <- list(B=1:3); x$b <- list(C=1:3, D=4:5)
+  y2 <- unlist(x, recursive=recursive)
+  stopifnot(identical(y2, y1))
+} # for (recursive ...)
+
+x <- listenv(); x$a <- list(B=1:3); x$b <- as.listenv(list(C=1:3, D=4:5))
+y3 <- unlist(x, recursive=TRUE)
+stopifnot(identical(y3, y1))
+
+x <- listenv()
+y <- unlist(x)
+stopifnot(length(y) == 0)
+stopifnot(is.null(y))
+
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Comparisons
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv(c=NULL, .a=3, b=1)
+print(x)
+
+## A list environment is always equal to itself
+stopifnot(all.equal(x, x))
+
+## List environments emulate lists
+stopifnot(all.equal(x, list(c=NULL, .a=3, b=1)))
+stopifnot(all.equal(x, list(c=NULL, .a=3, b=1), sorted=TRUE))
+stopifnot(all.equal(x, list(.a=3, b=1, c=NULL), sorted=TRUE))
+
+stopifnot(all.equal(x, list(c=NULL, b=1), all.names=FALSE))
+stopifnot(all.equal(x, list(.a=3, c=NULL, b=1), all.names=FALSE))
+stopifnot(all.equal(x, list(b=1, c=NULL), all.names=FALSE, sorted=TRUE))
+
+res <- all.equal(x, list(b=1, c=NULL), sorted=FALSE)
+stopifnot(!isTRUE(res))
+
+res <- all.equal(x, list(b=1, c=NULL), all.names=FALSE)
+stopifnot(!isTRUE(res))
+
+## Assert listenv() -> as.list() -> as.listenv() equality
+y <- as.list(x)
+stopifnot(identical(names(y), names(x)))
+z <- as.listenv(y)
+stopifnot(identical(names(z), names(y)))
+stopifnot(all.equal(x, y))
+
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Warnings
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -400,7 +566,8 @@ stopifnot(!inherits(res, "try-warning"))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- listenv(length=3L)
+x <- listenv()
+length(x) <- 3L
 names(x) <- c("a", "b", "c")
 
 res <- try(names(x) <- c("a", "b"), silent=TRUE)

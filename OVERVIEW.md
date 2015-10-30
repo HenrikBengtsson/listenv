@@ -1,58 +1,14 @@
-Copyright Henrik Bengtsson, 2015
+<%
+## Reuse the package vignette
+md <- R.rsp::rstring(file="vignettes/listenv.md.rsp", postprocess=FALSE)
 
-## List environments
-_List environments_ are environments that behaves as lists by
-overriding the subsetting functions for environments such that they
-also emulates some of the index subsetting that lists have.  For example,
-```r
-x <- listenv()
-for (i in 1:3) {
-  x[[i]] <- i^2
-}
-names(x) <- c("a", "b", "c")
-```
-The values of a list environment can be retrieved individually via
-`x$b` and `x[["b"]]` just as with regular environments, but also via
-`x[[2]]` as with regular lists.
-To retrieve all values of an environment as a list, use `as.list(x)`.
+## Drop the header
+md <- unlist(strsplit(md, split="\n", fixed=TRUE))
+md <- md[-seq_len(grep("^## ", md)[1]-1)]
 
-### Examples
-Here is a longer set of examples illustrating what the list environments provides:
-```r
-> x <- listenv()
-> x[[1]] <- { 1 }
-> x[[3]] <- { "Hello world!" }
-> length(x)
-3
-> seq_along(x)
-[1] 1 2 3
-> names(x) <- c("a", "b", "c")
-> x[['b']]
-NULL
-> x$b <- TRUE
-> x[[1]]
-1
-> str(as.list(x))
-List of 3
- $ a: num 1
- $ b: logi TRUE
- $ c: chr "Hello world!"
-> x[c('a', 'c')] <- list(2, "Hello again!")
-> y <- x[3:2]
-> str(as.list(y))
-List of 2
- $ c: chr "Hello again!"
- $ b: logi TRUE
-```
+## Drop the footer
+md <- md[seq_len(grep("^---", md)[1]-1)]
 
-It is possible to also specify the length upfront, e.g.
-```r
-> x <- listenv(length=3)
-> seq_along(x)
-[1] 1 2 3
-> str(as.list(x))
-List of 3
- $ : NULL
- $ : NULL
- $ : NULL
-```
+## Output
+cat(md, sep="\n")
+%>

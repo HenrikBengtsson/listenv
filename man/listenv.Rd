@@ -5,19 +5,29 @@
 \alias{listenv}
 \title{Create a list environment}
 \usage{
-listenv(length = 0L)
+listenv(...)
 
 as.listenv(...)
 }
 \arguments{
-\item{length}{The number of NULL elements from start.}
-
-\item{...}{The object to coerce and optional arguments.}
+\item{\dots}{(optional) Named and/or unnamed objects to be
+assigned to the list environment.}
 }
 \value{
 An environment of class `listenv`.
 }
 \description{
 Create a list environment
+}
+\examples{
+x <- listenv(c=2, a=3, d="hello")
+print(names(x))
+names(x)[2] <- "A"
+x$b <- 5:8
+
+y <- as.list(x)
+str(y)
+
+z <- as.listenv(y)
 }
 
