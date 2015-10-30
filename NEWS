@@ -1,7 +1,7 @@
 Package: listenv
 ================
 
-Version: 0.4.0-9000 [2015-10-29]
+Version: 0.5.0 [2015-10-30]
 o Add support for assigning elements when creating list environment
   similarly how to lists work, e.g. x <- listenv(a=1, b=2).
 o length(x) <- n now expand/truncate a list environment.
