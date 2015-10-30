@@ -531,8 +531,11 @@ stopifnot(!isTRUE(res))
 res <- all.equal(x, list(b=1, c=NULL), all.names=FALSE)
 stopifnot(!isTRUE(res))
 
+## Assert listenv() -> as.list() -> as.listenv() equality
 y <- as.list(x)
+stopifnot(identical(names(y), names(x)))
 z <- as.listenv(y)
+stopifnot(identical(names(z), names(y)))
 stopifnot(all.equal(x, y))
 
 

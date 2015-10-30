@@ -1,14 +1,15 @@
 Package: listenv
 ================
 
-Version: 0.4.0-9000 [2015-10-17]
+Version: 0.4.0-9000 [2015-10-29]
 o Add support for assigning elements when creating list environment
   similarly how to lists work, e.g. x <- listenv(a=1, b=2).
-o DEPRECATED: Deprecated x <- listenv(length=n). Instead use 
+o DEPRECATED: Deprecated x <- listenv(length=n). Instead use
   x <- listenv(); length(x) <- n.
 o Add support for growing or shrinking a list environment using
   length(x) <- n.
 o Add unlist() for list environments.
+o BUG FIX: as.listenv(x) would drop NULL elements in 'x'.
 o BUG FIX: x[idxs], x[name] <- y and x$<name> <- y would introduce
   NA names for non-named list environments.
 

@@ -62,7 +62,9 @@ as.listenv.list <- function(x, ...) {
   length(res) <- nx
   names(res) <- names(x)
   for (kk in seq_len(nx)) {
-    res[[kk]] <- x[[kk]]
+    value <- x[[kk]]
+    if (is.null(value)) value <- list(NULL)
+    res[[kk]] <- value
   }
   res
 }
