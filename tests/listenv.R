@@ -531,6 +531,10 @@ stopifnot(!isTRUE(res))
 res <- all.equal(x, list(b=1, c=NULL), all.names=FALSE)
 stopifnot(!isTRUE(res))
 
+y <- as.list(x)
+z <- as.listenv(y)
+stopifnot(all.equal(x, y))
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Warnings
