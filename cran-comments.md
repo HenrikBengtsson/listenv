@@ -1,18 +1,30 @@
-# CRAN submission listenv 0.4.0
-on 2015-08-08
+# CRAN submission listenv 0.5.0
+on 2015-10-30
 
 Thanks in advance
 
 
 ## Notes not sent to CRAN
-listenv 0.4.0, and its reverse-dependent package(*) have been verified with `R CMD check --as-cran` on: has been verified using `R CMD build` and `R CMD check --as-cran` on
+The package has been verified using `R CMD check --as-cran` on:
 
-* R version 3.1.3 (2015-03-09) [Platform: x86_64-unknown-linux-gnu (64-bit)]
-* R version 3.1.3 (2015-03-09) [Platform: x86_64-w64-mingw32/x64 (64-bit)]
-* R version 3.2.2 beta (2015-08-05 r68859) [Platform: x86_64-unknown-linux-gnu (64-bit)]
-* R version 3.2.2 beta (2015-08-04 r68843) [Platform: x86_64-w64-mingw32/x64 (64-bit)]
-* R version 3.3.0 Under development (unstable) (2015-08-05 r68859) [Platform: x86_64-w64-mingw32/x64 (64-bit)]
-  
-It has also been verified by the <http://win-builder.r-project.org/> service.
+* Platform x86_64-pc-linux-gnu (64-bit):
+  - R version 3.1.3 (2015-03-09)
+  - R version 3.2.2 (2015-08-14)
+  - R version 3.2.2 Patched (2015-10-27 r69581)
+  - R Under development (unstable) (2015-10-27 r69580)
 
-(*) The submitted updates cause no issues for any of the following 1 reverse dependency: future 0.7.0.
+* Platform: x86_64-apple-darwin13.4.0 (64-bit):
+  - R version 3.2.2 Patched (2015-10-22 r69556)
+
+* Platform x86_64-w64-mingw32/x64 (64-bit):
+  - R version 3.1.3 (2015-03-09)
+  - R version 3.2.2 (2015-08-14)
+  - R version 3.2.2 Patched (2015-10-19 r69550)
+  - R Under development (unstable) (2015-10-24 r69569)
+
+It has also verified using the <http://win-builder.r-project.org/>
+service.
+
+Moreover, the updates cause no issues for any of the following
+2 reverse dependency on CRAN, which have been tested with
+`R CMD check --as-cran`: R.filesets 2.9.0 and future 0.8.2.

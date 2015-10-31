@@ -25,6 +25,13 @@ stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$a, 1), identical(x$b, 2:3))
 
 
+x <- listenv(b=2:3, .a=1)
+print(x)
+stopifnot(length(x) == 2)
+stopifnot(identical(names(x), c("b", ".a")))
+stopifnot(identical(x$.a, 1), identical(x$b, 2:3))
+
+
 x <- listenv(length=3, a=1)
 print(x)
 stopifnot(length(x) == 2)
@@ -135,9 +142,25 @@ y <- x[-1]
 print(y)
 stopifnot(is.null(names(y)))
 
-x[c('a', 'b', 'c')] <- list(1, NULL, 3)
+x[c('c', '.a', 'b')] <- list(NULL, 3, 1)
 print(x)
-stopifnot(identical(names(x), c("", "", "", "a", "b", "c")))
+stopifnot(identical(names(x), c("", "", "", "c", ".a", "b")))
+
+y <- as.list(x)
+str(y)
+stopifnot(identical(names(y), c("", "", "", "c", ".a", "b")))
+
+y <- as.list(x, all.names=FALSE)
+str(y)
+stopifnot(identical(names(y), c("", "", "", "c", "b")))
+
+y <- as.list(x, sorted=TRUE)
+str(y)
+stopifnot(identical(names(y), c("", "", "", ".a", "b", "c")))
+
+y <- as.list(x, all.names=FALSE, sorted=TRUE)
+str(y)
+stopifnot(identical(names(y), c("", "", "", "b", "c")))
 
 
 x <- listenv()
@@ -233,6 +256,7 @@ print(y)
 z <- as.list(y)
 print(z)
 stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
+
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -480,6 +504,39 @@ x <- listenv()
 y <- unlist(x)
 stopifnot(length(y) == 0)
 stopifnot(is.null(y))
+
+
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Comparisons
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv(c=NULL, .a=3, b=1)
+print(x)
+
+## A list environment is always equal to itself
+stopifnot(all.equal(x, x))
+
+## List environments emulate lists
+stopifnot(all.equal(x, list(c=NULL, .a=3, b=1)))
+stopifnot(all.equal(x, list(c=NULL, .a=3, b=1), sorted=TRUE))
+stopifnot(all.equal(x, list(.a=3, b=1, c=NULL), sorted=TRUE))
+
+stopifnot(all.equal(x, list(c=NULL, b=1), all.names=FALSE))
+stopifnot(all.equal(x, list(.a=3, c=NULL, b=1), all.names=FALSE))
+stopifnot(all.equal(x, list(b=1, c=NULL), all.names=FALSE, sorted=TRUE))
+
+res <- all.equal(x, list(b=1, c=NULL), sorted=FALSE)
+stopifnot(!isTRUE(res))
+
+res <- all.equal(x, list(b=1, c=NULL), all.names=FALSE)
+stopifnot(!isTRUE(res))
+
+## Assert listenv() -> as.list() -> as.listenv() equality
+y <- as.list(x)
+stopifnot(identical(names(y), names(x)))
+z <- as.listenv(y)
+stopifnot(identical(names(z), names(y)))
+stopifnot(all.equal(x, y))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
