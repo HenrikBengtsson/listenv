@@ -338,11 +338,13 @@ toIndex <- function(x, idxs) {
 
 
 #' @export
-`[.listenv` <- function(x, i, ...) {
+`[.listenv` <- function(x, ...) {
   idxs <- list(...)
-  if (length(idxs) > 0L) {
-    dim
-    stop("Not supported")
+  nidxs <- length(idxs)
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
   }
 
   map <- map(x)

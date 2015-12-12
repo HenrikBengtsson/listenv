@@ -34,22 +34,30 @@ stopifnot(is.null(dimnames(x)))
 
 
 ## Extract single element
-message("* y <- x[[i,j]] ...")
+message("* y <- x[[i,j]] and z <- x[i,j] ...")
 dim(x) <- c(2,3)
 dimnames(x) <- list(c("a", "b"), NULL)
 
 y <- x[[3]]
 stopifnot(identical(y, 3L))
+z <- x[3]
+stopifnot(identical(z[[1]], y))
 
 y <- x[[1,1]]
 stopifnot(identical(y, x[[1]]))
+z <- x[1,1]
+stopifnot(identical(z[[1]], y))
 
 y <- x[[2,3]]
 stopifnot(identical(y, x[[6]]))
+z <- x[2,3]
+stopifnot(identical(z[[1]], y))
 
 y <- x[["a",3]]
 stopifnot(identical(y, x[[1,3]]))
 stopifnot(identical(y, x[[5]]))
+z <- x["a",3]
+stopifnot(identical(z[[1]], y))
 
 
 message("* x[[i,j]] <- value ...")
