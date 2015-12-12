@@ -718,6 +718,7 @@ dimnames.listenv <- function(x) attr(x, "dimnames.")
 }
 
 #' @method all.equal listenv
+#' @export
 all.equal.listenv <- function(target, current, all.names=TRUE, sorted=FALSE, ...) {
   if (identical(target, current)) return(TRUE)
 
