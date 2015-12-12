@@ -83,19 +83,40 @@ as.listenv.default <- function(x, ...) {
 #' @export
 print.listenv <- function(x, ...) {
   n <- length(x)
-  if (n == 0) {
-    s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
-  } else {
-    if (n == 1) {
-      s <- sprintf("`%s` with 1 element", class(x)[1L])
+  dim <- dim(x)
+
+  if (is.null(dim)) {
+    if (n == 0) {
+      s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
     } else {
-      s <- sprintf("`%s` with %d elements", class(x)[1L], n)
+      if (n == 1) {
+        s <- sprintf("`%s` with 1 element", class(x)[1L])
+      } else {
+        s <- sprintf("`%s` with %d elements", class(x)[1L], n)
+      }
+      names <- names(x)
+      if (is.null(names)) {
+        s <- sprintf("%s that are not named.\n", s)
+      } else {
+        s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
+      }
     }
-    names <- names(x)
-    if (is.null(names)) {
-      s <- sprintf("%s that are not named.\n", s)
+  } else {
+    dimstr <- sprintf("%d (%s)", n, paste(dim, collapse="x"))
+    if (n == 0) {
+      s <- sprintf("`%s` with %s elements.\n", class(x)[1L], dimstr)
     } else {
-      s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
+      if (n == 1) {
+        s <- sprintf("`%s` with %s element", class(x)[1L], dimstr)
+      } else {
+        s <- sprintf("`%s` with %s elements", class(x)[1L], dimstr)
+      }
+      names <- names(x)
+      if (is.null(names)) {
+        s <- sprintf("%s and elements that are not named.\n", s)
+      } else {
+        s <- sprintf("%s: %s.\n", s, hpaste(sQuote(names)))
+      }
     }
   }
   cat(s)
