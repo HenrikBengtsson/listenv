@@ -16,13 +16,13 @@ get_variable <- function(...) UseMethod("get_variable")
 #' @export
 get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ...) {
   if (length(name) != 1L) {
-    stop("Subscript must be a scalar: ", length(name), .call=FALSE)
+    stop("Subscript must be a scalar: ", length(name), call.=FALSE)
   }
 
   if (is.character(name)) {
   } else if (is.numeric(name)) {
   } else {
-    stop("Subscript must be a name or an index: ", mode(name), .call=FALSE)
+    stop("Subscript must be a name or an index: ", mode(name), call.=FALSE)
   }
 
   map <- map(x)
