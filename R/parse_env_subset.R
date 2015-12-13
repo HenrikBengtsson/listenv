@@ -132,9 +132,9 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
         for (kk in seq_along(subset)) {
           subsetKK <- subset[[kk]]
           if (is.numeric(subsetKK)) {
-            if (subsetKK == 0) {
-              stop("Invalid subset: ", sQuote(code), call.=TRUE)
-            }
+##            if (subsetKK == 0) {
+##              stop("Invalid subset: ", sQuote(code), call.=TRUE)
+##            }
             exists <- exists && (subsetKK >= 1 && subsetKK <= dim[kk])
           } else if (is.character(subsetKK)) {
             subsetKK <- match(subsetKK, dimnames[kk])
@@ -149,9 +149,9 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       } else {
         subset <- subset[[1L]]
         if (is.numeric(subset)) {
-          if (subset == 0) {
-            stop("Invalid subset: ", sQuote(code), call.=TRUE)
-          }
+##          if (subset == 0) {
+##            stop("Invalid subset: ", sQuote(code), call.=TRUE)
+##          }
           res$idx <- subset
           res$exists <- (res$idx >= 1 && res$idx <= length(envir))
           res$name <- names[subset]
