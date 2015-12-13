@@ -151,6 +151,16 @@ target <- parse_env_subset(x[[1,4]], substitute=TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$idx == c(1L,4L), !target$exists)
 
+## Assert that x[[1,4]] is not the same as x[[c(1,4)]]
+target <- parse_env_subset(x[[1,4]], substitute=TRUE)
+str(target)
+target2 <- parse_env_subset(x[[c(1,4)]], substitute=TRUE)
+str(target2)
+target$code <- target2$code <- NULL
+## FIXME: 2015-12-13
+## stopifnot(!all.equal(target2, target))
+
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
