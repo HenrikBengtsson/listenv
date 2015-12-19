@@ -13,6 +13,8 @@ stopifnot(is.null(dim(x)))
 stopifnot(is.null(dimnames(x)))
 y <- as.list(x)
 stopifnot(identical(y, x0))
+z <- as.listenv(y)
+stopifnot(all.equal(z, x))
 
 message("* dim(x) and dimnames(x) ...")
 dim(x0) <- c(2,3)
@@ -22,6 +24,8 @@ stopifnot(identical(dim(x), dim(x0)))
 stopifnot(is.null(dimnames(x)))
 y <- as.list(x)
 stopifnot(identical(y, x0))
+z <- as.listenv(y)
+stopifnot(all.equal(z, x))
 
 dimnames(x0) <- list(c("a", "b"), NULL)
 dimnames(x) <- dimnames(x0)
@@ -30,12 +34,16 @@ stopifnot(identical(dim(x), dim(x0)))
 stopifnot(identical(dimnames(x), dimnames(x0)))
 y <- as.list(x)
 stopifnot(identical(y, x0))
+z <- as.listenv(y)
+stopifnot(all.equal(z, x))
 
 dimnames(x0) <- NULL
 dimnames(x) <- NULL
 stopifnot(is.null(dimnames(x)))
 y <- as.list(x)
 stopifnot(identical(y, x0))
+z <- as.listenv(y)
+stopifnot(all.equal(z, x))
 
 dimnames(x0) <- list(c("a", "b"), NULL)
 dimnames(x) <- dimnames(x0)
@@ -47,6 +55,8 @@ stopifnot(is.null(dim(x)))
 stopifnot(is.null(dimnames(x)))
 y <- as.list(x)
 stopifnot(identical(y, x0))
+z <- as.listenv(y)
+stopifnot(all.equal(z, x))
 
 
 ## Extract single element

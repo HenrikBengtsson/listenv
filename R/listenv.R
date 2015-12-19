@@ -60,12 +60,21 @@ as.listenv.list <- function(x, ...) {
   nx <- length(x)
   res <- listenv()
   length(res) <- nx
+
   names(res) <- names(x)
   for (kk in seq_len(nx)) {
     value <- x[[kk]]
     if (is.null(value)) value <- list(NULL)
     res[[kk]] <- value
   }
+
+  ## Set dimensions?
+  dim <- dim(x)
+  if (!is.null(dim)) {
+    dim(res) <- dim
+    dimnames(res) <- dimnames(x)
+  }
+
   res
 }
 
