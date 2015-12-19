@@ -102,7 +102,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       names <- names(envir)
       if (is.numeric(subset)) {
         res$idx <- subset
-        res$exists <- (res$idx >= 1 && res$idx <= length(envir))
+        res$exists <- !is.na(map(envir)[res$idx]) && (res$idx >= 1 && res$idx <= length(envir))
         res$name <- names[subset]
         if (length(res$name) == 0L) res$name <- ""
       } else if (is.character(subset)) {

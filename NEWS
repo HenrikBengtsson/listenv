@@ -1,6 +1,13 @@
 Package: listenv
 ================
 
+Version: 0.5.0-9000 [2015-12-18]
+o BUG FIX: parse_env_subset(x[[idx]]) for list environment 'x' and
+  index 'idx' claimed x[[idx]] exists as long as idx in [1,length(x)]
+  but it forgot to check if element really existed, which may not
+  be true if 'x' has been expanded.
+
+
 Version: 0.5.0 [2015-10-30]
 o Add support for assigning elements when creating list environment
   similarly how to lists work, e.g. x <- listenv(a=1, b=2).
