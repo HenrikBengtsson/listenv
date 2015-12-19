@@ -36,7 +36,7 @@ message("*** parse_env_subset() on parent environment ... DONE")
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Environment
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("*** environment")
+message("parse_env_subset() on environment ...")
 x <- new.env()
 
 target <- parse_env_subset(x, substitute=TRUE)
@@ -70,6 +70,8 @@ x$a <- 1
 target <- parse_env_subset(x$a, substitute=TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$name == "a", is.na(target$idx), target$exists)
+
+message("parse_env_subset() on environment ... DONE")
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -

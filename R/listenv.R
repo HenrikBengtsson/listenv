@@ -60,12 +60,21 @@ as.listenv.list <- function(x, ...) {
   nx <- length(x)
   res <- listenv()
   length(res) <- nx
+
   names(res) <- names(x)
   for (kk in seq_len(nx)) {
     value <- x[[kk]]
     if (is.null(value)) value <- list(NULL)
     res[[kk]] <- value
   }
+
+  ## Set dimensions?
+  dim <- dim(x)
+  if (!is.null(dim)) {
+    dim(res) <- dim
+    dimnames(res) <- dimnames(x)
+  }
+
   res
 }
 
@@ -83,19 +92,40 @@ as.listenv.default <- function(x, ...) {
 #' @export
 print.listenv <- function(x, ...) {
   n <- length(x)
-  if (n == 0) {
-    s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
-  } else {
-    if (n == 1) {
-      s <- sprintf("`%s` with 1 element", class(x)[1L])
+  dim <- dim(x)
+
+  if (is.null(dim)) {
+    if (n == 0) {
+      s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
     } else {
-      s <- sprintf("`%s` with %d elements", class(x)[1L], n)
+      if (n == 1) {
+        s <- sprintf("`%s` with 1 element", class(x)[1L])
+      } else {
+        s <- sprintf("`%s` with %d elements", class(x)[1L], n)
+      }
+      names <- names(x)
+      if (is.null(names)) {
+        s <- sprintf("%s that are not named.\n", s)
+      } else {
+        s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
+      }
     }
-    names <- names(x)
-    if (is.null(names)) {
-      s <- sprintf("%s that are not named.\n", s)
+  } else {
+    dimstr <- sprintf("%d (%s)", n, paste(dim, collapse="x"))
+    if (n == 0) {
+      s <- sprintf("`%s` with %s elements.\n", class(x)[1L], dimstr)
     } else {
-      s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
+      if (n == 1) {
+        s <- sprintf("`%s` with %s element", class(x)[1L], dimstr)
+      } else {
+        s <- sprintf("`%s` with %s elements", class(x)[1L], dimstr)
+      }
+      names <- names(x)
+      if (is.null(names)) {
+        s <- sprintf("%s and elements that are not named.\n", s)
+      } else {
+        s <- sprintf("%s: %s.\n", s, hpaste(sQuote(names)))
+      }
     }
   }
   cat(s)
@@ -228,6 +258,13 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   ok <- !is.na(vars)
   res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
 
+  ## Set dimensions?
+  dim <- dim(x)
+  if (!is.null(dim)) {
+    dim(res) <- dim
+    dimnames(res) <- dimnames(x)
+  }
+
   res
 }
 
@@ -255,25 +292,78 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 }
 
 
+## [[i,j,...]] -> [[idx]]
+toIndex <- function(x, idxs) {
+  nidxs <- length(idxs)
+
+  dim <- dim(x)
+  if (is.null(dim)) dim <- length(x)
+  ndim <- length(dim)
+  if (ndim != nidxs) {
+    stop("incorrect number of dimensions")
+  }
+  dimnames <- dimnames(x)
+
+  ## Indexing scale factor per dimension
+  scale <- c(1L, cumprod(dim[-ndim]))
+
+  ## Subset
+  idx <- 1
+  for (kk in 1:nidxs) {
+    i <- idxs[[kk]]
+    ni <- length(i)
+    if (is.character(i)) {
+      if (ni != 1L) stop("attempt to select more than one element")
+      name <- i
+      i <- match(name, table=dimnames[[kk]])
+      if (is.na(i)) stop("subscript out of bounds")
+    } else if (is.logical(i)) {
+      d <- dim[kk]
+      i <- rep(i, length.out=d)
+      i <- which(i)
+    } else if (is.numeric(i)) {
+      if (ni != 1L) stop("attempt to select more than one element")
+      d <- dim[kk]
+      if (i < 0) stop("attempt to select less than one element")
+      if (i > d) stop("subscript out of bounds")
+    } else {
+      stop("invalid subscript type", sQuote(typeof(i)))
+    }
+    idx <- idx + scale[kk]*(i - 1)
+  } # for (kk ...)
+
+  idx
+} # toIndex()
+
+
 #' @export
-`[[.listenv` <- function(x, i, ...) {
+`[[.listenv` <- function(x, ...) {
   map <- map(x)
-
-  if (is.character(i)) {
-    name <- i
-    i <- match(name, table=names(map))
-    if (is.na(i)) return(NULL)
-  } else if (!is.numeric(i)) {
-    return(NextMethod("[["))
-  }
-
-  if (length(i) != 1L) {
-    stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))
-  }
-
   n <- length(map)
-  if (i < 1L || i > n) {
-    stop(sprintf("Subscript out of bounds [%d,%d]: %d", min(1,n), n, i), call.=FALSE)
+
+  idxs <- list(...)
+  nidxs <- length(idxs)
+
+  ## Subsetting by multiple dimensions?
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
+    if (is.character(i)) {
+      name <- i
+      i <- match(name, table=names(map))
+      if (is.na(i)) return(NULL)
+    } else if (!is.numeric(i)) {
+      return(NextMethod("[["))
+    }
+
+    if (length(i) != 1L) {
+      stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))
+    }
+
+    if (i < 1L || i > n) {
+      stop(sprintf("Subscript out of bounds [%d,%d]: %d", min(1,n), n, i), call.=FALSE)
+    }
   }
 
   var <- map[i]
@@ -286,7 +376,15 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 
 
 #' @export
-`[.listenv` <- function(x, i) {
+`[.listenv` <- function(x, ...) {
+  idxs <- list(...)
+  nidxs <- length(idxs)
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
+  }
+
   map <- map(x)
   nmap <- length(map)
   names <- names(map)
@@ -341,7 +439,7 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 }
 
 
-new_variable <- function(envir, value) {
+new_variable <- function(envir, value, create=TRUE) {
   count <- get(".listenv_var_count", envir=envir, inherits=FALSE)
 
   count <- count + 1L
@@ -351,7 +449,9 @@ new_variable <- function(envir, value) {
     assign(name, value, envir=envir, inherits=FALSE)
   }
 
-  assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+  if (create) {
+    assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+  }
 
   name
 } # new_variable()
@@ -511,14 +611,29 @@ remove_by_index <- function(x, i) {
 }
 
 #' @export
-`[[<-.listenv` <- function(x, i, value) {
-  if (is.character(i)) {
-    if (is.null(value)) {
-      x <- remove_by_name(x, name=i)
-    } else {
-      x <- assign_by_name(x, name=i, value=value)
+`[[<-.listenv` <- function(x, ..., value) {
+  map <- map(x)
+  n <- length(map)
+
+  idxs <- list(...)
+  nidxs <- length(idxs)
+
+  ## Subsetting by multiple dimensions?
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
+    if (is.character(i)) {
+      if (is.null(value)) {
+        x <- remove_by_name(x, name=i)
+      } else {
+        x <- assign_by_name(x, name=i, value=value)
+      }
+      return(invisible(x))
     }
-  } else if (is.numeric(i)) {
+  }
+
+  if (is.numeric(i)) {
     if (is.null(value)) {
       x <- remove_by_index(x, i=i)
     } else {
@@ -527,12 +642,18 @@ remove_by_index <- function(x, i) {
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
+
   return(invisible(x))
 }
 
 
 #' @export
-`[<-.listenv` <- function(x, i, value) {
+`[<-.listenv` <- function(x, i, ..., value) {
+  idxs <- list(...)
+  if (length(idxs) > 0L) {
+    stop("Not supported")
+  }
+
   if (is.logical(i)) {
     n <- length(x)
     if (length(i) < n) i <- rep(i, length.out=n)
@@ -589,6 +710,51 @@ unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
   } else {
     unlist(x, recursive=FALSE, use.names=use.names)
   }
+}
+
+#' @export
+dim.listenv <- function(x) attr(x, "dim.")
+
+#' @export
+`dim<-.listenv` <- function(x, value) {
+  n <- length(x)
+  if (!is.null(value)) {
+    value <- as.integer(value)
+    p <- prod(as.double(value))
+    if (p != n) {
+      stop(sprintf("dims [product %d] do not match the length of object [%d]", p, n))
+    }
+  }
+
+  if (!is.null(attr(x, "dim."))) {
+    ## Always reset names of dimensions if they are changed
+    dimnames(x) <- NULL
+  }
+
+  attr(x, "dim.") <- value
+  x
+}
+
+
+#' @export
+dimnames.listenv <- function(x) attr(x, "dimnames.")
+
+#' @export
+`dimnames<-.listenv` <- function(x, value) {
+  dim <- dim(x)
+  if (is.null(dim)) {
+    stop("'dimnames' applied to non-array")
+  }
+  for (kk in seq_along(dim)) {
+    names <- value[[kk]]
+    if (is.null(names)) next
+    n <- length(names)
+    if (n != dim[kk]) {
+      stop(sprintf("length of 'dimnames' [%d] not equal to array extent", kk))
+    }
+  }
+  attr(x, "dimnames.") <- value
+  x
 }
 
 #' @export
