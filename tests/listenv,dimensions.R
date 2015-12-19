@@ -6,31 +6,47 @@ oopts <- options(warn=1)
 
 message("* List environment and multiple dimensions ...")
 
-x <- as.listenv(as.list(1:6))
+x0 <- as.list(1:6)
+x <- as.listenv(x0)
 print(x)
 stopifnot(is.null(dim(x)))
 stopifnot(is.null(dimnames(x)))
-
+y <- as.list(x)
+stopifnot(identical(y, x0))
 
 message("* dim(x) and dimnames(x) ...")
-dim(x) <- c(2,3)
+dim(x0) <- c(2,3)
+dim(x) <- dim(x0)
 print(x)
-stopifnot(identical(dim(x), c(2L,3L)))
+stopifnot(identical(dim(x), dim(x0)))
 stopifnot(is.null(dimnames(x)))
+y <- as.list(x)
+stopifnot(identical(y, x0))
 
-dimnames(x) <- list(c("a", "b"), NULL)
+dimnames(x0) <- list(c("a", "b"), NULL)
+dimnames(x) <- dimnames(x0)
 print(x)
-stopifnot(identical(dim(x), c(2L,3L)))
-stopifnot(identical(dimnames(x), list(c("a", "b"), NULL)))
+stopifnot(identical(dim(x), dim(x0)))
+stopifnot(identical(dimnames(x), dimnames(x0)))
+y <- as.list(x)
+stopifnot(identical(y, x0))
 
+dimnames(x0) <- NULL
 dimnames(x) <- NULL
 stopifnot(is.null(dimnames(x)))
-dimnames(x) <- list(c("a", "b"), NULL)
+y <- as.list(x)
+stopifnot(identical(y, x0))
 
+dimnames(x0) <- list(c("a", "b"), NULL)
+dimnames(x) <- dimnames(x0)
+
+dim(x0) <- NULL
 dim(x) <- NULL
 print(x)
 stopifnot(is.null(dim(x)))
 stopifnot(is.null(dimnames(x)))
+y <- as.list(x)
+stopifnot(identical(y, x0))
 
 
 ## Extract single element

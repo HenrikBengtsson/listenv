@@ -249,6 +249,13 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   ok <- !is.na(vars)
   res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
 
+  ## Set dimensions?
+  dim <- dim(x)
+  if (!is.null(dim)) {
+    dim(res) <- dim
+    dimnames(res) <- dimnames(x)
+  }
+
   res
 }
 
