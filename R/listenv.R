@@ -312,8 +312,8 @@ toIndex <- function(x, idxs) {
   for (kk in 1:nidxs) {
     i <- idxs[[kk]]
     ni <- length(i)
-    if (ni != 1L) stop("attempt to select more than one element")
     if (is.character(i)) {
+      if (ni != 1L) stop("attempt to select more than one element")
       name <- i
       i <- match(name, table=dimnames[[kk]])
       if (is.na(i)) stop("subscript out of bounds")
@@ -322,6 +322,7 @@ toIndex <- function(x, idxs) {
       i <- rep(i, length.out=d)
       i <- which(i)
     } else if (is.numeric(i)) {
+      if (ni != 1L) stop("attempt to select more than one element")
       d <- dim[kk]
       if (i < 0) stop("attempt to select less than one element")
       if (i > d) stop("subscript out of bounds")
@@ -438,7 +439,7 @@ toIndex <- function(x, idxs) {
 }
 
 
-new_variable <- function(envir, value) {
+new_variable <- function(envir, value, create=TRUE) {
   count <- get(".listenv_var_count", envir=envir, inherits=FALSE)
 
   count <- count + 1L
@@ -448,7 +449,9 @@ new_variable <- function(envir, value) {
     assign(name, value, envir=envir, inherits=FALSE)
   }
 
-  assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+  if (create) {
+    assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+  }
 
   name
 } # new_variable()

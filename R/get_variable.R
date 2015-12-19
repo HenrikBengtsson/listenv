@@ -76,7 +76,7 @@ get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ..
       map <- c(map, extra)
     }
     ## Create internal variable
-    var <- new_variable(x, value=NULL)
+    var <- new_variable(x, value=NULL, create=create)
     map[i] <- var
   }
 

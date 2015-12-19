@@ -137,7 +137,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
 ##            }
             exists <- exists && (subsetKK >= 1 && subsetKK <= dim[kk])
           } else if (is.character(subsetKK)) {
-            subsetKK <- match(subsetKK, dimnames[kk])
+            subsetKK <- match(subsetKK, dimnames[[kk]])
             exists <- exists && !is.na(subsetKK)
             subset[[kk]] <- subsetKK
           }

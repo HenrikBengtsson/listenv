@@ -6,6 +6,16 @@ oopts <- options(warn=1)
 
 message("* List environment and multiple dimensions ...")
 
+x <- listenv()
+dim(x) <- c(0,0)
+print(x)
+stopifnot(length(x) == 0)
+
+x <- listenv(a=1)
+dim(x) <- c(1,1)
+print(x)
+stopifnot(length(x) == 1)
+
 x0 <- as.list(1:6)
 x <- as.listenv(x0)
 print(x)
@@ -15,6 +25,7 @@ y <- as.list(x)
 stopifnot(identical(y, x0))
 z <- as.listenv(y)
 stopifnot(all.equal(z, x))
+
 
 message("* dim(x) and dimnames(x) ...")
 dim(x0) <- c(2,3)
@@ -83,6 +94,13 @@ y <- x[["a",3]]
 stopifnot(identical(y, x[[1,3]]))
 stopifnot(identical(y, x[[5]]))
 z <- x["a",3]
+stopifnot(identical(z[[1]], y))
+
+
+y <- x[[1,c(FALSE,FALSE,TRUE)]]
+stopifnot(identical(y, x[[1,3]]))
+stopifnot(identical(y, x[[5]]))
+z <- x[1,c(FALSE,FALSE,TRUE)]
 stopifnot(identical(z[[1]], y))
 
 
