@@ -7,6 +7,8 @@ if (exists("y")) rm(list="y")
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Variable in global/parent environment
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
+message("*** parse_env_subset() on parent environment ...")
+
 target <- parse_env_subset(x, substitute=TRUE)
 str(target)
 stopifnot(identical(target$envir, environment()),
@@ -27,6 +29,8 @@ target <- parse_env_subset(y, substitute=TRUE)
 str(target)
 stopifnot(identical(target$envir, environment()),
           target$name == "y", is.na(target$idx), !target$exists)
+
+message("*** parse_env_subset() on parent environment ... DONE")
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -71,7 +75,8 @@ stopifnot(identical(target$envir, x), target$name == "a", is.na(target$idx), tar
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## List environment
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("*** listenv")
+message("*** parse_env_subset() on listenv ...")
+
 x <- listenv()
 
 target <- parse_env_subset(x, substitute=TRUE)
@@ -131,18 +136,54 @@ str(target)
 stopifnot(identical(target$envir, x), target$name == "a", target$idx  == 1, target$exists)
 
 
+x <- listenv()
+length(x) <- 2
+
+target <- parse_env_subset(x[[1]], substitute=TRUE)
+str(target)
+stopifnot(!target$exists)
+
+target <- parse_env_subset(x[[2]], substitute=TRUE)
+str(target)
+stopifnot(!target$exists)
+
+target <- parse_env_subset(x[[3]], substitute=TRUE)
+str(target)
+stopifnot(!target$exists)
+stopifnot(length(x) == 2)
+
+x[[2]] <- 2
+target <- parse_env_subset(x[[2]], substitute=TRUE)
+str(target)
+stopifnot(target$exists)
+
+x[[4]] <- 4
+target <- parse_env_subset(x[[3]], substitute=TRUE)
+str(target)
+stopifnot(!target$exists)
+stopifnot(length(x) == 4)
+
+message("*** parse_env_subset() on listenv ... DONE")
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Multi-dimensional subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
+message("*** parse_env_subset() on multi-dimensional listenv ...")
+
 x <- listenv()
 length(x) <- 6
 dim(x) <- c(2,3)
 
 target <- parse_env_subset(x[[2]], substitute=TRUE)
 str(target)
-stopifnot(identical(target$envir, x), target$idx == 2, target$exists)
+stopifnot(identical(target$envir, x), target$idx == 2, !target$exists)
 
+target <- parse_env_subset(x[[1,2]], substitute=TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx == 1:2, !target$exists)
+
+x[[1,2]] <- 1.2
 target <- parse_env_subset(x[[1,2]], substitute=TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$idx == 1:2, target$exists)
@@ -160,11 +201,14 @@ target$code <- target2$code <- NULL
 ## FIXME: 2015-12-13
 ## stopifnot(!all.equal(target2, target))
 
+message("*** parse_env_subset() on multi-dimensional listenv ... DONE")
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
+message("*** parse_env_subset() - exceptions ...")
+
 x <- listenv()
 
 res <- try(target <- parse_env_subset(x[[""]], substitute=TRUE), silent=TRUE)
@@ -206,6 +250,8 @@ res <- try(target <- parse_env_subset(x[[1,0]], substitute=TRUE), silent=TRUE)
 
 res <- try(target <- parse_env_subset(x[[1,2,3]], substitute=TRUE), silent=TRUE)
 ## stopifnot(inherits(res, "try-error"))
+
+message("*** parse_env_subset() - exceptions ... DONE")
 
 
 ## Cleanup

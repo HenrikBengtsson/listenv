@@ -138,14 +138,18 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
             exists <- exists && (subsetKK >= 1 && subsetKK <= dim[kk])
           } else if (is.character(subsetKK)) {
             subsetKK <- match(subsetKK, dimnames[kk])
-            exists <- exists && (!is.na(subsetKK) && !is.na(map[subsetKK]))
+            exists <- exists && !is.na(subsetKK)
             subset[[kk]] <- subsetKK
           }
         }
-        res$exists <- exists
         res$idx <- unlist(subset, use.names=FALSE)
         res$name <- names[res$idx]
         if (length(res$name) == 0L) res$name <- ""
+        if (exists) {
+          idx <- toIndex(res$envir, res$idx)
+          exists <- !is.na(map[idx])
+        }
+        res$exists <- exists
       } else {
         subset <- subset[[1L]]
         if (is.numeric(subset)) {
@@ -153,7 +157,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
 ##            stop("Invalid subset: ", sQuote(code), call.=TRUE)
 ##          }
           res$idx <- subset
-          res$exists <- (res$idx >= 1 && res$idx <= length(envir))
+          res$exists <- !is.na(map[res$idx]) && (res$idx >= 1 && res$idx <= length(envir))
           res$name <- names[subset]
           if (length(res$name) == 0L) res$name <- ""
         } else if (is.character(subset)) {
