@@ -75,7 +75,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
         } else if (is.language(subsetKK)) {
           subsetKK <- eval(subsetKK, envir=envir)
         }
-        subset <- c(subset, subsetKK)
+        subset[[kk-2L]] <- subsetKK
       }
 
       res$subset <- subset
@@ -100,11 +100,11 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
 
     for (kk in seq_along(subset)) {
       subsetKK <- subset[[kk]]
-      if (is.na(subsetKK)) {
-        stop(sprintf("Invalid subsetting. Subset must not be a missing value: %s", sQuote(code)), call.=FALSE)
+      if (any(is.na(subsetKK))) {
+        stop(sprintf("Invalid subsetting. Subset must not contain missing values: %s", sQuote(code)), call.=FALSE)
       } else if (is.character(subsetKK)) {
-        if (!nzchar(subsetKK)) {
-          stop(sprintf("Invalid subset. Subset must not be an empty name: %s", sQuote(code)), call.=FALSE)
+        if (!all(nzchar(subsetKK))) {
+          stop(sprintf("Invalid subset. Subset must not contain empty names: %s", sQuote(code)), call.=FALSE)
         }
       } else if (is.numeric(subsetKK)) {
       } else {

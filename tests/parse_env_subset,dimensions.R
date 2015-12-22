@@ -36,8 +36,7 @@ str(target)
 target2 <- parse_env_subset(x[[c(1,4)]], substitute=TRUE)
 str(target2)
 target$code <- target2$code <- NULL
-## FIXME: 2015-12-13
-## stopifnot(!all.equal(target2, target))
+stopifnot(!isTRUE(all.equal(target2, target)))
 
 
 dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
