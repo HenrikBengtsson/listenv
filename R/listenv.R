@@ -556,10 +556,10 @@ remove_by_name <- function(x, name) {
   ## Nothing to do?
   if (is.na(idx)) return(invisible(x))
 
+  ## Drop internal variable, unless place holder
   var <- map[idx]
-  ## Don't try to drop an internal place holders
-  var <- var[!is.na(var)]
-  if (length(var) > 0) remove(list=var, envir=x, inherits=FALSE)
+  if (!is.na(var)) remove(list=var, envir=x, inherits=FALSE)
+
   map <- map[-idx]
   map(x) <- map
 
@@ -584,10 +584,10 @@ remove_by_index <- function(x, i) {
   ## Nothing to do?
   if (i > length(map)) return(invisible(x))
 
+  ## Drop internal variable, unless place holder
   var <- map[i]
-  ## Don't try to drop an internal place holders
-  var <- var[!is.na(var)]
-  if (length(var) > 0) remove(list=var, envir=x, inherits=FALSE)
+  if (!is.na(var)) remove(list=var, envir=x, inherits=FALSE)
+
   map <- map[-i]
   map(x) <- map
 
