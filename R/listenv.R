@@ -180,8 +180,9 @@ length.listenv <- function(x) {
     ## Drop existing variables
     drop <- (value+1):n
     var <- map[drop]
+    ## Some may be internal place holders
     var <- var[!is.na(var)]
-    remove(list=var, envir=x, inherits=FALSE)
+    if (length(var) > 0) remove(list=var, envir=x, inherits=FALSE)
     map <- map[-drop]
   }
   map(x) <- map
@@ -556,7 +557,9 @@ remove_by_name <- function(x, name) {
   if (is.na(idx)) return(invisible(x))
 
   var <- map[idx]
-  remove(list=var, envir=x, inherits=FALSE)
+  ## Don't try to drop an internal place holders
+  var <- var[!is.na(var)]
+  if (length(var) > 0) remove(list=var, envir=x, inherits=FALSE)
   map <- map[-idx]
   map(x) <- map
 
@@ -582,7 +585,9 @@ remove_by_index <- function(x, i) {
   if (i > length(map)) return(invisible(x))
 
   var <- map[i]
-  remove(list=var, envir=x, inherits=FALSE)
+  ## Don't try to drop an internal place holders
+  var <- var[!is.na(var)]
+  if (length(var) > 0) remove(list=var, envir=x, inherits=FALSE)
   map <- map[-i]
   map(x) <- map
 
