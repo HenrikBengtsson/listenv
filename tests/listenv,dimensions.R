@@ -12,9 +12,12 @@ print(x)
 stopifnot(length(x) == 0)
 
 x <- listenv(a=1)
+stopifnot(identical(names(x), "a"))
 dim(x) <- c(1,1)
 print(x)
 stopifnot(length(x) == 1)
+stopifnot(is.null(dimnames(x)))
+stopifnot(is.null(names(x)))
 
 x0 <- as.list(1:6)
 x <- as.listenv(x0)
@@ -64,11 +67,23 @@ dim(x) <- NULL
 print(x)
 stopifnot(is.null(dim(x)))
 stopifnot(is.null(dimnames(x)))
+stopifnot(is.null(names(x)))
 y <- as.list(x)
 stopifnot(identical(y, x0))
 z <- as.listenv(y)
 stopifnot(all.equal(z, x))
 
+# Assign names
+x <- as.listenv(1:6)
+dim(x) <- c(2,3)
+dimnames(x) <- lapply(dim(x), FUN=function(n) letters[seq_len(n)])
+names(x) <- letters[seq_along(x)]
+print(x)
+stopifnot(!is.null(dim(x)))
+stopifnot(!is.null(dimnames(x)))
+stopifnot(!is.null(names(x)))
+stopifnot(x[["b"]] == 2L)
+stopifnot(x[["a", "b"]] == 3L)
 
 ## Extract single element
 message("* y <- x[[i,j]] and z <- x[i,j] ...")

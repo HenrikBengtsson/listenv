@@ -726,10 +726,9 @@ dim.listenv <- function(x) attr(x, "dim.")
     }
   }
 
-  if (!is.null(attr(x, "dim."))) {
-    ## Always reset names of dimensions if they are changed
-    dimnames(x) <- NULL
-  }
+  ## Always remove "dimnames" and "names" attributes, cf. help("dim")
+  dimnames(x) <- NULL
+  names(x) <- NULL
 
   attr(x, "dim.") <- value
   x
@@ -742,7 +741,7 @@ dimnames.listenv <- function(x) attr(x, "dimnames.")
 #' @export
 `dimnames<-.listenv` <- function(x, value) {
   dim <- dim(x)
-  if (is.null(dim)) {
+  if (is.null(dim) && !is.null(value)) {
     stop("'dimnames' applied to non-array")
   }
   for (kk in seq_along(dim)) {
