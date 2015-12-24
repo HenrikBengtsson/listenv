@@ -20,143 +20,114 @@ _List environments_ are environments that have list-like properties
 such as _indexed_ subsetting and dimensions.
 
 For example,
-
 ```r
-> x <- listenv(a=2, b=3, c="hello")
-> x$a
-[1] 2
-> x$d <- x$a + x[["b"]]
-> x[[3]] <- toupper(x[[3]])
-> length(x)
-[1] 4
-> seq_along(x)
-[1] 1 2 3 4
-> names(x)
-[1] "a" "b" "c" "d"
-> x$c
-[1] "HELLO"
-> x[[4]]
-[1] 5
+<%=withCapture({
+x <- listenv(a=2, b=3, c="hello")
+length(x)
+names(x)
+x$a
+x[[3]] <- toupper(x[[3]])
+x$c
+x$d <- x$a + x[["b"]]
+x[[4]]
+})%>
 ```
 
 ### Coercing to lists and vectors
 
 Coercing a list environment to a list:
 ```r
-> x <- listenv(a=2, b=3, c="hello")
-`listenv` with 3 elements: 'a', 'b', 'c'
-> y <- as.list(x)
-> str(y)
-List of 4
- $ a: num 2
- $ b: num 3
- $ c: chr "hello"
+<%=withCapture({
+x <- listenv(a=2, b=3, c="hello")
+x
+y <- as.list(x)
+str(y)
+})%>
 ```
 
 Coercing a list to a list environment:
 ```r
-> z <- as.listenv(y)
-`listenv` with 3 elements: 'a', 'b', 'c'
-> all.equal(z, x)
-[1] TRUE
+<%=withCapture({
+z <- as.listenv(y)
+z
+all.equal(z, x)
+})%>
 ```
+
 
 Coercing a list environment to a vector ("unlisting"):
 ```r
-> unlist(x)
-      a       b       c
-    "2"     "3" "hello"
-> unlist(x[-3])
-a b
-2 3
-> unlist(x[1:2], use.names=FALSE)
-[1] 2 3
+<%=withCapture({
+unlist(x)
+unlist(x[-3])
+unlist(x[1:2], use.names=FALSE)
+})%>
 ```
 
 
 ### List environment with initial set of elements
 
 ```r
-> x <- listenv(a=1, b=c("hello", "world"), c=list(d=42L, e=pi))
-> x
-`listenv` with 3 elements: 'a', 'b', 'c'
-> names(x)
-> str(as.list(x))
-List of 3
- $ a: num 1
- $ b: chr [1:2] "hello" "world"
- $ c:List of 2
-  ..$ d: int 42
-  ..$ e: num 3.14
+<%=withCapture({
+x <- listenv(a=1, b=c("hello", "world"), c=list(d=42L, e=pi))
+x
+names(x)
+str(as.list(x))
+})%>
 ```
 
 
 ### Empty list environment with given length
 ```r
-> x <- listenv()
-> length(x) <- 3
-> length(x)
-[1] 3
-> names(x)
-NULL
-> str(as.list(x))
-List of 3
- $ : NULL
- $ : NULL
- $ : NULL
+<%=withCapture({
+x <- listenv()
+length(x) <- 3
+length(x)
+names(x)
+str(as.list(x))
+})%>
 ```
 
 ### Assigning names to elements
 ```r
-> x <- listenv()
-> length(x) <- 3
-> names(x) <- letters[1:3]
-> names(x)
-[1] "a" "b" "c"
-> names(x)[2] <- "B"
-> str(as.list(x))
-List of 3
- $ a: NULL
- $ B: NULL
- $ c: NULL
+<%=withCapture({
+x <- listenv()
+length(x) <- 3
+names(x) <- letters[1:3]
+names(x)
+names(x)[2] <- "B"
+str(as.list(x))
+})%>
 ```
 
 ## Methods
 ```r
-> x <- listenv()
-> length(x) <- 3
-> seq_along(x)
-[1] 1 2 3
+<%=withCapture({
+x <- listenv()
+length(x) <- 3
+seq_along(x)
+})%>
 ```
 
 
 ### Examples
 Here is a longer set of examples illustrating what the list environments provides:
 ```r
-> x <- listenv()
-> x[[1]] <- { 1 }
-> x[[3]] <- { "Hello world!" }
-> length(x)
-3
-> seq_along(x)
-[1] 1 2 3
-> names(x) <- c("a", "b", "c")
-> x[['b']]
-NULL
-> x$b <- TRUE
-> x[[1]]
-1
-> str(as.list(x))
-List of 3
- $ a: num 1
- $ b: logi TRUE
- $ c: chr "Hello world!"
-> x[c('a', 'c')] <- list(2, "Hello again!")
-> y <- x[3:2]
-> str(as.list(y))
-List of 2
- $ c: chr "Hello again!"
- $ b: logi TRUE
+<%=withCapture({
+x <- listenv()
+x[[1]] <- { 1 }
+x[[3]] <- { "Hello world!" }
+length(x)
+seq_along(x)
+names(x) <- c("a", "b", "c")
+x[['b']]
+x$b <- TRUE
+x[[1]]
+str(as.list(x))
+x[c('a', 'c')] <- list(2, "Hello again!")
+y <- x[3:2]
+str(as.list(y))
+})%>
 ```
 
 ## Multi-dimensional list environments
