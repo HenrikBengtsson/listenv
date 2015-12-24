@@ -180,7 +180,6 @@ attr(x, "foo")
 ```
 
 
-
 ## Using list environments as lists
 
 ## Using list environments as environments
@@ -243,6 +242,15 @@ x <- undim(x)
 names(x)
 })%>
 ```
+_Warning_: Since list environments _and their attributes_ are mutable, calling
+```r
+undim(x)
+```
+will have the same effect as
+```r
+x <- undim(x)
+```
+That is, the dimension attributes of `x` will be changed.  The reason for this is explained in Section 'Important about environments' above.
 
 
 ### Limitations
