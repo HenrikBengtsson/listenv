@@ -699,7 +699,10 @@ remove_by_index <- function(x, i) {
 #' @export
 #' @method unlist listenv
 unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
+  names <- names(x)
   x <- as.list(x)
+  names(x) <- names
+
   if (recursive) {
     repeat {
       x <- unlist(x, recursive=TRUE, use.names=use.names)
