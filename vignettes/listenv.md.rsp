@@ -130,6 +130,61 @@ str(as.list(y))
 })%>
 ```
 
+## Important about environments
+List environments are as their name suggests _environments_.  Whenever working with environments in R, it is important to understand that _environments are mutable_ whereas all other of the basic data types in R are immutable.  For example, consider the following function that assigns zero to element `a` of object `x`:
+```r
+<%=withCapture({
+setA <- function(x) {
+  x$a <- 0
+  x
+}
+})%>
+```
+If we pass a regular list to this function,
+```r
+<%=withCapture({
+x <- list(a=1)
+y <- setA(x)
+x$a
+y$a
+})%>
+```
+we see that `x` is unaffected by the assignment.  This is because _lists are immutable_ in R.  However, if we pass an environment instead,
+```r
+<%=withCapture({
+x <- new.env()
+x$a <- 1
+y <- setA(x)
+x$a
+y$a
+})%>
+```
+we find that `x` was affected by the assignment.  This is because _environments are mutable_ in R.  Since list environments inherits from environments, this also goes for them, e.g.
+```r
+<%=withCapture({
+x <- listenv(a=1)
+y <- setA(x)
+x$a
+y$a
+})%>
+```
+
+What is also important to understand is that it is not just the _content_ of an environment that is mutable but also its _attributes_.  For example,
+```r
+<%=withCapture({
+x <- listenv(a=1)
+y <- x
+attr(y, "foo") <- "Hello!"
+attr(x, "foo")
+})%>
+```
+
+
+
+## Using list environments as lists
+
+## Using list environments as environments
+
 ## Multi-dimensional list environments
 
 Contrary to regular environments and similarly to lists, a list environments can have dimensions with corresponding names.  For example,
