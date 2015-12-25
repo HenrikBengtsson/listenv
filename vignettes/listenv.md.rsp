@@ -16,8 +16,14 @@ options("withCapture/newline"=FALSE)
 # <%@meta name="title"%>
 
 ## Introduction
-_List environments_ are environments that have list-like properties
-such as _indexed_ subsetting and dimensions.
+_List environments_ are environments that have list-like properties.  Features of a list environment includes:
+
+* Number of elements, cf. `length()`.
+* Indexing elements, cf. `x[[4]]`.
+* Named elements, cf. `names()`, `x$a` and `x[["a"]]`.
+* Dimensions, cf. `dim(x)`.
+* Names of dimensions, cf. `dimnames(x)`.
+* Indexing by dimensions, cf. `x[[2,4]]` and `x[[2,"D"]]`.
 
 For example,
 ```r
@@ -34,16 +40,14 @@ x[[4]]
 ```
 
 ## Creating list environments
-List environments are created similarly to lists but also similarly to environments.
-
-To create an empty list environment, we just do
+List environments are created similarly to lists but also similarly to environments.  To create an empty list environment, use
 ```r
 <%=withCapture({
 x <- listenv()
 x
 })%>
 ```
-which later can be populated as
+This can later can be populated using named assignments,
 ```r
 <%=withCapture({
 x$a <- 1
