@@ -15,34 +15,39 @@ options("withCapture/newline"=FALSE)
 %>
 # <%@meta name="title"%>
 
-## Introduction
-_List environments_ are environments that have list-like properties.  Features of a list environment are summarized in the below table:
+_List environments_ are environments that have list-like properties.  They are implemented by the [listenv] package.  Features of a list environment are summarized in the below table:
 
-| Property                                                  | list environments |  lists | environments |
-|-----------------------------------------------------------|:-----------------:|:------:|:------------:|
-| Number of elements, e.g. `length()`                       |              yes  |   yes  |         yes  |
-| Named elements, e.g. `names()`, `x$a` and `x[["a"]]`      |              yes  |   yes  |         yes  |
-| Duplicated names                                          |              yes  |   yes  |              |
-| Indexed elements, e.g. `x[[4]]`                           |              yes  |   yes  |              |
-| Dimensions, e.g. `dim(x)`                                 |              yes  |   yes  |              |
-| Names of dimensions, e.g. `dimnames(x)`                   |              yes  |   yes  |              |
-| Indexing by dimensions, e.g. `x[[2,4]]` and `x[[2,"D"]]`  |              yes  |   yes  |              |
-| Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`         |              yes  |        |         yes  |
-| Compatible* with `assign()`, `get()` and `exists()`       |              yes  |        |         yes  |
-| Compatible* with `delayedAssign()`                        |              yes  |        |         yes  |
+| Property                                                               | list environments |  lists | environments |
+|------------------------------------------------------------------------|:-----------------:|:------:|:------------:|
+| Number of elements, e.g. `length()`                                    |              yes  |   yes  |         yes  |
+| Named elements, e.g. `names()`, `x$a` and `x[["a"]]`                   |              yes  |   yes  |         yes  |
+| Duplicated names                                                       |              yes  |   yes  |              |
+| Indexed elements, e.g. `x[[4]]`                                        |              yes  |   yes  |              |
+| Dimensions, e.g. `dim(x)`                                              |              yes  |   yes  |              |
+| Names of dimensions, e.g. `dimnames(x)`                                |              yes  |   yes  |              |
+| Indexing by dimensions, e.g. `x[[2,4]]` and `x[[2,"D"]]`               |              yes  |   yes  |              |
+| Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`                      |              yes  |        |         yes  |
+| Compatible* with `assign()`, `delayedAssign()`, `get()` and `exists()` |              yes  |        |         yes  |
 
 For example,
 ```r
 <%=withCapture({
 x <- listenv(a=1, b=2, c="hello")
+x
+
 length(x)
 names(x)
 x$a
 x[[3]] <- toupper(x[[3]])
-y <- x
 x$c
-x$d <- x$a + x[["b"]]
-names(x)[2] <- "a"
+
+y <- x
+y$d <- y$a + y[["b"]]
+names(y)[2] <- "a"
+y$a
+y
+identical(y, x)
+
 for (ii in seq_along(x)) {
   cat(sprintf("Element %d (%s): %s\n", ii, sQuote(names(x)[ii]), x[[ii]]))
 }
@@ -50,8 +55,16 @@ for (ii in seq_along(x)) {
 get(map(x)["b"], envir=x)
 assign(map(x)["b"], 3, envir=x)
 ---%>
-x$a
-identical(y, x)
+
+x[c(1,3)] <- list(2, "Hello world!")
+
+x
+y <- as.list(x)
+str(y)
+z <- as.listenv(y)
+z
+identical(z, x)
+all.equal(z, x)
 })%>
 ```
 
@@ -154,6 +167,8 @@ for (ii in seq_along(x)) {
 ```
 
 
+## Coercion to and from list environments
+
 ### Coercing to lists and vectors
 
 Coercing a list environment to a list:
@@ -171,52 +186,17 @@ Coercing a list to a list environment:
 <%=withCapture({
 z <- as.listenv(y)
 z
+identical(z, x)
 all.equal(z, x)
 })%>
 ```
 
-
-Coercing a list environment to a vector ("unlisting"):
+Unlisting:
 ```r
 <%=withCapture({
 unlist(x)
 unlist(x[-3])
 unlist(x[1:2], use.names=FALSE)
-})%>
-```
-
-
-
-### Assigning names to elements
-```r
-<%=withCapture({
-x <- listenv()
-length(x) <- 3
-names(x) <- letters[1:3]
-names(x)
-names(x)[2] <- "B"
-str(as.list(x))
-})%>
-```
-
-
-### Examples
-Here is a longer set of examples illustrating what the list environments provides:
-```r
-<%=withCapture({
-x <- listenv()
-x[[1]] <- { 1 }
-x[[3]] <- { "Hello world!" }
-length(x)
-seq_along(x)
-names(x) <- c("a", "b", "c")
-x[['b']]
-x$b <- TRUE
-x[[1]]
-str(as.list(x))
-x[c('a', 'c')] <- list(2, "Hello again!")
-y <- x[3:2]
-str(as.list(y))
 })%>
 ```
 
