@@ -26,6 +26,8 @@ _List environments_ are environments that have list-like properties.  They are i
 | Dimensions, e.g. `dim(x)`                                              |              yes  |   yes  |              |
 | Names of dimensions, e.g. `dimnames(x)`                                |              yes  |   yes  |              |
 | Indexing by dimensions, e.g. `x[[2,4]]` and `x[[2,"D"]]`               |              yes  |   yes  |              |
+| Multi-element subsetting, e.g. `x[c("a", "c")]` and `x[-1]`            |              yes  |   yes  |              |
+| Removing element by assigning NULL, e.g. `x$c <- NULL`                 |              yes  |   yes  |              |
 | Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`                      |              yes  |        |         yes  |
 | Compatible* with `assign()`, `delayedAssign()`, `get()` and `exists()` |              yes  |        |         yes  |
 

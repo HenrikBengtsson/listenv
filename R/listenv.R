@@ -326,6 +326,7 @@ toIndex <- function(x, idxs) {
     stop("incorrect number of dimensions")
   }
   dimnames <- dimnames(x)
+  idxDimnames <- dimnames
 
   ## Indexing scale factor per dimension
   scale <- c(1L, cumprod(dim[-ndim]))
@@ -336,24 +337,44 @@ toIndex <- function(x, idxs) {
     i <- idxs[[kk]]
     ni <- length(i)
     if (is.character(i)) {
-      if (ni != 1L) stop("attempt to select more than one element")
       name <- i
       i <- match(name, table=dimnames[[kk]])
-      if (is.na(i)) stop("subscript out of bounds")
+      if (anyNA(i)) stop("subscript out of bounds")
     } else if (is.logical(i)) {
       d <- dim[kk]
       i <- rep(i, length.out=d)
       i <- which(i)
     } else if (is.numeric(i)) {
-      if (ni != 1L) stop("attempt to select more than one element")
       d <- dim[kk]
-      if (i < 0) stop("attempt to select less than one element")
-      if (i > d) stop("subscript out of bounds")
+      if (any(i < 0)) stop("attempt to select less than one element")
+      if (any(i > d)) stop("subscript out of bounds")
     } else {
       stop("invalid subscript type", sQuote(typeof(i)))
     }
-    idx <- idx + scale[kk]*(i - 1)
+
+    ## Subset dimnames?
+    if (!is.null(idxDimnames)) {
+      dn <- idxDimnames[[kk]]
+      if (!is.null(dn)) idxDimnames[[kk]] <- dn[i]
+    }
+
+    i <- scale[kk]*(i - 1)
+    if (kk == 1) {
+      idx <- idx + i
+    } else {
+      idx <- outer(idx, i, FUN=`+`)
+    }
   } # for (kk ...)
+
+  ## Sanity check
+  dim <- dim(idx)
+  ndim <- length(dim)
+  if (ndim != nidxs) {
+    stop(sprintf("INTERNAL ERROR: Incompatible dimensions: %d != %d", ndim, nidxs))
+  }
+
+  ## Preserve dimnames
+  dimnames(idx) <- idxDimnames
 
   idx
 } # toIndex()
@@ -399,13 +420,41 @@ toIndex <- function(x, idxs) {
 
 
 #' @export
-`[.listenv` <- function(x, ...) {
-  idxs <- list(...)
+`[.listenv` <- function(x, ..., drop=FALSE) {
+  ## Need to allow for implicit indices, e.g. x[1,,2]
+  idxs <- as.list(sys.call())[-(1:2)]
+  idxs$drop <- NULL
   nidxs <- length(idxs)
-  if (nidxs > 1L) {
-    i <- toIndex(x, idxs)
+
+  ## Assert that subsetting has correct shape
+  dim <- dim(x)
+  ndim <- length(dim)
+  if (nidxs > 1 && nidxs != ndim) {
+    stop(sprintf("Incorrect subsetting. Expected %d dimensions but got %d", ndim, nidxs))
+  }
+
+  ## Implicitly specified dimensions
+  missing <- sapply(idxs, FUN=function(x) is.symbol(x) && identical("", deparse(x)))
+  if (any(missing)) {
+    if (nidxs == ndim) {
+      for (kk in seq_len(ndim)) {
+        if (missing[kk]) {
+          idxs[[kk]] <- seq_len(dim[kk])
+        } else {
+          idxs[[kk]] <- eval.parent(idxs[[kk]])
+        }
+      }
+    } else if (nidxs == 1) {
+      idxs[[1]] <- seq_len(length(x))
+    }
   } else {
+    idxs <- lapply(idxs, FUN=eval.parent)
+  }
+
+  if (nidxs <= 1L) {
     i <- idxs[[1L]]
+  } else {
+    i <- toIndex(x, idxs)
   }
 
   map <- map(x)
@@ -421,6 +470,7 @@ toIndex <- function(x, idxs) {
     if (!(all(i > 0) || all(i < 0))) {
       stop("Only 0's may be mixed with negative subscripts")
     }
+    ## Exclude elements with negative indices?
     if (length(i) > 0L && i[1L] < 0) {
       i <- setdiff(seq_len(nmap), -i)
     }
@@ -439,23 +489,38 @@ toIndex <- function(x, idxs) {
   length(res) <- ni
   res <- structure(res, class=class(x))
 
-  ## Nothing to do?
-  if (ni == 0L) {
-    return(res)
+  if (ni > 0L) {
+    ## Add names?
+    if (!is.null(names)) {
+      names2 <- names[i]
+      names2[i > nmap] <- ""
+      names(res) <- names2
+    }
+
+    ## Ignore out-of-range indices
+    j <- i[i <= nmap]
+    for (kk in seq_along(j)) {
+      value <- x[[j[kk]]]
+      if (!is.null(value)) res[[kk]] <- value
+    }
   }
 
-  ## Add names?
-  if (!is.null(names)) {
-    names2 <- names[i]
-    names2[i > nmap] <- ""
-    names(res) <- names2
-  }
+  ## Preserve dimensions?
+  dim <- dim(i)
+  if (!is.null(dim)) {
+    dimnames <- dimnames(i)
 
-  ## Ignore out-of-range indices
-  i <- i[i <= nmap]
-  for (kk in seq_along(i)) {
-    value <- x[[i[kk]]]
-    if (!is.null(value)) res[[kk]] <- value
+    ## Drop singleton dimensions?
+    if (drop) {
+      keep <- (dim != 1)
+      dim <- dim[keep]
+      dimnames <- dimnames[keep]
+    }
+
+    names <- names(res)
+    dim(res) <- dim
+    dimnames(res) <- dimnames
+    names(res) <- names
   }
 
   res
