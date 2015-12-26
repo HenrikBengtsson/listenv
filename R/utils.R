@@ -1,5 +1,7 @@
 ## From R.utils 2.0.2 (2015-05-23)
 hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL, maxHead=if (missing(lastCollapse)) 3 else Inf, maxTail=if (is.finite(maxHead)) 1 else Inf, abbreviate="...") {
+  maxHead <- as.integer(maxHead)
+  maxTail <- as.integer(maxTail)
   if (is.null(lastCollapse)) lastCollapse <- collapse
 
   # Build vector 'x'
