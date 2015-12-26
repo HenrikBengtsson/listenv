@@ -138,6 +138,38 @@ x[["a",3]] <- -x[["a",3]]
 stopifnot(identical(x[[1,3]], -5L))
 
 
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Multi-element subsetting
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+message("* x[i], x[i,j] ...")
+x <- as.listenv(1:24)
+dim(x) <- c(2,3,4)
+x[2] <- list(NULL)
+print(x)
+stopifnot(is.null(names(x)))
+
+y <- x[]
+print(y)
+stopifnot(length(y) == length(x))
+stopifnot(all.equal(y, x))
+stopifnot(!identical(y, x))
+stopifnot(is.null(names(y)))
+
+y <- x[1]
+print(y)
+stopifnot(is.null(names(y)))
+
+y <- x[2:3]
+print(y)
+stopifnot(is.null(names(y)))
+
+y <- x[-1]
+print(y)
+stopifnot(is.null(names(y)))
+
+message("* x[i], x[i,j] ... DONE")
+
+
 message("* Exceptions ...")
 x <- listenv()
 res <- try(dim(x) <- c(2,3), silent=TRUE)

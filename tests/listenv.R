@@ -130,6 +130,13 @@ x[1:3] <- list(1, NULL, 3)
 print(x)
 stopifnot(is.null(names(x)))
 
+y <- x[]
+print(y)
+stopifnot(length(y) == length(x))
+stopifnot(all.equal(y, x))
+stopifnot(!identical(y, x))
+stopifnot(is.null(names(y)))
+
 y <- x[1]
 print(y)
 stopifnot(is.null(names(y)))

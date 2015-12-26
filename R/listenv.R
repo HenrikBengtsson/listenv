@@ -453,7 +453,13 @@ toIndex <- function(x, idxs) {
         }
       }
     } else if (nidxs == 1) {
-      idxs[[1]] <- seq_len(length(x))
+      if (ndim == 0) {
+        idxs <- list(seq_len(length(x)))
+      } else {
+        ## Special case: Preserve dimensions when x[]
+        idxs <- lapply(dim, FUN=function(n) seq_len(n))
+        nidxs <- length(idxs)
+     }
     }
   } else {
     idxs <- lapply(idxs, FUN=eval.parent)
