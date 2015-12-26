@@ -13,7 +13,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   if (substitute) expr <- substitute(expr)
   code <- paste(deparse(expr), collapse="")
 
-  res <- list(envir=envir, name="", subset=NULL, idx=NA_integer_, exists=NA, code=code)
+  res <- list(envir=envir, name="", op=NULL, subset=NULL, idx=NA_integer_, exists=NA, code=code)
 
   if (is.symbol(expr)) {
     ## Variable specified as a symbol
@@ -41,10 +41,11 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       res$name <- code
     } else if (n >= 3L) {
       ## Assignment to enviroment via $ and [[
-      op <- expr[[1]]
+      op <- as.character(expr[[1]])
+      res$op <- op
       if (op == "$" && n > 3L) {
         stop("Invalid syntax: ", sQuote(code), call.=FALSE)
-      } else if (op != "$" && op != "[[") {
+      } else if (!is.element(op, c("$", "[[", "["))) {
         stop("Invalid syntax: ", sQuote(code), call.=FALSE)
       }
 
@@ -63,7 +64,12 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       ## Subset
       subset <- list()
       for (kk in 3:n) {
-        subsetKK <- expr[[kk]]
+        missing <- (length(expr[[kk]]) == 1L) && (expr[[kk]] == "")
+        if (missing) {
+          subsetKK <- NULL
+        } else {
+          subsetKK <- expr[[kk]]
+        }
         if (is.symbol(subsetKK)) {
           subsetKK <- deparse(subsetKK)
           if (op == "[[") {
@@ -100,7 +106,8 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
 
     for (kk in seq_along(subset)) {
       subsetKK <- subset[[kk]]
-      if (any(is.na(subsetKK))) {
+      if (is.null(subsetKK)) {
+      } else if (any(is.na(subsetKK))) {
         stop(sprintf("Invalid subsetting. Subset must not contain missing values: %s", sQuote(code)), call.=FALSE)
       } else if (is.character(subsetKK)) {
         if (!all(nzchar(subsetKK))) {
@@ -111,7 +118,6 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
         stop(sprintf("Invalid subset of type %s: %s", sQuote(typeof(subsetKK)), sQuote(code)), call.=FALSE)
       }
     } # for (kk ...)
-
 
     ## Special: listenv:s
     envir <- res$envir
@@ -131,7 +137,9 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
         exists <- TRUE
         for (kk in seq_along(subset)) {
           subsetKK <- subset[[kk]]
-          if (is.numeric(subsetKK)) {
+          if (is.null(subsetKK)) {
+            subset[[kk]] <- seq_len(dim[kk])
+          } else if (is.numeric(subsetKK)) {
 ##            if (subsetKK == 0) {
 ##              stop("Invalid subset: ", sQuote(code), call.=TRUE)
 ##            }
@@ -142,11 +150,37 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
             subset[[kk]] <- subsetKK
           }
         }
-        res$idx <- unlist(subset, use.names=FALSE)
+
+        ## Indexing scale factor per dimension
+        ndim <- length(dim)
+        scale <- c(1L, cumprod(dim[-ndim]))
+        idx <- 1
+        for (kk in seq_along(subset)) {
+          i <- subset[[kk]]
+          stopifnot(is.numeric(i))
+          d <- dim[kk]
+          if (any(i < 0)) {
+            if (any(i > 0)) {
+              stop("only 0's may be mixed with negative subscripts")
+            }
+            ## Drop elements
+            i <- setdiff(seq_len(d), -i)
+          }
+          if (any(i > d)) i[i > d] <- NA_integer_
+          ## Drop zeros
+          i <- i[i != 0]
+          i <- scale[kk]*(i - 1)
+          if (kk == 1) {
+            idx <- idx + i
+          } else {
+            idx <- outer(idx, i, FUN=`+`)
+          }
+        } # for (kk ...)
+
+        res$idx <- idx
         res$name <- names[res$idx]
         if (length(res$name) == 0L) res$name <- ""
         if (exists) {
-          idx <- toIndex(res$envir, res$idx)
           exists <- !is.na(map[idx])
         }
         res$exists <- exists
@@ -175,26 +209,34 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   }
 
   ## Identify index?
-  if (inherits(res$envir, "listenv") && any(is.na(res$idx)) && nzchar(res$name)) {
+  if (inherits(res$envir, "listenv")) {
     envir <- res$envir
-    res$idx <- match(res$name, names(envir))
-    res$exists <- !any(is.na(res$idx)) && !any(is.na(map(envir)[res$idx]))
+    if (any(is.na(res$idx)) && nzchar(res$name)) {
+      res$idx <- match(res$name, names(envir))
+    }
+    res$exists <- !is.na(res$idx) & !is.na(map(envir)[res$idx])
   }
 
   ## Validate
-  if (any(is.na(res$idx)) && !nzchar(res$name)) {
-    stop("Invalid subset: ", sQuote(code), call.=TRUE)
+  if (is.null(dim) && length(res$subset) == 1) {
+    if (any(is.na(res$idx)) && !nzchar(res$name)) {
+      stop("Invalid subset: ", sQuote(code), call.=TRUE)
+    }
   }
 
-  if (is.na(res$exists)) {
-    res$exists <- exists(res$name, envir=res$envir, inherits=TRUE)
+  unknown <- which(is.na(res$exists))
+  if (length(unknown) > 0) {
+    res$exists[unknown] <- sapply(unknown, FUN=function(idx) {
+      exists(res$name[idx], envir=res$envir, inherits=TRUE)
+    })
   }
 
   ## Sanity check
   stopifnot(is.environment(res$envir))
   stopifnot(is.character(res$name))
   stopifnot(is.null(res$idx) || all(is.numeric(res$idx)))
-  stopifnot(is.logical(res$exists), !is.na(res$exists))
+  stopifnot(is.logical(res$exists), !anyNA(res$exists))
+  stopifnot(length(res$exists) == length(res$idx))
 
   res
 }

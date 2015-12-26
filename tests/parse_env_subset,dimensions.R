@@ -19,16 +19,16 @@ stopifnot(identical(target$envir, x), target$idx == 2, !target$exists)
 
 target <- parse_env_subset(x[[1,2]], substitute=TRUE)
 str(target)
-stopifnot(identical(target$envir, x), target$idx == 1:2, !target$exists)
+stopifnot(identical(target$envir, x), target$idx == 3, !target$exists)
 
 x[[1,2]] <- 1.2
 target <- parse_env_subset(x[[1,2]], substitute=TRUE)
 str(target)
-stopifnot(identical(target$envir, x), target$idx == 1:2, target$exists)
+stopifnot(identical(target$envir, x), target$idx == 3, target$exists)
 
 target <- parse_env_subset(x[[1,4]], substitute=TRUE)
 str(target)
-stopifnot(identical(target$envir, x), target$idx == c(1L,4L), !target$exists)
+stopifnot(identical(target$envir, x), is.na(target$idx), !target$exists)
 
 ## Assert that x[[1,4]] is not the same as x[[c(1,4)]]
 target <- parse_env_subset(x[[1,4]], substitute=TRUE)
@@ -44,11 +44,11 @@ print(x)
 
 target <- parse_env_subset(x[["a",2]], substitute=TRUE)
 str(target)
-stopifnot(identical(target$envir, x), target$idx == 1:2, target$exists)
+stopifnot(identical(target$envir, x), target$idx == 3, target$exists)
 
 target <- parse_env_subset(x[["a","B"]], substitute=TRUE)
 str(target)
-stopifnot(identical(target$envir, x), target$idx == 1:2, target$exists)
+stopifnot(identical(target$envir, x), target$idx == 3, target$exists)
 
 message("*** parse_env_subset() on multi-dimensional listenv ... DONE")
 

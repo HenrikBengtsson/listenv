@@ -165,6 +165,11 @@ str(target)
 stopifnot(!target$exists)
 stopifnot(length(x) == 4)
 
+target <- parse_env_subset(x[1:5], substitute=TRUE)
+stopifnot(length(x) == 4)
+stopifnot(length(target$idx) == 5, all(target$idx == 1:5))
+str(target)
+
 message("*** parse_env_subset() on listenv ... DONE")
 
 
@@ -185,9 +190,6 @@ res <- try(target <- parse_env_subset(1:10, envir=x, substitute=FALSE), silent=T
 stopifnot(inherits(res, "try-error"))
 
 res <- try(target <- parse_env_subset(c("a", "b"), envir=x, substitute=FALSE), silent=TRUE)
-stopifnot(inherits(res, "try-error"))
-
-res <- try(target <- parse_env_subset(x[1:10], substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
 res <- try(target <- parse_env_subset(x@a, substitute=TRUE), silent=TRUE)
