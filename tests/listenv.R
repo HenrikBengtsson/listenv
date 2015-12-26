@@ -327,6 +327,12 @@ print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(as.list(x), list(a=1L, b=2L, c=3L)))
+stopifnot(identical(unlist(x), c(a=1L, b=2L, c=3L)))
+
+x[] <- 3:1
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("a", "b", "c")))
+stopifnot(identical(as.list(x), list(a=3L, b=2L, c=1L)))
 
 x[c('c', 'b')] <- 2:3
 print(x)
@@ -335,7 +341,7 @@ print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(as.list(x), list(a=1L, b=3L, c=2L)))
+stopifnot(identical(as.list(x), list(a=3L, b=3L, c=2L)))
 
 x[c('a', 'c')] <- 1L
 print(x)

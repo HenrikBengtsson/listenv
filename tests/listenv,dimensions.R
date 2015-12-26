@@ -213,6 +213,34 @@ stopifnot(all.equal(as.list(y), as.list(x)[-1,,c(3,3,1)], check.attributes=FALSE
 message("* x[i], x[i,j] ... DONE")
 
 
+message("* x[i] <- value, x[i,j] <- value ...")
+dim <- c(2,3)
+n <- prod(dim)
+names <- letters[seq_len(n)]
+
+x0 <- as.list(1:n)
+dim(x0) <- dim
+names(x0) <- names
+
+x <- as.listenv(1:n)
+dim(x) <- dim
+names(x) <- names
+
+x0[] <- 6:1
+x[] <- 6:1
+stopifnot(all(unlist(x) == unlist(x0)))
+
+x0[1,] <- 1:3
+x[1,] <- 1:3
+stopifnot(all(unlist(x) == unlist(x0)))
+
+x0[,-2] <- 1:2
+x[,-2] <- 1:2
+stopifnot(all(unlist(x) == unlist(x0)))
+
+message("* x[i] <- value, x[i,j] <- value ... DONE")
+
+
 message("* Exceptions ...")
 x <- listenv()
 res <- try(dim(x) <- c(2,3), silent=TRUE)

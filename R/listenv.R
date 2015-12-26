@@ -769,19 +769,57 @@ remove_by_index <- function(x, i) {
 
 
 #' @export
-`[<-.listenv` <- function(x, i, ..., value) {
-  idxs <- list(...)
-  if (length(idxs) > 0L) {
-    stop("Assignments via multi-dimensional subsetting is not yet supported")
+`[<-.listenv` <- function(x, ..., value) {
+  ## Need to allow for implicit indices, e.g. x[1,,2]
+  idxs <- as.list(sys.call())[-(1:2)]
+  idxs$value <- NULL
+  nidxs <- length(idxs)
+
+  ## Assert that subsetting has correct shape
+  dim <- dim(x)
+  ndim <- length(dim)
+  if (nidxs > 1 && nidxs != ndim) {
+    stop(sprintf("Incorrect subsetting. Expected %d dimensions but got %d", ndim, nidxs))
   }
 
-  if (is.logical(i)) {
-    n <- length(x)
-    if (length(i) < n) i <- rep(i, length.out=n)
-    i <- which(i)
+  ## Implicitly specified dimensions
+  missing <- sapply(idxs, FUN=function(x) is.symbol(x) && identical("", deparse(x)))
+  if (any(missing)) {
+    if (nidxs == ndim) {
+      for (kk in seq_len(ndim)) {
+        if (missing[kk]) {
+          idxs[[kk]] <- seq_len(dim[kk])
+        } else {
+          idxs[[kk]] <- eval.parent(idxs[[kk]])
+        }
+      }
+    } else if (nidxs == 1) {
+      if (ndim == 0) {
+        idxs <- list(seq_len(length(x)))
+      } else {
+        ## Special case: Preserve dimensions when x[]
+        idxs <- lapply(dim, FUN=function(n) seq_len(n))
+        nidxs <- length(idxs)
+     }
+    }
+  } else {
+    idxs <- lapply(idxs, FUN=eval.parent)
+  }
+
+  if (nidxs <= 1L) {
+    i <- idxs[[1L]]
+  } else {
+    i <- toIndex(x, idxs)
   }
 
   ni <- length(i)
+  if (is.logical(i)) {
+    n <- length(x)
+    if (ni < n) i <- rep(i, length.out=n)
+    i <- which(i)
+    ni <- length(i)
+  }
+
 
   # Nothing to do?
   if (ni == 0L) return(invisible(x))
