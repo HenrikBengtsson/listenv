@@ -420,7 +420,7 @@ toIndex <- function(x, idxs) {
 
 
 #' @export
-`[.listenv` <- function(x, ..., drop=FALSE) {
+`[.listenv` <- function(x, ..., drop=TRUE) {
   ## Need to allow for implicit indices, e.g. x[1,,2]
   idxs <- as.list(sys.call())[-(1:2)]
   idxs$drop <- NULL
