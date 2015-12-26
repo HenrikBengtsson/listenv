@@ -262,33 +262,32 @@ names.listenv <- function(x) {
 #' @keywords internal
 as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   vars <- map(x)
+  nvars <- length(vars)
   names <- names(x)
 
   ## Drop names starting with a period
-  if (!all.names) {
+  if (!all.names && nvars > 0) {
     keep <- !grepl("^[.]", names)
     vars <- vars[keep]
     names <- names[keep]
-  }
-
-  ## Nothing to do?
-  if (length(vars) == 0) {
-    return(list())
+    nvars <- length(vars)
   }
 
   ## Sort by names?
-  if (sorted) {
+  if (sorted && nvars > 0) {
     o <- order(names)
     vars <- vars[o]
     names <- names[o]
   }
 
   ## Collect as a named list
-  res <- vector("list", length=length(vars))
+  res <- vector("list", length=nvars)
   names(res) <- names
 
-  ok <- !is.na(vars)
-  res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
+  if (nvars > 0) {
+    ok <- !is.na(vars)
+    res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
+  }
 
   ## Set dimensions?
   dim <- dim(x)
@@ -356,8 +355,16 @@ toIndex <- function(x, idxs) {
       i <- which(i)
     } else if (is.numeric(i)) {
       d <- dim[kk]
-      if (any(i < 0)) stop("attempt to select less than one element")
       if (any(i > d)) stop("subscript out of bounds")
+      if (any(i < 0)) {
+        if (any(i > 0)) {
+          stop("only 0's may be mixed with negative subscripts")
+        }
+        ## Drop elements
+        i <- setdiff(seq_len(d), -i)
+      }
+      ## Drop zeros
+      i <- i[i != 0]
     } else {
       stop("invalid subscript type", sQuote(typeof(i)))
     }

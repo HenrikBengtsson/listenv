@@ -179,6 +179,18 @@ stopifnot(all.equal(y, x))
 stopifnot(all.equal(unlist(y), unlist(x)))
 stopifnot(all.equal(as.list(y), as.list(x)[1:2,1:3,1:4], check.attributes=FALSE))
 
+y <- x[0,0,0]
+print(y)
+stopifnot(length(y) == 0)
+stopifnot(all.equal(dim(y), c(0,0,0)))
+stopifnot(all.equal(y, as.list(x)[0,0,0]))
+
+y <- x[0,,]
+print(y)
+stopifnot(length(y) == 0)
+stopifnot(all.equal(dim(y), c(0,dim(x)[-1])))
+stopifnot(all.equal(y, as.list(x)[0,,]))
+
 y <- x[2,1,,drop=FALSE]
 print(y)
 stopifnot(all.equal(dim(y), c(1,1,dim(x)[3])))
@@ -193,6 +205,10 @@ y <- x[2,1,]
 print(y)
 stopifnot(is.null(dim(y)))
 stopifnot(all.equal(as.list(y), as.list(x)[2,1,], check.attributes=FALSE))
+
+y <- x[-1,,c(3,3,1)]
+print(y)
+stopifnot(all.equal(as.list(y), as.list(x)[-1,,c(3,3,1)], check.attributes=FALSE))
 
 message("* x[i], x[i,j] ... DONE")
 
