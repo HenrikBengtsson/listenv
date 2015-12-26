@@ -121,6 +121,7 @@ stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
 
 
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Multi-element subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -264,6 +265,60 @@ z <- as.list(y)
 print(z)
 stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
 
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Local access
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv(a=1, b=2, c=3.14)
+
+y <- local({
+  x[[3]]
+})
+stopifnot(identical(y, 3.14))
+
+y <- local({
+  x[3]
+})
+stopifnot(identical(y[[1]], 3.14))
+
+y <- local({
+  ii <- 3
+  x[[ii]]
+})
+stopifnot(identical(y, 3.14))
+
+y <- local({
+  ii <- 3
+  x[ii]
+})
+stopifnot(identical(y[[1]], 3.14))
+
+
+local({
+  x[[3]] <- 42L
+})
+y <- x[[3]]
+stopifnot(identical(y, 42L))
+
+local({
+  x[3] <- 3.14
+})
+y <- x[[3]]
+stopifnot(identical(y, 3.14))
+
+local({
+  ii <- 3
+  x[ii] <- 42L
+})
+y <- x[[3]]
+stopifnot(identical(y, 42L))
+
+local({
+  ii <- 3
+  x[[ii]] <- 3.14
+})
+y <- x[[3]]
+stopifnot(identical(y, 3.14))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

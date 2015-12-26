@@ -460,11 +460,12 @@ toIndex <- function(x, idxs) {
   missing <- sapply(idxs, FUN=function(x) is.symbol(x) && identical("", deparse(x)))
   if (any(missing)) {
     if (nidxs == ndim) {
+      envir <- parent.frame()
       for (kk in seq_len(ndim)) {
         if (missing[kk]) {
           idxs[[kk]] <- seq_len(dim[kk])
         } else {
-          idxs[[kk]] <- eval.parent(idxs[[kk]])
+          idxs[[kk]] <- eval(idxs[[kk]], envir=envir)
         }
       }
     } else if (nidxs == 1) {
@@ -477,7 +478,8 @@ toIndex <- function(x, idxs) {
      }
     }
   } else {
-    idxs <- lapply(idxs, FUN=eval.parent)
+    envir <- parent.frame()
+    idxs <- lapply(idxs, FUN=eval, envir=envir)
   }
 
   if (nidxs <= 1L) {
@@ -790,11 +792,12 @@ remove_by_index <- function(x, i) {
   missing <- sapply(idxs, FUN=function(x) is.symbol(x) && identical("", deparse(x)))
   if (any(missing)) {
     if (nidxs == ndim) {
+      envir <- parent.frame()
       for (kk in seq_len(ndim)) {
         if (missing[kk]) {
           idxs[[kk]] <- seq_len(dim[kk])
         } else {
-          idxs[[kk]] <- eval.parent(idxs[[kk]])
+          idxs[[kk]] <- eval(idxs[[kk]], envir=envir)
         }
       }
     } else if (nidxs == 1) {
@@ -807,7 +810,8 @@ remove_by_index <- function(x, i) {
      }
     }
   } else {
-    idxs <- lapply(idxs, FUN=eval.parent)
+    envir <- parent.frame()
+    idxs <- lapply(idxs, FUN=eval, envir=envir)
   }
 
   if (nidxs <= 1L) {
