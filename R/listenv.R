@@ -60,8 +60,7 @@ as.listenv.list <- function(x, ...) {
   nx <- length(x)
   res <- listenv()
   length(res) <- nx
-
-  names(res) <- names(x)
+  names(res) <- names <- names(x)
   for (kk in seq_len(nx)) {
     value <- x[[kk]]
     if (is.null(value)) value <- list(NULL)
@@ -73,6 +72,7 @@ as.listenv.list <- function(x, ...) {
   if (!is.null(dim)) {
     dim(res) <- dim
     dimnames(res) <- dimnames(x)
+    names(res) <- names
   }
 
   res
@@ -286,6 +286,7 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   ## Collect as a named list
   res <- vector("list", length=length(vars))
   names(res) <- names
+
   ok <- !is.na(vars)
   res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
 
@@ -294,6 +295,7 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   if (!is.null(dim)) {
     dim(res) <- dim
     dimnames(res) <- dimnames(x)
+    names(res) <- names
   }
 
   res

@@ -35,7 +35,8 @@ dims <- list(2:3, 2:4)
 for (kk in seq_along(dims)) {
   dim <- dims[[kk]]
   dimnames <- lapply(dim, FUN=function(n) letters[seq_len(n)])
-  str(list(dim=dim, dimnames=dimnames))
+  names <- letters[seq_len(prod(dim))]
+  str(list(dim=dim, dimnames=dimnames, names=names))
 
   n <- prod(dim)
   values <- seq_len(n)
@@ -54,6 +55,9 @@ for (kk in seq_along(dims)) {
   print(x)
   stopifnot(identical(dim(x), dim(x0)))
   stopifnot(is.null(dimnames(x)))
+  stopifnot(is.null(names(x)))
+  names(x0) <- names
+  names(x) <- names
   y <- as.list(x)
   stopifnot(identical(y, x0))
   z <- as.listenv(y)
@@ -69,6 +73,7 @@ for (kk in seq_along(dims)) {
     print(x)
     stopifnot(identical(dim(x), dim(x0)))
     stopifnot(identical(dimnames(x), dimnames(x0)))
+    stopifnot(identical(names(x), names))
     y <- as.list(x)
     stopifnot(identical(y, x0))
     z <- as.listenv(y)
@@ -144,6 +149,7 @@ stopifnot(identical(x[[1,3]], -5L))
 message("* x[i], x[i,j] ...")
 x <- as.listenv(1:24)
 dim(x) <- c(2,3,4)
+names(x) <- letters[seq_along(x)]
 x[2] <- list(NULL)
 print(x)
 
@@ -171,22 +177,22 @@ print(y)
 stopifnot(all.equal(dim(y), dim(x)))
 stopifnot(all.equal(y, x))
 stopifnot(all.equal(unlist(y), unlist(x)))
-stopifnot(all.equal(as.list(y), as.list(x)[1:2,1:3,1:4]))
+stopifnot(all.equal(as.list(y), as.list(x)[1:2,1:3,1:4], check.attributes=FALSE))
 
 y <- x[2,1,,drop=FALSE]
 print(y)
 stopifnot(all.equal(dim(y), c(1,1,dim(x)[3])))
-stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=FALSE]))
+stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=FALSE], check.attributes=FALSE))
 
 y <- x[2,1,,drop=TRUE]
 print(y)
 stopifnot(is.null(dim(y)))
-stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=TRUE]))
+stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=TRUE], check.attributes=FALSE))
 
 y <- x[2,1,]
 print(y)
 stopifnot(is.null(dim(y)))
-stopifnot(all.equal(as.list(y), as.list(x)[2,1,]))
+stopifnot(all.equal(as.list(y), as.list(x)[2,1,], check.attributes=FALSE))
 
 message("* x[i], x[i,j] ... DONE")
 
