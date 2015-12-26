@@ -15,7 +15,7 @@ options("withCapture/newline"=FALSE)
 %>
 # <%@meta name="title"%>
 
-_List environments_ are environments that have list-like properties.  They are implemented by the [listenv] package.  Features of a list environment are summarized in the below table:
+_List environments_ are environments that have list-like properties.  They are implemented by the [listenv] package.  The main features of a list environment are summarized in the below table:
 
 | Property                                                               | list environments |  lists | environments |
 |------------------------------------------------------------------------|:-----------------:|:------:|:------------:|
