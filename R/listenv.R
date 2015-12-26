@@ -93,41 +93,63 @@ as.listenv.default <- function(x, ...) {
 print.listenv <- function(x, ...) {
   n <- length(x)
   dim <- dim(x)
+  ndim <- length(dim)
+  names <- names(x)
+  dimnames <- dimnames(x)
+  class <- class(x)[1L]
 
-  if (is.null(dim)) {
-    if (n == 0) {
-      s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
-    } else {
-      if (n == 1) {
-        s <- sprintf("`%s` with 1 element", class(x)[1L])
-      } else {
-        s <- sprintf("`%s` with %d elements", class(x)[1L], n)
-      }
-      names <- names(x)
-      if (is.null(names)) {
-        s <- sprintf("%s that are not named.\n", s)
-      } else {
-        s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
-      }
-    }
+  if (ndim <= 1) {
+    what <- "vector"
+  } else if (ndim == 2) {
+    what <- "matrix"
   } else {
-    dimstr <- sprintf("%d (%s)", n, paste(dim, collapse="x"))
-    if (n == 0) {
-      s <- sprintf("`%s` with %s elements.\n", class(x)[1L], dimstr)
-    } else {
-      if (n == 1) {
-        s <- sprintf("`%s` with %s element", class(x)[1L], dimstr)
+    what <- "array"
+  }
+
+  s <- sprintf("A %s %s with %d", sQuote(class), what, n)
+  if (is.null(names) && n > 0) {
+    s <- sprintf("%s unnamed", s)
+  }
+  if (n == 1) {
+    s <- sprintf("%s element", s)
+  } else {
+    s <- sprintf("%s elements", s)
+  }
+  if (!is.null(names)) {
+    s <- sprintf("%s (%s)", s, hpaste(sQuote(names)))
+  }
+  if (ndim > 1) {
+    dimstr <- paste(dim, collapse="x")
+    hasDimnames <- !sapply(dimnames, FUN=is.null)
+    dimnamesT <- sapply(dimnames, FUN=function(x) hpaste(sQuote(x)))
+
+    s <- sprintf("%s arranged in %s", s, dimstr)
+
+    if (ndim == 2) {
+      if (all(hasDimnames)) {
+        s <- sprintf("%s rows (%s) and columns (%s)", s, dimnamesT[1L], dimnamesT[2L])
+      } else if (hasDimnames[1]) {
+        s <- sprintf("%s rows (%s) and unnamed columns", s, dimnamesT[1L])
+      } else if (hasDimnames[2]) {
+        s <- sprintf("%s unnamed rows and columns (%s)", s, dimnamesT[2L])
       } else {
-        s <- sprintf("`%s` with %s elements", class(x)[1L], dimstr)
+        s <- sprintf("%s unnamed rows and columns", s, dimstr)
       }
-      names <- names(x)
-      if (is.null(names)) {
-        s <- sprintf("%s and elements that are not named.\n", s)
+    } else {
+      dimnamesT[!hasDimnames] <- "NULL"
+      dimnamesT <- sprintf("#%d: %s", seq_along(dimnamesT), dimnamesT)
+      dimnamesT <- paste(dimnamesT, collapse="; ")
+      if (all(hasDimnames)) {
+        s <- sprintf("%s dimensions (%s)", s, dimnamesT)
+      } else if (!any(hasDimnames)) {
+        s <- sprintf("%s unnamed dimensions", s)
       } else {
-        s <- sprintf("%s: %s.\n", s, hpaste(sQuote(names)))
+        s <- sprintf("%s partially named dimensions (%s)", s, dimnamesT)
       }
     }
   }
+
+  s <- sprintf("%s.\n", s)
   cat(s)
 }
 
