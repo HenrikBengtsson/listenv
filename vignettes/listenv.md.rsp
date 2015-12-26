@@ -193,15 +193,6 @@ str(as.list(x))
 })%>
 ```
 
-## Methods
-```r
-<%=withCapture({
-x <- listenv()
-length(x) <- 3
-seq_along(x)
-})%>
-```
-
 
 ### Examples
 Here is a longer set of examples illustrating what the list environments provides:
@@ -269,12 +260,14 @@ unlist(x)
 })%>
 ```
 
-Note, whenever dimensions are set using `dim(x) <- dims` both the dimensional names and the element names are removed.  This is by definition, cf. `help("dim", package="base")`.  This behavior is annoying if one wants to remove the dimensions but keep the names of the elements, e.g.
+Note, whenever dimensions are set using `dim(x) <- dims` both the dimensional names and the element names are removed, e.g.
 ```r
 > dim(x) <- NULL
 > names(x)
 NULL
 ```
+This behavior is by design, cf. `help("dim", package="base")`.
+<%---
 Because of this, the listenv package provides the `undim()` function, which removes the dimensions but preserves the names, e.g.
 ```r
 <%=withCapture({
@@ -291,7 +284,7 @@ will have the same effect as
 x <- undim(x)
 ```
 That is, the dimension attributes of `x` will be changed.  The reason for this is explained in Section 'Important about environments' above.
-
+---%>
 
 ### Limitations
 The current implementation does _not_ support _dimensional subsetting_ of more than one element.  For instance, `x[1,]` is not supported by this version.
