@@ -18,12 +18,15 @@ options("withCapture/newline"=FALSE)
 ## Introduction
 _List environments_ are environments that have list-like properties.  Features of a list environment includes:
 
-* Number of elements, cf. `length()`.
-* Indexing elements, cf. `x[[4]]`.
-* Named elements, cf. `names()`, `x$a` and `x[["a"]]`.
-* Dimensions, cf. `dim(x)`.
-* Names of dimensions, cf. `dimnames(x)`.
-* Indexing by dimensions, cf. `x[[2,4]]` and `x[[2,"D"]]`.
+| Property                                                  | list environments |  lists | environments |
+|-----------------------------------------------------------|:-----------------:|:------:|:------------:|
+| Number of elements, e.g. `length()`                       |              yes  |   yes  |         yes  |
+| Named elements, e.g. `names()`, `x$a` and `x[["a"]]`      |              yes  |   yes  |         yes  |
+| Indexed elements, e.g. `x[[4]]`                           |              yes  |   yes  |              |
+| Dimensions, e.g. `dim(x)`                                 |              yes  |   yes  |              |
+| Names of dimensions, e.g. `dimnames(x)`                   |              yes  |   yes  |              |
+| Indexing by dimensions, e.g. `x[[2,4]]` and `x[[2,"D"]]`  |              yes  |   yes  |              |
+| Mutable elements, e.g. `x$a <- 3`                         |              yes  |        |         yes  |
 
 For example,
 ```r
