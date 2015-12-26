@@ -351,6 +351,7 @@ toIndex <- function(x, idxs) {
       if (anyNA(i)) stop("subscript out of bounds")
     } else if (is.logical(i)) {
       d <- dim[kk]
+      if (length(i) > d) stop("(subscript) logical subscript too long")
       i <- rep(i, length.out=d)
       i <- which(i)
     } else if (is.numeric(i)) {
@@ -498,7 +499,9 @@ toIndex <- function(x, idxs) {
       i <- setdiff(seq_len(nmap), -i)
     }
   } else if (is.logical(i)) {
-    if (length(i) < nmap) i <- rep(i, length.out=nmap)
+    ni <- length(i)
+    if (length(i) > nmap) stop("(subscript) logical subscript too long")
+    i <- rep(i, length.out=nmap)
     i <- which(i)
   } else {
     return(NextMethod("["))
@@ -775,7 +778,8 @@ remove_by_index <- function(x, i) {
 
   if (is.logical(i)) {
     n <- length(x)
-    if (length(i) < n) i <- rep(i, length.out=n)
+    if (length(i) > n) stop("(subscript) logical subscript too long")
+    i <- rep(i, length.out=n)
     i <- which(i)
   }
 

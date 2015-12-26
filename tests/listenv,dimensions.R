@@ -220,6 +220,19 @@ stopifnot(inherits(res, "try-error"))
 
 length(x) <- 6
 dim(x) <- c(2,3)
+
+res <- try(x[[3,3]], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[3,3], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[c(-1,1),3], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
+res <- try(x[c(TRUE, TRUE, TRUE),], silent=TRUE)
+stopifnot(inherits(res, "try-error"))
+
 res <- try(dimnames(x) <- NA, silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
