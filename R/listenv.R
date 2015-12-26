@@ -392,8 +392,12 @@ toIndex <- function(x, idxs) {
     stop(sprintf("INTERNAL ERROR: Incompatible dimensions: %d != %d", ndim, nidxs))
   }
 
+  ## Preserve names(dim)
+  names(dim(idx)) <- names(dim(x))
+
   ## Preserve dimnames
   dimnames(idx) <- idxDimnames
+
 
   idx
 } # toIndex()
@@ -881,11 +885,13 @@ dim.listenv <- function(x) attr(x, "dim.")
 `dim<-.listenv` <- function(x, value) {
   n <- length(x)
   if (!is.null(value)) {
+    names <- names(value)
     value <- as.integer(value)
     p <- prod(as.double(value))
     if (p != n) {
       stop(sprintf("dims [product %d] do not match the length of object [%d]", p, n))
     }
+    names(value) <- names
   }
 
   ## Always remove "dimnames" and "names" attributes, cf. help("dim")
