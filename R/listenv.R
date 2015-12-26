@@ -126,25 +126,33 @@ print.listenv <- function(x, ...) {
     s <- sprintf("%s arranged in %s", s, dimstr)
 
     if (ndim == 2) {
-      if (all(hasDimnames)) {
-        s <- sprintf("%s rows (%s) and columns (%s)", s, dimnamesT[1L], dimnamesT[2L])
-      } else if (hasDimnames[1]) {
-        s <- sprintf("%s rows (%s) and unnamed columns", s, dimnamesT[1L])
-      } else if (hasDimnames[2]) {
-        s <- sprintf("%s unnamed rows and columns (%s)", s, dimnamesT[2L])
-      } else {
+      if (is.null(dimnames)) {
         s <- sprintf("%s unnamed rows and columns", s, dimstr)
+      } else {
+        if (all(hasDimnames)) {
+          s <- sprintf("%s rows (%s) and columns (%s)", s, dimnamesT[1L], dimnamesT[2L])
+        } else if (hasDimnames[1]) {
+          s <- sprintf("%s rows (%s) and unnamed columns", s, dimnamesT[1L])
+        } else if (hasDimnames[2]) {
+          s <- sprintf("%s unnamed rows and columns (%s)", s, dimnamesT[2L])
+        } else {
+          s <- sprintf("%s unnamed rows and columns", s, dimstr)
+        }
       }
     } else {
-      dimnamesT[!hasDimnames] <- "NULL"
-      dimnamesT <- sprintf("#%d: %s", seq_along(dimnamesT), dimnamesT)
-      dimnamesT <- paste(dimnamesT, collapse="; ")
-      if (all(hasDimnames)) {
-        s <- sprintf("%s dimensions (%s)", s, dimnamesT)
-      } else if (!any(hasDimnames)) {
+      if (is.null(dimnames)) {
         s <- sprintf("%s unnamed dimensions", s)
       } else {
-        s <- sprintf("%s partially named dimensions (%s)", s, dimnamesT)
+        dimnamesT[!hasDimnames] <- "NULL"
+        dimnamesT <- sprintf("#%d: %s", seq_along(dimnamesT), dimnamesT)
+        dimnamesT <- paste(dimnamesT, collapse="; ")
+        if (all(hasDimnames)) {
+          s <- sprintf("%s dimensions (%s)", s, dimnamesT)
+        } else if (!any(hasDimnames)) {
+          s <- sprintf("%s unnamed dimensions", s)
+        } else {
+          s <- sprintf("%s partially named dimensions (%s)", s, dimnamesT)
+        }
       }
     }
   }

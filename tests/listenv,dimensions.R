@@ -31,47 +31,51 @@ stopifnot(all.equal(z, x))
 
 
 message("* dim(x) and dimnames(x) ...")
-dim(x0) <- c(2,3)
-dim(x) <- dim(x0)
-print(x)
-stopifnot(identical(dim(x), dim(x0)))
-stopifnot(is.null(dimnames(x)))
-y <- as.list(x)
-stopifnot(identical(y, x0))
-z <- as.listenv(y)
-stopifnot(all.equal(z, x))
+dims <- list(2:3, 2:4)
+for (kk in seq_along(dims)) {
+  dim <- dims[[kk]]
+  dimnames <- lapply(dim, FUN=function(n) letters[seq_len(n)])
+  str(list(dim=dim, dimnames=dimnames))
 
-dimnames(x0) <- list(c("a", "b"), NULL)
-dimnames(x) <- dimnames(x0)
-print(x)
-stopifnot(identical(dim(x), dim(x0)))
-stopifnot(identical(dimnames(x), dimnames(x0)))
-y <- as.list(x)
-stopifnot(identical(y, x0))
-z <- as.listenv(y)
-stopifnot(all.equal(z, x))
+  n <- prod(dim)
+  values <- seq_len(n)
 
-dimnames(x0) <- NULL
-dimnames(x) <- NULL
-stopifnot(is.null(dimnames(x)))
-y <- as.list(x)
-stopifnot(identical(y, x0))
-z <- as.listenv(y)
-stopifnot(all.equal(z, x))
+  x0 <- as.list(values)
+  x <- as.listenv(values)
+  print(x)
+  stopifnot(identical(dim(x), dim(x0)))
+  y <- as.list(x)
+  stopifnot(identical(y, x0))
+  z <- as.listenv(y)
+  stopifnot(all.equal(z, x))
 
-dimnames(x0) <- list(c("a", "b"), NULL)
-dimnames(x) <- dimnames(x0)
+  dim(x0) <- dim
+  dim(x) <- dim
+  print(x)
+  stopifnot(identical(dim(x), dim(x0)))
+  stopifnot(is.null(dimnames(x)))
+  y <- as.list(x)
+  stopifnot(identical(y, x0))
+  z <- as.listenv(y)
+  stopifnot(all.equal(z, x))
 
-dim(x0) <- NULL
-dim(x) <- NULL
-print(x)
-stopifnot(is.null(dim(x)))
-stopifnot(is.null(dimnames(x)))
-stopifnot(is.null(names(x)))
-y <- as.list(x)
-stopifnot(identical(y, x0))
-z <- as.listenv(y)
-stopifnot(all.equal(z, x))
+  excls <- c(list(NULL), as.list(seq_along(dimnames)), list(seq_along(dimnames)))
+  for (ll in seq_along(excls)) {
+    excl <- excls[[ll]]
+    dimnamesT <- dimnames
+    dimnamesT[excl] <- list(NULL)
+    dimnames(x0) <- dimnamesT
+    dimnames(x) <- dimnamesT
+    print(x)
+    stopifnot(identical(dim(x), dim(x0)))
+    stopifnot(identical(dimnames(x), dimnames(x0)))
+    y <- as.list(x)
+    stopifnot(identical(y, x0))
+    z <- as.listenv(y)
+    stopifnot(all.equal(z, x))
+  } ## for (ll ...)
+} ## for (kk ...)
+
 
 # Assign names
 x <- as.listenv(1:6)
@@ -141,13 +145,13 @@ stopifnot(inherits(res, "try-error"))
 
 length(x) <- 6
 dim(x) <- c(2,3)
-res <- try(dimnames(x) <- NA)
+res <- try(dimnames(x) <- NA, silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(dimnames(x) <- list("a", "b", "c"))
+res <- try(dimnames(x) <- list("a", "b", "c"), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(dimnames(x) <- list("a", NULL))
+res <- try(dimnames(x) <- list("a", NULL), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
 
 dimnames(x) <- list(c("a", "b"), NULL)
