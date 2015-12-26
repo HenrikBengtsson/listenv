@@ -236,6 +236,18 @@ x[["b", "B"]] <- -x[["b", "B"]]
 as.list(x)
 })%>
 ```
+We can also assign multiple elements through dimensional subsetting, e.g.
+```r
+<%=withCapture({
+x[2,-1] <- 98:99
+as.list(x)
+x["a",c(1,3)] <- list(97, "foo")
+as.list(x)
+x[] <- 1:6
+as.list(x)
+})%>
+```
+
 
 Concurrently with dimensional names it is possible to have names of the invidual elements just as for list environments without dimensions.  For example,
 ```r
