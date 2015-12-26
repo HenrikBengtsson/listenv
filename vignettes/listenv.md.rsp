@@ -16,29 +16,42 @@ options("withCapture/newline"=FALSE)
 # <%@meta name="title"%>
 
 ## Introduction
-_List environments_ are environments that have list-like properties.  Features of a list environment includes:
+_List environments_ are environments that have list-like properties.  Features of a list environment are summarized in the below table:
 
 | Property                                                  | list environments |  lists | environments |
 |-----------------------------------------------------------|:-----------------:|:------:|:------------:|
 | Number of elements, e.g. `length()`                       |              yes  |   yes  |         yes  |
 | Named elements, e.g. `names()`, `x$a` and `x[["a"]]`      |              yes  |   yes  |         yes  |
+| Duplicated names                                          |              yes  |   yes  |              |
 | Indexed elements, e.g. `x[[4]]`                           |              yes  |   yes  |              |
 | Dimensions, e.g. `dim(x)`                                 |              yes  |   yes  |              |
 | Names of dimensions, e.g. `dimnames(x)`                   |              yes  |   yes  |              |
 | Indexing by dimensions, e.g. `x[[2,4]]` and `x[[2,"D"]]`  |              yes  |   yes  |              |
-| Mutable elements, e.g. `x$a <- 3`                         |              yes  |        |         yes  |
+| Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`         |              yes  |        |         yes  |
+| Compatible* with `assign()`, `get()` and `exists()`       |              yes  |        |         yes  |
+| Compatible* with `delayedAssign()`                        |              yes  |        |         yes  |
 
 For example,
 ```r
 <%=withCapture({
-x <- listenv(a=2, b=3, c="hello")
+x <- listenv(a=1, b=2, c="hello")
 length(x)
 names(x)
 x$a
 x[[3]] <- toupper(x[[3]])
+y <- x
 x$c
 x$d <- x$a + x[["b"]]
-x[[4]]
+names(x)[2] <- "a"
+for (ii in seq_along(x)) {
+  cat(sprintf("Element %d (%s): %s\n", ii, sQuote(names(x)[ii]), x[[ii]]))
+}
+<%---
+get(map(x)["b"], envir=x)
+assign(map(x)["b"], 3, envir=x)
+---%>
+x$a
+identical(y, x)
 })%>
 ```
 
@@ -140,16 +153,6 @@ for (ii in seq_along(x)) {
 })%>
 ```
 
-
-## Using list environments as lists
-
-
-
-## Using list environments as environments
-
-
-
-## Coercing to and from list environments
 
 ### Coercing to lists and vectors
 
