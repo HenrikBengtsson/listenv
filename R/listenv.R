@@ -521,7 +521,8 @@ toIndex <- function(x, idxs) {
 
   ## Preserve dimensions?
   dim <- dim(i)
-  if (!is.null(dim)) {
+  ndim <- length(dim)
+  if (ndim > 1) {
     dimnames <- dimnames(i)
 
     ## Drop singleton dimensions?
@@ -529,12 +530,15 @@ toIndex <- function(x, idxs) {
       keep <- (dim != 1)
       dim <- dim[keep]
       dimnames <- dimnames[keep]
+      ndim <- length(dim)
     }
 
-    names <- names(res)
-    dim(res) <- dim
-    dimnames(res) <- dimnames
-    names(res) <- names
+    if (ndim > 1) {
+      names <- names(res)
+      dim(res) <- dim
+      dimnames(res) <- dimnames
+      names(res) <- names
+    }
   }
 
   res

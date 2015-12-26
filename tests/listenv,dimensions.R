@@ -146,26 +146,47 @@ x <- as.listenv(1:24)
 dim(x) <- c(2,3,4)
 x[2] <- list(NULL)
 print(x)
-stopifnot(is.null(names(x)))
 
 y <- x[]
 print(y)
 stopifnot(length(y) == length(x))
 stopifnot(all.equal(y, x))
 stopifnot(!identical(y, x))
-stopifnot(is.null(names(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[]))
 
 y <- x[1]
 print(y)
-stopifnot(is.null(names(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[1]))
 
 y <- x[2:3]
 print(y)
-stopifnot(is.null(names(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[2:3]))
 
 y <- x[-1]
 print(y)
-stopifnot(is.null(names(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[-1]))
+
+y <- x[1:2,1:3,1:4]
+print(y)
+stopifnot(all.equal(dim(y), dim(x)))
+stopifnot(all.equal(y, x))
+stopifnot(all.equal(unlist(y), unlist(x)))
+stopifnot(all.equal(as.list(y), as.list(x)[1:2,1:3,1:4]))
+
+y <- x[2,1,,drop=FALSE]
+print(y)
+stopifnot(all.equal(dim(y), c(1,1,dim(x)[3])))
+stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=FALSE]))
+
+y <- x[2,1,,drop=TRUE]
+print(y)
+stopifnot(is.null(dim(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=TRUE]))
+
+y <- x[2,1,]
+print(y)
+stopifnot(is.null(dim(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[2,1,]))
 
 message("* x[i], x[i,j] ... DONE")
 
