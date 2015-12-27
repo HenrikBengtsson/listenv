@@ -32,14 +32,9 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     res$subset <- list(expr)
   } else {
     n <- length(expr)
-#    if (n == 1L) {
-#    } else if (n != 3L) {
-#      stop("Invalid syntax: ", sQuote(code), call.=FALSE)
-#    }
+    stopifnot(n >= 2L)
 
-    if (n == 1L) {
-      res$name <- code
-    } else if (n >= 3L) {
+    if (n >= 3L) {
       ## Assignment to enviroment via $ and [[
       op <- as.character(expr[[1]])
       res$op <- op
@@ -81,11 +76,15 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
         } else if (is.language(subsetKK)) {
           subsetKK <- eval(subsetKK, envir=envir)
         }
-        subset[[kk-2L]] <- subsetKK
+        if (is.null(subsetKK)) {
+          subset[kk-2L] <- list(NULL)
+        } else {
+          subset[[kk-2L]] <- subsetKK
+        }
       }
 
       res$subset <- subset
-    } # if (n == ...)
+    } # if (n >= 3)
   } # if (is.symbol(expr))
 
 
