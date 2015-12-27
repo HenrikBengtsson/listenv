@@ -127,6 +127,9 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       map <- map(envir)
       dim <- dim(envir)
 
+      op <- res$op
+      if (is.null(op)) op <- "[["
+
       ## Multi-dimensional subsetting?
       if (length(subset) > 1L) {
         if (is.null(dim)) {
@@ -139,9 +142,6 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
           if (is.null(subsetKK)) {
             subset[[kk]] <- seq_len(dim[kk])
           } else if (is.numeric(subsetKK)) {
-##            if (subsetKK == 0) {
-##              stop("Invalid subset: ", sQuote(code), call.=TRUE)
-##            }
             exists <- exists && (subsetKK >= 1 && subsetKK <= dim[kk])
           } else if (is.character(subsetKK)) {
             subsetKK <- match(subsetKK, dimnames[[kk]])
@@ -159,7 +159,9 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
           stopifnot(is.numeric(i))
           d <- dim[kk]
           if (any(i < 0)) {
-            if (any(i > 0)) {
+            if (op == "[[") {
+              stop("Invalid (negative) indices: ", hpaste(i))
+            } else if (any(i > 0)) {
               stop("only 0's may be mixed with negative subscripts")
             }
             ## Drop elements
@@ -189,14 +191,22 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
           i <- subset
           n <- length(envir)
           if (any(i < 0)) {
-            if (any(i > 0)) {
+            if (op == "[[") {
+              stop("Invalid (negative) indices: ", hpaste(i))
+            } else if (any(i > 0)) {
               stop("only 0's may be mixed with negative subscripts")
             }
             ## Drop elements
             i <- setdiff(seq_len(n), -i)
           }
-          ## Drop zeros
-          i <- i[i != 0]
+          ## Drop zeros?
+          keep <- which(i != 0)
+          if (length(keep) != length(i)) {
+            if (op == "[[") {
+              stop("Invalid (zero) indices: ", hpaste(i))
+            }
+            i <- i[keep]
+          }
           res$idx <- i
           res$exists <- !is.na(map[res$idx]) & (res$idx >= 1 & res$idx <= n)
           res$name <- names[i]

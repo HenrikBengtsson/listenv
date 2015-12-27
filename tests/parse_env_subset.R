@@ -182,10 +182,6 @@ target <- parse_env_subset(x[0], substitute=TRUE)
 stopifnot(length(target$idx) == 0)
 str(target)
 
-target <- parse_env_subset(x[[0]], substitute=TRUE)
-stopifnot(length(target$idx) == 0)
-str(target)
-
 target <- parse_env_subset(x[-1], substitute=TRUE)
 stopifnot(length(target$idx) == length(x)-1)
 str(target)
@@ -203,6 +199,9 @@ message("*** parse_env_subset() on listenv ... DONE")
 message("*** parse_env_subset() - exceptions ...")
 
 x <- listenv()
+
+res <- try(target <- parse_env_subset(x[[0]], substitute=TRUE), silent=TRUE)
+stopifnot(inherits(res, "try-error"))
 
 res <- try(target <- parse_env_subset("_a", substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))
