@@ -121,6 +121,7 @@ stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
 
 
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Multi-element subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -129,6 +130,13 @@ x <- listenv()
 x[1:3] <- list(1, NULL, 3)
 print(x)
 stopifnot(is.null(names(x)))
+
+y <- x[]
+print(y)
+stopifnot(length(y) == length(x))
+stopifnot(all.equal(y, x))
+stopifnot(!identical(y, x))
+stopifnot(is.null(names(y)))
 
 y <- x[1]
 print(y)
@@ -258,6 +266,60 @@ print(z)
 stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
 
 
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Local access
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- listenv(a=1, b=2, c=3.14)
+
+y <- local({
+  x[[3]]
+})
+stopifnot(identical(y, 3.14))
+
+y <- local({
+  x[3]
+})
+stopifnot(identical(y[[1]], 3.14))
+
+y <- local({
+  ii <- 3
+  x[[ii]]
+})
+stopifnot(identical(y, 3.14))
+
+y <- local({
+  ii <- 3
+  x[ii]
+})
+stopifnot(identical(y[[1]], 3.14))
+
+
+local({
+  x[[3]] <- 42L
+})
+y <- x[[3]]
+stopifnot(identical(y, 42L))
+
+local({
+  x[3] <- 3.14
+})
+y <- x[[3]]
+stopifnot(identical(y, 3.14))
+
+local({
+  ii <- 3
+  x[ii] <- 42L
+})
+y <- x[[3]]
+stopifnot(identical(y, 42L))
+
+local({
+  ii <- 3
+  x[[ii]] <- 3.14
+})
+y <- x[[3]]
+stopifnot(identical(y, 3.14))
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Removing elements
@@ -320,6 +382,12 @@ print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(as.list(x), list(a=1L, b=2L, c=3L)))
+stopifnot(identical(unlist(x), c(a=1L, b=2L, c=3L)))
+
+x[] <- 3:1
+stopifnot(length(x) == 3)
+stopifnot(identical(names(x), c("a", "b", "c")))
+stopifnot(identical(as.list(x), list(a=3L, b=2L, c=1L)))
 
 x[c('c', 'b')] <- 2:3
 print(x)
@@ -328,7 +396,7 @@ print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(as.list(x), list(a=1L, b=3L, c=2L)))
+stopifnot(identical(as.list(x), list(a=3L, b=3L, c=2L)))
 
 x[c('a', 'c')] <- 1L
 print(x)

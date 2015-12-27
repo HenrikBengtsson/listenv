@@ -60,12 +60,21 @@ as.listenv.list <- function(x, ...) {
   nx <- length(x)
   res <- listenv()
   length(res) <- nx
-  names(res) <- names(x)
+  names(res) <- names <- names(x)
   for (kk in seq_len(nx)) {
     value <- x[[kk]]
     if (is.null(value)) value <- list(NULL)
     res[[kk]] <- value
   }
+
+  ## Set dimensions?
+  dim <- dim(x)
+  if (!is.null(dim)) {
+    dim(res) <- dim
+    dimnames(res) <- dimnames(x)
+    names(res) <- names
+  }
+
   res
 }
 
@@ -83,21 +92,72 @@ as.listenv.default <- function(x, ...) {
 #' @export
 print.listenv <- function(x, ...) {
   n <- length(x)
-  if (n == 0) {
-    s <- sprintf("`%s` with 0 elements.\n", class(x)[1L])
+  dim <- dim(x)
+  ndim <- length(dim)
+  names <- names(x)
+  dimnames <- dimnames(x)
+  class <- class(x)[1L]
+
+  if (ndim <= 1) {
+    what <- "vector"
+  } else if (ndim == 2) {
+    what <- "matrix"
   } else {
-    if (n == 1) {
-      s <- sprintf("`%s` with 1 element", class(x)[1L])
+    what <- "array"
+  }
+
+  s <- sprintf("A %s %s with %d", sQuote(class), what, n)
+  if (is.null(names) && n > 0) {
+    s <- sprintf("%s unnamed", s)
+  }
+  if (n == 1) {
+    s <- sprintf("%s element", s)
+  } else {
+    s <- sprintf("%s elements", s)
+  }
+  if (!is.null(names)) {
+    s <- sprintf("%s (%s)", s, hpaste(sQuote(names)))
+  }
+  if (ndim > 1) {
+    dimstr <- paste(dim, collapse="x")
+    hasDimnames <- !sapply(dimnames, FUN=is.null)
+    dimnamesT <- sapply(dimnames, FUN=function(x) hpaste(sQuote(x)))
+
+    s <- sprintf("%s arranged in %s", s, dimstr)
+
+    if (ndim == 2) {
+      if (is.null(dimnames)) {
+        s <- sprintf("%s unnamed rows and columns", s, dimstr)
+      } else {
+        if (all(hasDimnames)) {
+          s <- sprintf("%s rows (%s) and columns (%s)", s, dimnamesT[1L], dimnamesT[2L])
+        } else if (hasDimnames[1]) {
+          s <- sprintf("%s rows (%s) and unnamed columns", s, dimnamesT[1L])
+        } else if (hasDimnames[2]) {
+          s <- sprintf("%s unnamed rows and columns (%s)", s, dimnamesT[2L])
+        } else {
+          s <- sprintf("%s unnamed rows and columns", s, dimstr)
+        }
+      }
     } else {
-      s <- sprintf("`%s` with %d elements", class(x)[1L], n)
-    }
-    names <- names(x)
-    if (is.null(names)) {
-      s <- sprintf("%s that are not named.\n", s)
-    } else {
-      s <- sprintf("%s: %s\n", s, hpaste(sQuote(names)))
+      if (is.null(dimnames)) {
+        s <- sprintf("%s unnamed dimensions", s)
+      } else {
+        dimnamesT[!hasDimnames] <- "NULL"
+        dimnamesT <- sprintf("#%d: %s", seq_along(dimnamesT), dimnamesT)
+        dimnamesT <- paste(dimnamesT, collapse="; ")
+        if (all(hasDimnames)) {
+          s <- sprintf("%s dimensions (%s)", s, dimnamesT)
+        } else if (!any(hasDimnames)) {
+          s <- sprintf("%s unnamed dimensions", s)
+        } else {
+          s <- sprintf("%s partially named dimensions (%s)", s, dimnamesT)
+        }
+      }
     }
   }
+
+  s <- sprintf("%s.\n", s)
   cat(s)
 }
 
@@ -150,8 +210,9 @@ length.listenv <- function(x) {
     ## Drop existing variables
     drop <- (value+1):n
     var <- map[drop]
+    ## Some may be internal place holders
     var <- var[!is.na(var)]
-    remove(list=var, envir=x, inherits=FALSE)
+    if (length(var) > 0) remove(list=var, envir=x, inherits=FALSE)
     map <- map[-drop]
   }
   map(x) <- map
@@ -201,32 +262,40 @@ names.listenv <- function(x) {
 #' @keywords internal
 as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   vars <- map(x)
+  nvars <- length(vars)
   names <- names(x)
 
   ## Drop names starting with a period
-  if (!all.names) {
+  if (!all.names && nvars > 0) {
     keep <- !grepl("^[.]", names)
     vars <- vars[keep]
     names <- names[keep]
-  }
-
-  ## Nothing to do?
-  if (length(vars) == 0) {
-    return(list())
+    nvars <- length(vars)
   }
 
   ## Sort by names?
-  if (sorted) {
+  if (sorted && nvars > 0) {
     o <- order(names)
     vars <- vars[o]
     names <- names[o]
   }
 
   ## Collect as a named list
-  res <- vector("list", length=length(vars))
+  res <- vector("list", length=nvars)
   names(res) <- names
-  ok <- !is.na(vars)
-  res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
+
+  if (nvars > 0) {
+    ok <- !is.na(vars)
+    res[ok] <- mget(vars[ok], envir=x, inherits=FALSE)
+  }
+
+  ## Set dimensions?
+  dim <- dim(x)
+  if (!is.null(dim)) {
+    dim(res) <- dim
+    dimnames(res) <- dimnames(x)
+    names(res) <- names
+  }
 
   res
 }
@@ -255,25 +324,113 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 }
 
 
+## [[i,j,...]] -> [[idx]]
+toIndex <- function(x, idxs) {
+  nidxs <- length(idxs)
+
+  dim <- dim(x)
+  if (is.null(dim)) dim <- length(x)
+  ndim <- length(dim)
+  if (ndim != nidxs) {
+    stop("incorrect number of dimensions")
+  }
+  dimnames <- dimnames(x)
+  idxDimnames <- dimnames
+
+  ## Indexing scale factor per dimension
+  scale <- c(1L, cumprod(dim[-ndim]))
+
+  ## Subset
+  idx <- 1
+  for (kk in 1:nidxs) {
+    i <- idxs[[kk]]
+    ni <- length(i)
+    if (is.character(i)) {
+      name <- i
+      i <- match(name, table=dimnames[[kk]])
+      if (anyNA(i)) stop("subscript out of bounds")
+    } else if (is.logical(i)) {
+      d <- dim[kk]
+      ni <- length(i)
+      if (ni > d) stop("(subscript) logical subscript too long")
+      if (ni < d) i <- rep(i, length.out=d)
+      i <- which(i)
+    } else if (is.numeric(i)) {
+      d <- dim[kk]
+      if (any(i > d)) stop("subscript out of bounds")
+      if (any(i < 0)) {
+        if (any(i > 0)) {
+          stop("only 0's may be mixed with negative subscripts")
+        }
+        ## Drop elements
+        i <- setdiff(seq_len(d), -i)
+      }
+      ## Drop zeros
+      i <- i[i != 0]
+    } else {
+      stop("invalid subscript type", sQuote(typeof(i)))
+    }
+
+    ## Subset dimnames?
+    if (!is.null(idxDimnames)) {
+      dn <- idxDimnames[[kk]]
+      if (!is.null(dn)) idxDimnames[[kk]] <- dn[i]
+    }
+
+    i <- scale[kk]*(i - 1)
+    if (kk == 1) {
+      idx <- idx + i
+    } else {
+      idx <- outer(idx, i, FUN=`+`)
+    }
+  } # for (kk ...)
+
+  ## Sanity check
+  dim <- dim(idx)
+  ndim <- length(dim)
+  if (ndim != nidxs) {
+    stop(sprintf("INTERNAL ERROR: Incompatible dimensions: %d != %d", ndim, nidxs))
+  }
+
+  ## Preserve names(dim)
+  names(dim(idx)) <- names(dim(x))
+
+  ## Preserve dimnames
+  dimnames(idx) <- idxDimnames
+
+
+  idx
+} # toIndex()
+
+
 #' @export
-`[[.listenv` <- function(x, i, ...) {
+`[[.listenv` <- function(x, ...) {
   map <- map(x)
-
-  if (is.character(i)) {
-    name <- i
-    i <- match(name, table=names(map))
-    if (is.na(i)) return(NULL)
-  } else if (!is.numeric(i)) {
-    return(NextMethod("[["))
-  }
-
-  if (length(i) != 1L) {
-    stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))
-  }
-
   n <- length(map)
-  if (i < 1L || i > n) {
-    stop(sprintf("Subscript out of bounds [%d,%d]: %d", min(1,n), n, i), call.=FALSE)
+
+  idxs <- list(...)
+  nidxs <- length(idxs)
+
+  ## Subsetting by multiple dimensions?
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
+    if (is.character(i)) {
+      name <- i
+      i <- match(name, table=names(map))
+      if (is.na(i)) return(NULL)
+    } else if (!is.numeric(i)) {
+      return(NextMethod("[["))
+    }
+
+    if (length(i) != 1L) {
+      stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))
+    }
+
+    if (i < 1L || i > n) {
+      stop(sprintf("Subscript out of bounds [%d,%d]: %d", min(1,n), n, i), call.=FALSE)
+    }
   }
 
   var <- map[i]
@@ -286,7 +443,51 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 
 
 #' @export
-`[.listenv` <- function(x, i) {
+`[.listenv` <- function(x, ..., drop=TRUE) {
+  ## Need to allow for implicit indices, e.g. x[1,,2]
+  idxs <- as.list(sys.call())[-(1:2)]
+  idxs$drop <- NULL
+  nidxs <- length(idxs)
+
+  ## Assert that subsetting has correct shape
+  dim <- dim(x)
+  ndim <- length(dim)
+  if (nidxs > 1 && nidxs != ndim) {
+    stop(sprintf("Incorrect subsetting. Expected %d dimensions but got %d", ndim, nidxs))
+  }
+
+  ## Implicitly specified dimensions
+  missing <- sapply(idxs, FUN=function(x) is.symbol(x) && identical("", deparse(x)))
+  if (any(missing)) {
+    if (nidxs == ndim) {
+      envir <- parent.frame()
+      for (kk in seq_len(ndim)) {
+        if (missing[kk]) {
+          idxs[[kk]] <- seq_len(dim[kk])
+        } else {
+          idxs[[kk]] <- eval(idxs[[kk]], envir=envir)
+        }
+      }
+    } else if (nidxs == 1) {
+      if (ndim == 0) {
+        idxs <- list(seq_len(length(x)))
+      } else {
+        ## Special case: Preserve dimensions when x[]
+        idxs <- lapply(dim, FUN=function(n) seq_len(n))
+        nidxs <- length(idxs)
+     }
+    }
+  } else {
+    envir <- parent.frame()
+    idxs <- lapply(idxs, FUN=eval, envir=envir)
+  }
+
+  if (nidxs <= 1L) {
+    i <- idxs[[1L]]
+  } else {
+    i <- toIndex(x, idxs)
+  }
+
   map <- map(x)
   nmap <- length(map)
   names <- names(map)
@@ -297,11 +498,18 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
     name <- i
     i <- match(name, table=names)
   } else if (is.numeric(i)) {
-    if (!(all(i > 0) || all(i < 0))) {
-      stop("Only 0's may be mixed with negative subscripts")
-    }
-    if (length(i) > 0L && i[1L] < 0) {
+    ## Exclude elements with negative indices?
+    if (any(i < 0)) {
+      stopifnot(is.null(dim(i)))
+      if (any(i > 0)) {
+        stop("only 0's may be mixed with negative subscripts")
+      }
+      ## Drop elements
       i <- setdiff(seq_len(nmap), -i)
+    }
+    ## Drop zeros?
+    if (is.null(dim(i))) {
+      i <- i[i != 0]
     }
   } else if (is.logical(i)) {
     if (length(i) < nmap) i <- rep(i, length.out=nmap)
@@ -318,30 +526,49 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
   length(res) <- ni
   res <- structure(res, class=class(x))
 
-  ## Nothing to do?
-  if (ni == 0L) {
-    return(res)
+  if (ni > 0L) {
+    ## Add names?
+    if (!is.null(names)) {
+      names2 <- names[i]
+      names2[i > nmap] <- ""
+      names(res) <- names2
+    }
+
+    ## Ignore out-of-range indices
+    j <- i[i <= nmap]
+    for (kk in seq_along(j)) {
+      value <- x[[j[kk]]]
+      if (!is.null(value)) res[[kk]] <- value
+    }
   }
 
-  ## Add names?
-  if (!is.null(names)) {
-    names2 <- names[i]
-    names2[i > nmap] <- ""
-    names(res) <- names2
-  }
+  ## Preserve dimensions?
+  dim <- dim(i)
+  ndim <- length(dim)
+  if (ndim > 1) {
+    dimnames <- dimnames(i)
 
-  ## Ignore out-of-range indices
-  i <- i[i <= nmap]
-  for (kk in seq_along(i)) {
-    value <- x[[i[kk]]]
-    if (!is.null(value)) res[[kk]] <- value
+    ## Drop singleton dimensions?
+    if (drop) {
+      keep <- (dim != 1)
+      dim <- dim[keep]
+      dimnames <- dimnames[keep]
+      ndim <- length(dim)
+    }
+
+    if (ndim > 1) {
+      names <- names(res)
+      dim(res) <- dim
+      dimnames(res) <- dimnames
+      names(res) <- names
+    }
   }
 
   res
 }
 
 
-new_variable <- function(envir, value) {
+new_variable <- function(envir, value, create=TRUE) {
   count <- get(".listenv_var_count", envir=envir, inherits=FALSE)
 
   count <- count + 1L
@@ -351,7 +578,9 @@ new_variable <- function(envir, value) {
     assign(name, value, envir=envir, inherits=FALSE)
   }
 
-  assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+  if (create) {
+    assign(".listenv_var_count", count, envir=envir, inherits=FALSE)
+  }
 
   name
 } # new_variable()
@@ -455,8 +684,10 @@ remove_by_name <- function(x, name) {
   ## Nothing to do?
   if (is.na(idx)) return(invisible(x))
 
+  ## Drop internal variable, unless place holder
   var <- map[idx]
-  remove(list=var, envir=x, inherits=FALSE)
+  if (!is.na(var)) remove(list=var, envir=x, inherits=FALSE)
+
   map <- map[-idx]
   map(x) <- map
 
@@ -481,8 +712,10 @@ remove_by_index <- function(x, i) {
   ## Nothing to do?
   if (i > length(map)) return(invisible(x))
 
+  ## Drop internal variable, unless place holder
   var <- map[i]
-  remove(list=var, envir=x, inherits=FALSE)
+  if (!is.na(var)) remove(list=var, envir=x, inherits=FALSE)
+
   map <- map[-i]
   map(x) <- map
 
@@ -511,14 +744,29 @@ remove_by_index <- function(x, i) {
 }
 
 #' @export
-`[[<-.listenv` <- function(x, i, value) {
-  if (is.character(i)) {
-    if (is.null(value)) {
-      x <- remove_by_name(x, name=i)
-    } else {
-      x <- assign_by_name(x, name=i, value=value)
+`[[<-.listenv` <- function(x, ..., value) {
+  map <- map(x)
+  n <- length(map)
+
+  idxs <- list(...)
+  nidxs <- length(idxs)
+
+  ## Subsetting by multiple dimensions?
+  if (nidxs > 1L) {
+    i <- toIndex(x, idxs)
+  } else {
+    i <- idxs[[1L]]
+    if (is.character(i)) {
+      if (is.null(value)) {
+        x <- remove_by_name(x, name=i)
+      } else {
+        x <- assign_by_name(x, name=i, value=value)
+      }
+      return(invisible(x))
     }
-  } else if (is.numeric(i)) {
+  }
+
+  if (is.numeric(i)) {
     if (is.null(value)) {
       x <- remove_by_index(x, i=i)
     } else {
@@ -527,19 +775,65 @@ remove_by_index <- function(x, i) {
   } else {
     stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call.=FALSE)
   }
+
   return(invisible(x))
 }
 
 
 #' @export
-`[<-.listenv` <- function(x, i, value) {
-  if (is.logical(i)) {
-    n <- length(x)
-    if (length(i) < n) i <- rep(i, length.out=n)
-    i <- which(i)
+`[<-.listenv` <- function(x, ..., value) {
+  ## Need to allow for implicit indices, e.g. x[1,,2]
+  idxs <- as.list(sys.call())[-(1:2)]
+  idxs$value <- NULL
+  nidxs <- length(idxs)
+
+  ## Assert that subsetting has correct shape
+  dim <- dim(x)
+  ndim <- length(dim)
+  if (nidxs > 1 && nidxs != ndim) {
+    stop(sprintf("Incorrect subsetting. Expected %d dimensions but got %d", ndim, nidxs))
+  }
+
+  ## Implicitly specified dimensions
+  missing <- sapply(idxs, FUN=function(x) is.symbol(x) && identical("", deparse(x)))
+  if (any(missing)) {
+    if (nidxs == ndim) {
+      envir <- parent.frame()
+      for (kk in seq_len(ndim)) {
+        if (missing[kk]) {
+          idxs[[kk]] <- seq_len(dim[kk])
+        } else {
+          idxs[[kk]] <- eval(idxs[[kk]], envir=envir)
+        }
+      }
+    } else if (nidxs == 1) {
+      if (ndim == 0) {
+        idxs <- list(seq_len(length(x)))
+      } else {
+        ## Special case: Preserve dimensions when x[]
+        idxs <- lapply(dim, FUN=function(n) seq_len(n))
+        nidxs <- length(idxs)
+     }
+    }
+  } else {
+    envir <- parent.frame()
+    idxs <- lapply(idxs, FUN=eval, envir=envir)
+  }
+
+  if (nidxs <= 1L) {
+    i <- idxs[[1L]]
+  } else {
+    i <- toIndex(x, idxs)
   }
 
   ni <- length(i)
+  if (is.logical(i)) {
+    n <- length(x)
+    if (ni < n) i <- rep(i, length.out=n)
+    i <- which(i)
+    ni <- length(i)
+  }
+
 
   # Nothing to do?
   if (ni == 0L) return(invisible(x))
@@ -573,7 +867,10 @@ remove_by_index <- function(x, i) {
 #' @export
 #' @method unlist listenv
 unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
+  names <- names(x)
   x <- as.list(x)
+  names(x) <- names
+
   if (recursive) {
     repeat {
       x <- unlist(x, recursive=TRUE, use.names=use.names)
@@ -589,6 +886,52 @@ unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
   } else {
     unlist(x, recursive=FALSE, use.names=use.names)
   }
+}
+
+#' @export
+dim.listenv <- function(x) attr(x, "dim.")
+
+#' @export
+`dim<-.listenv` <- function(x, value) {
+  n <- length(x)
+  if (!is.null(value)) {
+    names <- names(value)
+    value <- as.integer(value)
+    p <- prod(as.double(value))
+    if (p != n) {
+      stop(sprintf("dims [product %d] do not match the length of object [%d]", p, n))
+    }
+    names(value) <- names
+  }
+
+  ## Always remove "dimnames" and "names" attributes, cf. help("dim")
+  dimnames(x) <- NULL
+  names(x) <- NULL
+
+  attr(x, "dim.") <- value
+  x
+}
+
+
+#' @export
+dimnames.listenv <- function(x) attr(x, "dimnames.")
+
+#' @export
+`dimnames<-.listenv` <- function(x, value) {
+  dim <- dim(x)
+  if (is.null(dim) && !is.null(value)) {
+    stop("'dimnames' applied to non-array")
+  }
+  for (kk in seq_along(dim)) {
+    names <- value[[kk]]
+    if (is.null(names)) next
+    n <- length(names)
+    if (n != dim[kk]) {
+      stop(sprintf("length of 'dimnames' [%d] not equal to array extent", kk))
+    }
+  }
+  attr(x, "dimnames.") <- value
+  x
 }
 
 #' @export
