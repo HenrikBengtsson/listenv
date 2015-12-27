@@ -160,15 +160,39 @@ str(target)
 stopifnot(target$exists)
 
 x[[4]] <- 4
+stopifnot(length(x) == 4)
+
 target <- parse_env_subset(x[[3]], substitute=TRUE)
 str(target)
 stopifnot(!target$exists)
-stopifnot(length(x) == 4)
 
 target <- parse_env_subset(x[1:5], substitute=TRUE)
-stopifnot(length(x) == 4)
 stopifnot(length(target$idx) == 5, all(target$idx == 1:5))
 str(target)
+
+target <- parse_env_subset(x[integer(0L)], substitute=TRUE)
+stopifnot(length(target$idx) == 0)
+str(target)
+
+target <- parse_env_subset(x[[integer(0L)]], substitute=TRUE)
+stopifnot(length(target$idx) == 0)
+str(target)
+
+target <- parse_env_subset(x[0], substitute=TRUE)
+stopifnot(length(target$idx) == 0)
+str(target)
+
+target <- parse_env_subset(x[[0]], substitute=TRUE)
+stopifnot(length(target$idx) == 0)
+str(target)
+
+target <- parse_env_subset(x[-1], substitute=TRUE)
+stopifnot(length(target$idx) == length(x)-1)
+str(target)
+
+## Odds and ends
+target <- parse_env_subset(x[[""]], substitute=TRUE)
+stopifnot(length(target$idx) == 1L, !target$exists)
 
 message("*** parse_env_subset() on listenv ... DONE")
 
@@ -179,9 +203,6 @@ message("*** parse_env_subset() on listenv ... DONE")
 message("*** parse_env_subset() - exceptions ...")
 
 x <- listenv()
-
-res <- try(target <- parse_env_subset(x[[""]], substitute=TRUE), silent=TRUE)
-stopifnot(inherits(res, "try-error"))
 
 res <- try(target <- parse_env_subset("_a", substitute=TRUE), silent=TRUE)
 stopifnot(inherits(res, "try-error"))

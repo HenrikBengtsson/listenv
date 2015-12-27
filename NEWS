@@ -1,10 +1,9 @@
 Package: listenv
 ================
 
-Version: 0.5.9-9000 [2015-12-22]
+Version: 0.5.9-9000 [2015-12-26]
 o Added support for multi-dimensional subsetting of list environments
   just as for list.
-o Added undim() for removing dimension while preserving names attribute.
 o BUG FIX: parse_env_subset(x[[idx]]) for list environment 'x' and
   index 'idx' claimed x[[idx]] exists as long as idx in [1,length(x)]
   but it forgot to check if element really existed, which may not

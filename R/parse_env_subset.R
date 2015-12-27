@@ -186,12 +186,20 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       } else {
         subset <- subset[[1L]]
         if (is.numeric(subset)) {
-##          if (subset == 0) {
-##            stop("Invalid subset: ", sQuote(code), call.=TRUE)
-##          }
-          res$idx <- subset
-          res$exists <- !is.na(map[res$idx]) && (res$idx >= 1 && res$idx <= length(envir))
-          res$name <- names[subset]
+          i <- subset
+          n <- length(envir)
+          if (any(i < 0)) {
+            if (any(i > 0)) {
+              stop("only 0's may be mixed with negative subscripts")
+            }
+            ## Drop elements
+            i <- setdiff(seq_len(n), -i)
+          }
+          ## Drop zeros
+          i <- i[i != 0]
+          res$idx <- i
+          res$exists <- !is.na(map[res$idx]) & (res$idx >= 1 & res$idx <= n)
+          res$name <- names[i]
           if (length(res$name) == 0L) res$name <- ""
         } else if (is.character(subset)) {
           res$idx <- match(subset, names)
@@ -217,7 +225,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   }
 
   ## Validate
-  if (is.null(dim) && length(res$subset) == 1) {
+  if (is.null(dim) && length(res$subset) == 1 && identical(res$op, "[")) {
     if (any(is.na(res$idx)) && !nzchar(res$name)) {
       stop("Invalid subset: ", sQuote(code), call.=TRUE)
     }

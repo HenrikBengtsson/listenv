@@ -498,12 +498,18 @@ toIndex <- function(x, idxs) {
     name <- i
     i <- match(name, table=names)
   } else if (is.numeric(i)) {
-    if (!(all(i > 0) || all(i < 0))) {
-      stop("Only 0's may be mixed with negative subscripts")
-    }
     ## Exclude elements with negative indices?
-    if (length(i) > 0L && i[1L] < 0) {
+    if (any(i < 0)) {
+      stopifnot(is.null(dim(i)))
+      if (any(i > 0)) {
+        stop("only 0's may be mixed with negative subscripts")
+      }
+      ## Drop elements
       i <- setdiff(seq_len(nmap), -i)
+    }
+    ## Drop zeros?
+    if (is.null(dim(i))) {
+      i <- i[i != 0]
     }
   } else if (is.logical(i)) {
     if (length(i) < nmap) i <- rep(i, length.out=nmap)
