@@ -234,9 +234,6 @@ NULL
 ```
 This behavior is by design, cf. `help("dim", package="base")`.
 
-### Limitations
-The current implementation does _not_ support _dimensional subsetting_ of more than one element.  For instance, `x[1,]` is not supported by this version.
-
 
 
 ## Important about environments
