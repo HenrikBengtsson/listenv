@@ -691,6 +691,11 @@ remove_by_name <- function(x, name) {
   map <- map[-idx]
   map(x) <- map
 
+  ## Remove dimensions
+  names <- names(x)
+  dim(x) <- NULL
+  names(x) <- names
+
   invisible(x)
 } # remove_by_name()
 
@@ -718,6 +723,11 @@ remove_by_index <- function(x, i) {
 
   map <- map[-i]
   map(x) <- map
+
+  ## Remove dimensions
+  names <- names(x)
+  dim(x) <- NULL
+  names(x) <- names
 
   invisible(x)
 } # remove_by_index()

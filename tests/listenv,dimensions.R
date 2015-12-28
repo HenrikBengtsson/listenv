@@ -295,6 +295,17 @@ print(y)
 stopifnot(identical(y, 1:12))
 
 
+message("* Removing elements ...")
+
+x <- as.listenv(1:6)
+dim(x) <- c(2,3)
+names(x) <- letters[seq_along(x)]
+print(x)
+x[[3]] <- NULL
+print(x)
+stopifnot(is.null(dim(x)))
+stopifnot(!is.null(names(x)), identical(names(x), c("a", "b", "d", "e", "f")))
+
 message("* List environment and multiple dimensions ... DONE")
 
 

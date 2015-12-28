@@ -1,6 +1,11 @@
 Package: listenv
 ================
 
+Version: 0.6.0-9000 [2015-12-28]
+o BUG FIX: Removing an element from a list environment did not remove
+  dimensions, e.g. x$a <- NULL.
+
+
 Version: 0.6.0 [2015-12-27]
 o Added support for multi-dimensional subsetting of list environments
   just as for list.
