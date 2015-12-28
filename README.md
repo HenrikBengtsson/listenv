@@ -234,10 +234,6 @@ NULL
 ```
 This behavior is by design, cf. `help("dim", package="base")`.
 
-### Limitations
-The current implementation does _not_ support _dimensional subsetting_ of more than one element.  For instance, `x[1,]` is not supported by this version.
-
-
 
 ## Important about environments
 List environments are as their name suggests _environments_.  Whenever working with environments in R, it is important to understand that _environments are mutable_ whereas all other of the basic data types in R are immutable.  For example, consider the following function that assigns zero to element `a` of object `x`:
@@ -295,6 +291,13 @@ R package listenv is available on [CRAN](http://cran.r-project.org/package=liste
 install.packages('listenv')
 ```
 
+### Pre-release version
+
+To install the pre-release version that is available in branch `develop`, use:
+```r
+source('http://callr.org/install#HenrikBengtsson/listenv@develop')
+```
+This will install the package from source.  
 
 
 
