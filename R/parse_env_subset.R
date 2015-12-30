@@ -202,19 +202,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
           ## Drop zeros?
           keep <- which(i != 0)
           if (length(keep) != length(i)) {
-            if (op == "[[") {
-              ## BACKWARD COMPATIBILITY:
-              ## In order not to break two `R CMD check` package tests
-              ## for future 0.9.0 on CRAN, we tweak the result here in
-              ## order for those two tests not to fail. /HB 2015-12-26
-              ## FIX ME: Remove when future (> 0.9.0) is on CRAN.
-              if (identical(i, 0) && identical(code, "x[[0]]") && is.element("package:future", search()) && utils::packageVersion("future") <= "0.9.0") {
-                res$idx <- i
-                res$exists <- FALSE
-                return(res)
-              }
-              stop("Invalid (zero) indices: ", hpaste(i))
-            }
+            if (op == "[[") stop("Invalid (zero) indices: ", hpaste(i))
             i <- i[keep]
           }
           res$idx <- i
