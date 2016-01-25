@@ -1,7 +1,9 @@
 Package: listenv
 ================
 
-Version: 0.6.0-9000 [2015-12-28]
+Version: 0.6.0-9000 [2016-01-25]
+o Added is.matrix(), is.array(), as.vector() and as.matrix() for list
+  environments.
 o BUG FIX: Removing an element from a list environment did not remove
   dimensions, e.g. x$a <- NULL.
 
