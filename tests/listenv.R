@@ -2,7 +2,10 @@ library("listenv")
 
 ovars <- ls(envir=globalenv())
 oopts <- options(warn=1)
-
+withR330 <- function(expr) {
+  if (getRversion() < "3.3.0") return()
+  eval(substitute(expr), envir=parent.frame())
+}
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Allocation
@@ -11,32 +14,38 @@ x <- listenv()
 print(x)
 stopifnot(length(x) == 0)
 stopifnot(is.null(names(x)))
+withR330({ stopifnot(identical(lengths(x), integer(0L))) })
 
 x <- listenv(a=1)
 print(x)
 stopifnot(length(x) == 1)
 stopifnot(identical(names(x), c("a")))
 stopifnot(identical(x$a, 1))
+withR330({ stopifnot(identical(lengths(x), c(a=1L))) })
 
 x <- listenv(a=1, b=2:3)
 print(x)
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$a, 1), identical(x$b, 2:3))
-
+withR330({
+    stopifnot(identical(lengths(x), c(a=1L, b=2L)))
+    stopifnot(identical(lengths(x, use.names=FALSE), c(1L, 2L)))
+})
 
 x <- listenv(b=2:3, .a=1)
 print(x)
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("b", ".a")))
 stopifnot(identical(x$.a, 1), identical(x$b, 2:3))
-
+withR330({ stopifnot(identical(lengths(x), c(b=2L, .a=1L))) })
 
 x <- listenv(length=3, a=1)
 print(x)
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("length", "a")))
 stopifnot(identical(x$length, 3), identical(x$a, 1))
+withR330({ stopifnot(identical(lengths(x), c(length=1L, a=1L))) })
 
 
 withCallingHandlers({
@@ -90,6 +99,7 @@ print(names(x))
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$a, 1))
+withR330({ stopifnot(identical(lengths(x), c(a=1L, b=1L))) })
 
 x[["a"]] <- 0
 print(x)
@@ -119,6 +129,7 @@ names(x) <- c("a", "b", "c")
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
 stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
+withR330({ stopifnot(identical(lengths(x), c(a=1L, b=1L, c=1L))) })
 
 
 
@@ -130,6 +141,7 @@ x <- listenv()
 x[1:3] <- list(1, NULL, 3)
 print(x)
 stopifnot(is.null(names(x)))
+withR330({ stopifnot(identical(lengths(x), c(1L, 0L, 1L))) })
 
 y <- x[]
 print(y)
@@ -137,6 +149,7 @@ stopifnot(length(y) == length(x))
 stopifnot(all.equal(y, x))
 stopifnot(!identical(y, x))
 stopifnot(is.null(names(y)))
+withR330({ stopifnot(identical(lengths(y), c(1L, 0L, 1L))) })
 
 y <- x[1]
 print(y)
@@ -145,14 +158,17 @@ stopifnot(is.null(names(y)))
 y <- x[2:3]
 print(y)
 stopifnot(is.null(names(y)))
+withR330({ stopifnot(identical(lengths(y), c(0L, 1L))) })
 
 y <- x[-1]
 print(y)
 stopifnot(is.null(names(y)))
+withR330({ stopifnot(identical(lengths(y), c(0L, 1L))) })
 
 x[c('c', '.a', 'b')] <- list(NULL, 3, 1)
 print(x)
 stopifnot(identical(names(x), c("", "", "", "c", ".a", "b")))
+withR330({ stopifnot(identical(lengths(x), c(1L, 0L, 1L, c=0L, .a=1L, b=1L))) })
 
 y <- as.list(x)
 str(y)
@@ -264,6 +280,7 @@ print(y)
 z <- as.list(y)
 print(z)
 stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
+withR330({ stopifnot(identical(lengths(z), c(a=1L, b=0L, c=1L, 0L, 0L))) })
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

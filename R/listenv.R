@@ -184,6 +184,7 @@ map <- function(x, ...) {
 #'
 #' @param x A list environment.
 #'
+#' @aliases lengths.listenv
 #' @export
 #' @keywords internal
 length.listenv <- function(x) {
@@ -245,6 +246,14 @@ names.listenv <- function(x) {
   names(map) <- value
   map(x) <- map
   invisible(x)
+}
+
+#' @export
+#' @S3method lengths listenv
+lengths.listenv <- function(x, use.names=TRUE) {
+  ns <- lapply(x, FUN=length)
+  if (length(ns) == 0L) return(integer(0L))
+  unlist(ns, use.names=use.names)
 }
 
 #' List representation of a list environment

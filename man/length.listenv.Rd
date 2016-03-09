@@ -2,6 +2,7 @@
 % Please edit documentation in R/listenv.R
 \name{length.listenv}
 \alias{length.listenv}
+\alias{lengths.listenv}
 \title{Number of elements in list environment}
 \usage{
 \method{length}{listenv}(x)
