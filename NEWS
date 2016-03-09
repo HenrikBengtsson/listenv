@@ -4,7 +4,7 @@ Package: listenv
 Version: 0.6.0-9000 [2016-03-08]
 o Added is.matrix(), is.array(), as.vector() and as.matrix() for list
   environments.
-o Added lengths() for list environments.
+o Added lengths() for list environments.  Requires R (>= 3.3.0).
 o BUG FIX: Removing an element from a list environment did not remove
   dimensions, e.g. x$a <- NULL.
 
