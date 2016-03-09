@@ -191,6 +191,11 @@ length.listenv <- function(x) {
   length(map(x))
 }
 
+## BACKPORT for R (< 3.2.0)
+if (!exists("lengths", mode="function")) {
+  lengths <- function(x, use.names=FALSE) UseMethod("lengths")
+}
+
 #' @export
 `length<-.listenv` <- function(x, value) {
   map <- map(x)
