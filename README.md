@@ -208,6 +208,12 @@ A 'listenv' vector with 2 elements ('a', 'f').
 > unlist(x)
 a b c d e f 
 1 2 3 4 5 6 
+> as.list(x)
+  A B C
+a 1 3 5
+b 2 4 6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"
 ```
 Contrary to lists, element names are preserved also with multi-dimensional subsetting, e.g.
 ```r
