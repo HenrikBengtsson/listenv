@@ -8,10 +8,15 @@
 #
 # Validate your .travis.yml file at http://lint.travis-ci.org/
 #----------------------------------------------------------------
-language: R
-cache: packages
+language: r
 sudo: false
+cache: packages
 
+r:
+  - oldrel
+  - release
+  - devel
+  
 r_github_packages:
   - jimhester/covr
 
