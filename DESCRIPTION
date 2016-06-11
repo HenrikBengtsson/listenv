@@ -3,7 +3,9 @@ Version: 0.6.0-9000
 Depends:
     R (>= 3.1.2)
 Suggests:
-    R.utils, R.rsp
+    R.utils,
+    R.rsp,
+    markdown
 VignetteBuilder:
     R.rsp
 Title: Environments Behaving (Almost) as Lists
