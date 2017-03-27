@@ -120,8 +120,8 @@ print.listenv <- function(x, ...) {
   }
   if (ndim > 1) {
     dimstr <- paste(dim, collapse = "x")
-    hasDimnames <- !sapply(dimnames, FUN = is.null)
-    dimnamesT <- sapply(dimnames, FUN = function(x) hpaste(sQuote(x)))
+    has_dimnames <- !sapply(dimnames, FUN = is.null)
+    dimnames_tmp <- sapply(dimnames, FUN = function(x) hpaste(sQuote(x)))
 
     s <- sprintf("%s arranged in %s", s, dimstr)
 
@@ -129,12 +129,13 @@ print.listenv <- function(x, ...) {
       if (is.null(dimnames)) {
         s <- sprintf("%s unnamed rows and columns", s, dimstr)
       } else {
-        if (all(hasDimnames)) {
-          s <- sprintf("%s rows (%s) and columns (%s)", s, dimnamesT[1L], dimnamesT[2L])
-        } else if (hasDimnames[1]) {
-          s <- sprintf("%s rows (%s) and unnamed columns", s, dimnamesT[1L])
-        } else if (hasDimnames[2]) {
-          s <- sprintf("%s unnamed rows and columns (%s)", s, dimnamesT[2L])
+        if (all(has_dimnames)) {
+          s <- sprintf("%s rows (%s) and columns (%s)", s,
+                       dimnames_tmp[1L], dimnames_tmp[2L])
+        } else if (has_dimnames[1]) {
+          s <- sprintf("%s rows (%s) and unnamed columns", s, dimnames_tmp[1L])
+        } else if (has_dimnames[2]) {
+          s <- sprintf("%s unnamed rows and columns (%s)", s, dimnames_tmp[2L])
         } else {
           s <- sprintf("%s unnamed rows and columns", s, dimstr)
         }
@@ -143,15 +144,16 @@ print.listenv <- function(x, ...) {
       if (is.null(dimnames)) {
         s <- sprintf("%s unnamed dimensions", s)
       } else {
-        dimnamesT[!hasDimnames] <- "NULL"
-        dimnamesT <- sprintf("#%d: %s", seq_along(dimnamesT), dimnamesT)
-        dimnamesT <- paste(dimnamesT, collapse = "; ")
-        if (all(hasDimnames)) {
-          s <- sprintf("%s dimensions (%s)", s, dimnamesT)
-        } else if (!any(hasDimnames)) {
+        dimnames_tmp[!has_dimnames] <- "NULL"
+        dimnames_tmp <- sprintf("#%d: %s",
+                                seq_along(dimnames_tmp), dimnames_tmp)
+        dimnames_tmp <- paste(dimnames_tmp, collapse = "; ")
+        if (all(has_dimnames)) {
+          s <- sprintf("%s dimensions (%s)", s, dimnames_tmp)
+        } else if (!any(has_dimnames)) {
           s <- sprintf("%s unnamed dimensions", s)
         } else {
-          s <- sprintf("%s partially named dimensions (%s)", s, dimnamesT)
+          s <- sprintf("%s partially named dimensions (%s)", s, dimnames_tmp)
         }
       }
     }
@@ -351,7 +353,7 @@ toIndex <- function(x, idxs) {
     stop("incorrect number of dimensions")
   }
   dimnames <- dimnames(x)
-  idxDimnames <- dimnames
+  idx_dimnames <- dimnames
 
   ## Indexing scale factor per dimension
   scale <- c(1L, cumprod(dim[-ndim]))
@@ -388,9 +390,9 @@ toIndex <- function(x, idxs) {
     }
 
     ## Subset dimnames?
-    if (!is.null(idxDimnames)) {
-      dn <- idxDimnames[[kk]]
-      if (!is.null(dn)) idxDimnames[[kk]] <- dn[i]
+    if (!is.null(idx_dimnames)) {
+      dn <- idx_dimnames[[kk]]
+      if (!is.null(dn)) idx_dimnames[[kk]] <- dn[i]
     }
 
     i <- scale[kk] * (i - 1)
@@ -413,8 +415,7 @@ toIndex <- function(x, idxs) {
   names(dim(idx)) <- names(dim(x))
 
   ## Preserve dimnames
-  dimnames(idx) <- idxDimnames
-
+  dimnames(idx) <- idx_dimnames
 
   idx
 }

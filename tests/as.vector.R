@@ -18,7 +18,7 @@ for (dim in dims) {
                  "character", "raw")) {
     message("mode: ", mode)
 
-    ## as.vector()
+    ## as.vector():
     y <- as.listenv(x)
     vx <- as.vector(x, mode = mode)
     print(vx)
@@ -27,7 +27,7 @@ for (dim in dims) {
     stopifnot(is.matrix(vx) == is.matrix(vy))
     stopifnot(is.array(vx) == is.array(vy))
 
-    ## as.matrix()
+    ## as.matrix():
     y <- as.listenv(x)
     mx <- as.matrix(x)
     print(mx)
@@ -37,7 +37,7 @@ for (dim in dims) {
     stopifnot(is.matrix(mx) == is.matrix(my))
     stopifnot(is.array(mx) == is.array(my))
 
-    ## as.array()
+    ## as.array():
     y <- as.listenv(x)
     ax <- as.array(x)
     print(ax)

@@ -8,7 +8,7 @@ hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL,
   if (is.null(lastCollapse)) lastCollapse <- collapse
 
   # Build vector 'x'
-  x <- paste(..., sep=sep)
+  x <- paste(..., sep = sep)
   n <- length(x)
 
   # Nothing todo?
@@ -27,11 +27,10 @@ hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL,
     if (lastCollapse == collapse) {
       x <- paste(x, collapse = collapse)
     } else {
-      xT <- paste(x[1:(n - 1)], collapse = collapse)
-      x <- paste(xT, x[n], sep = lastCollapse)
+      x_head <- paste(x[1:(n - 1)], collapse = collapse)
+      x <- paste(x_head, x[n], sep = lastCollapse)
     }
   }
 
   x
 }
-

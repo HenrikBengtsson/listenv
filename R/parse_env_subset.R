@@ -69,26 +69,26 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       for (kk in 3:n) {
         missing <- (length(expr[[kk]]) == 1L) && (expr[[kk]] == "")
         if (missing) {
-          subsetKK <- NULL
+          subset_kk <- NULL
         } else {
-          subsetKK <- expr[[kk]]
+          subset_kk <- expr[[kk]]
         }
-        if (is.symbol(subsetKK)) {
-          subsetKK <- deparse(subsetKK)
+        if (is.symbol(subset_kk)) {
+          subset_kk <- deparse(subset_kk)
           if (op == "[[") {
-            if (!exists(subsetKK, envir = envir, inherits = TRUE)) {
+            if (!exists(subset_kk, envir = envir, inherits = TRUE)) {
               stop(sprintf("Object %s not found: %s",
-                           sQuote(subsetKK), sQuote(code)), call. = FALSE)
+                           sQuote(subset_kk), sQuote(code)), call. = FALSE)
             }
-            subsetKK <- get(subsetKK, envir = envir, inherits = TRUE)
+            subset_kk <- get(subset_kk, envir = envir, inherits = TRUE)
           }
-        } else if (is.language(subsetKK)) {
-          subsetKK <- eval(subsetKK, envir = envir)
+        } else if (is.language(subset_kk)) {
+          subset_kk <- eval(subset_kk, envir = envir)
         }
-        if (is.null(subsetKK)) {
+        if (is.null(subset_kk)) {
           subset[kk - 2L] <- list(NULL)
         } else {
-          subset[[kk - 2L]] <- subsetKK
+          subset[[kk - 2L]] <- subset_kk
         }
       }
 
@@ -117,22 +117,22 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     }
 
     for (kk in seq_along(subset)) {
-      subsetKK <- subset[[kk]]
-      if (is.null(subsetKK)) {
-      } else if (any(is.na(subsetKK))) {
+      subset_kk <- subset[[kk]]
+      if (is.null(subset_kk)) {
+      } else if (any(is.na(subset_kk))) {
         stop(sprintf(
           "Invalid subsetting. Subset must not contain missing values: %s",
           sQuote(code)), call. = FALSE)
-      } else if (is.character(subsetKK)) {
-        if (!all(nzchar(subsetKK))) {
+      } else if (is.character(subset_kk)) {
+        if (!all(nzchar(subset_kk))) {
           stop(sprintf(
             "Invalid subset. Subset must not contain empty names: %s",
             sQuote(code)), call. = FALSE)
         }
-      } else if (is.numeric(subsetKK)) {
+      } else if (is.numeric(subset_kk)) {
       } else {
         stop(sprintf("Invalid subset of type %s: %s",
-                     sQuote(typeof(subsetKK)), sQuote(code)), call. = FALSE)
+                     sQuote(typeof(subset_kk)), sQuote(code)), call. = FALSE)
       }
     } # for (kk ...)
 
@@ -156,15 +156,15 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
         dimnames <- dimnames(envir)
         exists <- TRUE
         for (kk in seq_along(subset)) {
-          subsetKK <- subset[[kk]]
-          if (is.null(subsetKK)) {
+          subset_kk <- subset[[kk]]
+          if (is.null(subset_kk)) {
             subset[[kk]] <- seq_len(dim[kk])
-          } else if (is.numeric(subsetKK)) {
-            exists <- exists && (subsetKK >= 1 && subsetKK <= dim[kk])
-          } else if (is.character(subsetKK)) {
-            subsetKK <- match(subsetKK, dimnames[[kk]])
-            exists <- exists && !is.na(subsetKK)
-            subset[[kk]] <- subsetKK
+          } else if (is.numeric(subset_kk)) {
+            exists <- exists && (subset_kk >= 1 && subset_kk <= dim[kk])
+          } else if (is.character(subset_kk)) {
+            subset_kk <- match(subset_kk, dimnames[[kk]])
+            exists <- exists && !is.na(subset_kk)
+            subset[[kk]] <- subset_kk
           }
         }
 

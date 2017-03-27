@@ -14,9 +14,9 @@ for (ii in seq_along(x)) {
   stopifnot(is.null(x[[ii]]))
   idx <- arrayInd(ii, .dim = dim(x))
   stopifnot(is.null(x[[idx[1], idx[2]]]))
-  varV <- get_variable(x, ii, create = FALSE)
-  varA <- get_variable(x, idx, create = FALSE)
-  stopifnot(identical(varA, varV))
+  var_v <- get_variable(x, ii, create = FALSE)
+  var_a <- get_variable(x, idx, create = FALSE)
+  stopifnot(identical(var_a, var_v))
 }
 
 x[1:6] <- 1:6
@@ -25,9 +25,9 @@ for (ii in seq_along(x)) {
   idx <- arrayInd(ii, .dim = dim(x))
   stopifnot(identical(x[[idx[1], idx[2]]], ii))
 
-  varV <- get_variable(x, ii)
-  varA <- get_variable(x, idx)
-  stopifnot(identical(varA, varV))
+  var_v <- get_variable(x, ii)
+  var_a <- get_variable(x, idx)
+  stopifnot(identical(var_a, var_v))
 }
 
 

@@ -67,10 +67,10 @@ for (kk in seq_along(dims)) {
              list(seq_along(dimnames)))
   for (ll in seq_along(excls)) {
     excl <- excls[[ll]]
-    dimnamesT <- dimnames
-    dimnamesT[excl] <- list(NULL)
-    dimnames(x0) <- dimnamesT
-    dimnames(x) <- dimnamesT
+    dimnames_tmp <- dimnames
+    dimnames_tmp[excl] <- list(NULL)
+    dimnames(x0) <- dimnames_tmp
+    dimnames(x) <- dimnames_tmp
     print(x)
     stopifnot(identical(dim(x), dim(x0)))
     stopifnot(identical(dimnames(x), dimnames(x0)))
