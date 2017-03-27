@@ -1,19 +1,19 @@
 library("listenv")
 
-ovars <- ls(envir=globalenv())
-oopts <- options(warn=1)
+ovars <- ls(envir = globalenv())
+oopts <- options(warn = 1)
 
 
 message("* List environment and multiple dimensions ...")
 
 x <- listenv()
-dim(x) <- c(0,0)
+dim(x) <- c(0, 0)
 print(x)
 stopifnot(length(x) == 0)
 
-x <- listenv(a=1)
+x <- listenv(a = 1)
 stopifnot(identical(names(x), "a"))
-dim(x) <- c(1,1)
+dim(x) <- c(1, 1)
 print(x)
 stopifnot(length(x) == 1)
 stopifnot(is.null(dimnames(x)))
@@ -34,9 +34,9 @@ message("* dim(x) and dimnames(x) ...")
 dims <- list(2:3, 2:4)
 for (kk in seq_along(dims)) {
   dim <- dims[[kk]]
-  dimnames <- lapply(dim, FUN=function(n) letters[seq_len(n)])
+  dimnames <- lapply(dim, FUN = function(n) letters[seq_len(n)])
   names <- letters[seq_len(prod(dim))]
-  str(list(dim=dim, dimnames=dimnames, names=names))
+  str(list(dim = dim, dimnames = dimnames, names = names))
 
   n <- prod(dim)
   values <- seq_len(n)
@@ -63,7 +63,8 @@ for (kk in seq_along(dims)) {
   z <- as.listenv(y)
   stopifnot(all.equal(z, x))
 
-  excls <- c(list(NULL), as.list(seq_along(dimnames)), list(seq_along(dimnames)))
+  excls <- c(list(NULL), as.list(seq_along(dimnames)),
+             list(seq_along(dimnames)))
   for (ll in seq_along(excls)) {
     excl <- excls[[ll]]
     dimnamesT <- dimnames
@@ -84,8 +85,8 @@ for (kk in seq_along(dims)) {
 
 # Assign names
 x <- as.listenv(1:6)
-dim(x) <- c(2,3)
-dimnames(x) <- lapply(dim(x), FUN=function(n) letters[seq_len(n)])
+dim(x) <- c(2, 3)
+dimnames(x) <- lapply(dim(x), FUN = function(n) letters[seq_len(n)])
 names(x) <- letters[seq_along(x)]
 print(x)
 stopifnot(!is.null(dim(x)))
@@ -96,7 +97,7 @@ stopifnot(x[["a", "b"]] == 3L)
 
 ## Extract single element
 message("* y <- x[[i,j]] and z <- x[i,j] ...")
-dim(x) <- c(2,3)
+dim(x) <- c(2, 3)
 dimnames(x) <- list(c("a", "b"), NULL)
 
 y <- x[[3]]
@@ -104,27 +105,27 @@ stopifnot(identical(y, 3L))
 z <- x[3]
 stopifnot(identical(z[[1]], y))
 
-y <- x[[1,1]]
+y <- x[[1, 1]]
 stopifnot(identical(y, x[[1]]))
-z <- x[1,1]
+z <- x[1, 1]
 stopifnot(identical(z[[1]], y))
 
-y <- x[[2,3]]
+y <- x[[2, 3]]
 stopifnot(identical(y, x[[6]]))
-z <- x[2,3]
+z <- x[2, 3]
 stopifnot(identical(z[[1]], y))
 
-y <- x[["a",3]]
-stopifnot(identical(y, x[[1,3]]))
+y <- x[["a", 3]]
+stopifnot(identical(y, x[[1, 3]]))
 stopifnot(identical(y, x[[5]]))
-z <- x["a",3]
+z <- x["a", 3]
 stopifnot(identical(z[[1]], y))
 
 
-y <- x[[1,c(FALSE,FALSE,TRUE)]]
-stopifnot(identical(y, x[[1,3]]))
+y <- x[[1, c(FALSE, FALSE, TRUE)]]
+stopifnot(identical(y, x[[1, 3]]))
 stopifnot(identical(y, x[[5]]))
-z <- x[1,c(FALSE,FALSE,TRUE)]
+z <- x[1, c(FALSE, FALSE, TRUE)]
 stopifnot(identical(z[[1]], y))
 
 
@@ -133,14 +134,14 @@ message("* x[[i,j]] <- value ...")
 x[[3]] <- -x[[3]]
 stopifnot(identical(x[[3]], -3L))
 
-x[[1,1]] <- -x[[1,1]]
+x[[1, 1]] <- -x[[1, 1]]
 stopifnot(identical(x[[1]], -1L))
 
-x[[2,3]] <- -x[[2,3]]
+x[[2, 3]] <- -x[[2, 3]]
 stopifnot(identical(x[[6]], -6L))
 
-x[["a",3]] <- -x[["a",3]]
-stopifnot(identical(x[[1,3]], -5L))
+x[["a", 3]] <- -x[["a", 3]]
+stopifnot(identical(x[[1, 3]], -5L))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -148,7 +149,7 @@ stopifnot(identical(x[[1,3]], -5L))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 message("* x[i], x[i,j] ...")
 x <- as.listenv(1:24)
-dim(x) <- c(2,3,4)
+dim(x) <- c(2, 3, 4)
 names(x) <- letters[seq_along(x)]
 x[2] <- list(NULL)
 print(x)
@@ -172,49 +173,54 @@ y <- x[-1]
 print(y)
 stopifnot(all.equal(as.list(y), as.list(x)[-1]))
 
-y <- x[1:2,1:3,1:4]
+y <- x[1:2, 1:3, 1:4]
 print(y)
 stopifnot(all.equal(dim(y), dim(x)))
 stopifnot(all.equal(y, x))
 stopifnot(all.equal(unlist(y), unlist(x)))
-stopifnot(all.equal(as.list(y), as.list(x)[1:2,1:3,1:4], check.attributes=FALSE))
+stopifnot(all.equal(as.list(y), as.list(x)[1:2, 1:3, 1:4],
+                    check.attributes = FALSE))
 
-y <- x[0,0,0]
+y <- x[0, 0, 0]
 print(y)
 stopifnot(length(y) == 0)
-stopifnot(all.equal(dim(y), c(0,0,0)))
-stopifnot(all.equal(y, as.list(x)[0,0,0]))
+stopifnot(all.equal(dim(y), c(0, 0, 0)))
+stopifnot(all.equal(y, as.list(x)[0, 0, 0]))
 
-y <- x[0,,]
+y <- x[0, , ]
 print(y)
 stopifnot(length(y) == 0)
-stopifnot(all.equal(dim(y), c(0,dim(x)[-1])))
-stopifnot(all.equal(y, as.list(x)[0,,]))
+stopifnot(all.equal(dim(y), c(0, dim(x)[-1])))
+stopifnot(all.equal(y, as.list(x)[0, , ]))
 
-y <- x[2,1,,drop=FALSE]
+y <- x[2, 1, , drop = FALSE]
 print(y)
-stopifnot(all.equal(dim(y), c(1,1,dim(x)[3])))
-stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=FALSE], check.attributes=FALSE))
+stopifnot(all.equal(dim(y), c(1, 1, dim(x)[3])))
+stopifnot(all.equal(as.list(y), as.list(x)[2, 1, , drop = FALSE],
+                    check.attributes = FALSE))
 
-y <- x[2,1,,drop=TRUE]
-print(y)
-stopifnot(is.null(dim(y)))
-stopifnot(all.equal(as.list(y), as.list(x)[2,1,,drop=TRUE], check.attributes=FALSE))
-
-y <- x[2,1,]
+y <- x[2, 1, , drop = TRUE]
 print(y)
 stopifnot(is.null(dim(y)))
-stopifnot(all.equal(as.list(y), as.list(x)[2,1,], check.attributes=FALSE))
+stopifnot(all.equal(as.list(y), as.list(x)[2, 1, , drop = TRUE],
+                    check.attributes = FALSE))
 
-y <- x[-1,,c(3,3,1)]
+y <- x[2, 1, ]
 print(y)
-stopifnot(all.equal(as.list(y), as.list(x)[-1,,c(3,3,1)], check.attributes=FALSE))
+stopifnot(is.null(dim(y)))
+stopifnot(all.equal(as.list(y), as.list(x)[2, 1, ],
+                    check.attributes = FALSE))
+
+y <- x[-1, , c(3, 3, 1)]
+print(y)
+stopifnot(all.equal(as.list(y), as.list(x)[-1, , c(3, 3, 1)],
+                    check.attributes = FALSE))
 
 message("* x[i], x[i,j] ... DONE")
 
 
 message("* x[i] <- value, x[i,j] <- value ...")
-dim <- c(2,3)
+dim <- c(2, 3)
 n <- prod(dim)
 names <- letters[seq_len(n)]
 
@@ -230,12 +236,12 @@ x0[] <- 6:1
 x[] <- 6:1
 stopifnot(all(unlist(x) == unlist(x0)))
 
-x0[1,] <- 1:3
-x[1,] <- 1:3
+x0[1, ] <- 1:3
+x[1, ] <- 1:3
 stopifnot(all(unlist(x) == unlist(x0)))
 
-x0[,-2] <- 1:2
-x[,-2] <- 1:2
+x0[, -2] <- 1:2
+x[, -2] <- 1:2
 stopifnot(all(unlist(x) == unlist(x0)))
 
 message("* x[i] <- value, x[i,j] <- value ... DONE")
@@ -243,31 +249,31 @@ message("* x[i] <- value, x[i,j] <- value ... DONE")
 
 message("* Exceptions ...")
 x <- listenv()
-res <- try(dim(x) <- c(2,3), silent=TRUE)
+res <- try(dim(x) <- c(2, 3), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 length(x) <- 6
-dim(x) <- c(2,3)
+dim(x) <- c(2, 3)
 
-res <- try(x[[3,3]], silent=TRUE)
+res <- try(x[[3, 3]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[3,3], silent=TRUE)
+res <- try(x[3, 3], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[c(-1,1),3], silent=TRUE)
+res <- try(x[c(-1, 1), 3], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[c(TRUE, TRUE, TRUE),], silent=TRUE)
+res <- try(x[c(TRUE, TRUE, TRUE), ], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(dimnames(x) <- NA, silent=TRUE)
+res <- try(dimnames(x) <- NA, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(dimnames(x) <- list("a", "b", "c"), silent=TRUE)
+res <- try(dimnames(x) <- list("a", "b", "c"), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(dimnames(x) <- list("a", NULL), silent=TRUE)
+res <- try(dimnames(x) <- list("a", NULL), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 dimnames(x) <- list(c("a", "b"), NULL)
@@ -276,20 +282,20 @@ dimnames(x) <- list(c("a", "b"), NULL)
 message("* Changing dim(x) and dimnames(x) ...")
 x <- listenv()
 x[1:12] <- 1:12
-dim(x) <- c(2,2,3)
+dim(x) <- c(2, 2, 3)
 dimnames(x) <- list(c("a", "b"), NULL, NULL)
 print(x)
-stopifnot(identical(dim(x), c(2L,2L,3L)))
+stopifnot(identical(dim(x), c(2L, 2L, 3L)))
 stopifnot(identical(dimnames(x), list(c("a", "b"), NULL, NULL)))
-x[[2,1,2]] <- -x[[2,1,2]]
+x[[2, 1, 2]] <- -x[[2, 1, 2]]
 y <- unlist(x)
 print(y)
 
-dim(x) <- c(4,3)
+dim(x) <- c(4, 3)
 print(x)
-stopifnot(identical(dim(x), c(4L,3L)))
+stopifnot(identical(dim(x), c(4L, 3L)))
 stopifnot(is.null(dimnames(x)))
-x[[2,2]] <- -x[[2,2]]
+x[[2, 2]] <- -x[[2, 2]]
 y <- unlist(x)
 print(y)
 stopifnot(identical(y, 1:12))
@@ -298,7 +304,7 @@ stopifnot(identical(y, 1:12))
 message("* Removing elements ...")
 
 x <- as.listenv(1:6)
-dim(x) <- c(2,3)
+dim(x) <- c(2, 3)
 names(x) <- letters[seq_along(x)]
 print(x)
 x[[3]] <- NULL
@@ -311,4 +317,4 @@ message("* List environment and multiple dimensions ... DONE")
 
 ## Cleanup
 options(oopts)
-rm(list=setdiff(ls(envir=globalenv()), ovars), envir=globalenv())
+rm(list = setdiff(ls(envir = globalenv()), ovars), envir = globalenv())

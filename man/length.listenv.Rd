@@ -14,4 +14,3 @@
 Number of elements in list environment
 }
 \keyword{internal}
-

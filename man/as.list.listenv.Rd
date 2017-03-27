@@ -24,4 +24,3 @@ A list.
 List representation of a list environment
 }
 \keyword{internal}
-

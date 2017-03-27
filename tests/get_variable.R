@@ -1,7 +1,7 @@
 library("listenv")
 
-ovars <- ls(envir=globalenv())
-oopts <- options(warn=1)
+ovars <- ls(envir = globalenv())
+oopts <- options(warn = 1)
 map <- listenv:::map
 
 x <- listenv()
@@ -56,23 +56,24 @@ print(x[[2]])
 print(x[[3]])
 
 ## Out-of-bound subsetting
-res <- try(x[[0]], silent=TRUE)
+res <- try(x[[0]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 ## Out-of-bound subsetting
-res <- try(x[[4]], silent=TRUE)
+res <- try(x[[4]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-print(get_variable(x, 1L, mustExist=FALSE))
-print(get_variable(x, 2L, mustExist=FALSE))
-print(get_variable(x, 3L, mustExist=FALSE))
+print(get_variable(x, 1L, mustExist = FALSE))
+print(get_variable(x, 2L, mustExist = FALSE))
+print(get_variable(x, 3L, mustExist = FALSE))
 
 ## Out-of-bound element
-res <- try(var <- get_variable(x, 0L, mustExist=TRUE), silent=TRUE)
+res <- try(var <- get_variable(x, 0L, mustExist = TRUE), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 ## Out-of-bound element
-res <- try(var <- get_variable(x, length(x) + 1L, mustExist=TRUE), silent=TRUE)
+res <- try(var <- get_variable(x, length(x) + 1L, mustExist = TRUE),
+           silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 
@@ -84,17 +85,17 @@ length(x) <- 3L
 names(x) <- c("a", "b", "c")
 
 ## Non-existing element
-res <- try(var <- get_variable(x, "z", mustExist=TRUE), silent=TRUE)
+res <- try(var <- get_variable(x, "z", mustExist = TRUE), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(var <- get_variable(x, c("a", "b")), silent=TRUE)
+res <- try(var <- get_variable(x, c("a", "b")), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(var <- get_variable(x, 1+2i), silent=TRUE)
+res <- try(var <- get_variable(x, 1 + 2i), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
 
 
 ## Cleanup
 options(oopts)
-rm(list=setdiff(ls(envir=globalenv()), ovars), envir=globalenv())
+rm(list = setdiff(ls(envir = globalenv()), ovars), envir = globalenv())

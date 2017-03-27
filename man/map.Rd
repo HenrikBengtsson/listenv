@@ -17,4 +17,3 @@ The a named character vector
 Variable name map for elements of list environment
 }
 \keyword{internal}
-

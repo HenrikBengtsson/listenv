@@ -1,12 +1,12 @@
 library("listenv")
 
-dims <- list(3, c(3,1), c(2,3), c(2,3,4))
+dims <- list(3, c(3, 1), c(2, 3), c(2, 3, 4))
 
 for (dim in dims) {
   x <- as.list(1:prod(dim))
   if (length(dim) > 1) {
     dim(x) <- dim
-    dimnames(x) <- lapply(dim, FUN=function(n) letters[seq_len(n)])
+    dimnames(x) <- lapply(dim, FUN = function(n) letters[seq_len(n)])
   }
   y <- as.listenv(x)
 
@@ -14,14 +14,15 @@ for (dim in dims) {
   stopifnot(is.matrix(x) == is.matrix(y))
   stopifnot(is.array(x) == is.array(y))
 
-  for (mode in c("any", "list", "logical", "integer", "double", "complex", "character", "raw")) {
+  for (mode in c("any", "list", "logical", "integer", "double", "complex",
+                 "character", "raw")) {
     message("mode: ", mode)
 
     ## as.vector()
     y <- as.listenv(x)
-    vx <- as.vector(x, mode=mode)
+    vx <- as.vector(x, mode = mode)
     print(vx)
-    vy <- as.vector(y, mode=mode)
+    vy <- as.vector(y, mode = mode)
     stopifnot(identical(vy, vx))
     stopifnot(is.matrix(vx) == is.matrix(vy))
     stopifnot(is.array(vx) == is.array(vy))

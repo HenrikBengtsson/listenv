@@ -24,4 +24,3 @@ The name of the underlying variable
 Get name of variable for a specific element of list environment
 }
 \keyword{internal}
-

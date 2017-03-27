@@ -24,4 +24,3 @@ automatically also does \code{attr(x, "dimnames") <- NULL}.
 However, other attributes such as names attributes are preserved,
 which is not the case if one do \code{dim(x) <- NULL}.
 }
-

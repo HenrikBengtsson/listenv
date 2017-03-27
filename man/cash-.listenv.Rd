@@ -19,4 +19,3 @@ The value of an element or NULL if the element does not exist
 Get elements of list environment
 }
 \keyword{internal}
-

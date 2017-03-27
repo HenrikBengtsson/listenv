@@ -9,7 +9,8 @@ dim.listenv <- function(x) attr(x, "dim.")
     value <- as.integer(value)
     p <- prod(as.double(value))
     if (p != n) {
-      stop(sprintf("dims [product %d] do not match the length of object [%d]", p, n))
+      stop(sprintf("dims [product %d] do not match the length of object [%d]",
+                   p, n))
     }
     names(value) <- names
   }
@@ -65,7 +66,7 @@ as.vector.listenv <- function(x, mode="any") {
   if (mode == "any") mode <- "list"
   x <- as.list(x)
   if (mode != "list") {
-    x <- as.vector(x, mode=mode)
+    x <- as.vector(x, mode = mode)
   }
   x
 }

@@ -1,13 +1,13 @@
 library("listenv")
 
-ovars <- ls(envir=globalenv())
-oopts <- options(warn=1)
+ovars <- ls(envir = globalenv())
+oopts <- options(warn = 1)
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Single-element assignments and subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- list(a=1, b=2, c=3)
+x <- list(a = 1, b = 2, c = 3)
 str(x)
 y <- as.listenv(x)
 print(y)
@@ -23,11 +23,11 @@ y <- as.listenv(e)
 print(y)
 stopifnot(identical(as.list(y), as.list(e)))
 
-x <- c(a=1, b=2, c=3)
+x <- c(a = 1, b = 2, c = 3)
 y <- as.listenv(x)
 print(y)
 stopifnot(identical(as.list(y), as.list(x)))
 
 ## Cleanup
 options(oopts)
-rm(list=setdiff(ls(envir=globalenv()), ovars), envir=globalenv())
+rm(list = setdiff(ls(envir = globalenv()), ovars), envir = globalenv())

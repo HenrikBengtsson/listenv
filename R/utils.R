@@ -1,5 +1,8 @@
 ## From R.utils 2.0.2 (2015-05-23)
-hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL, maxHead=if (missing(lastCollapse)) 3 else Inf, maxTail=if (is.finite(maxHead)) 1 else Inf, abbreviate="...") {
+hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL,
+                   maxHead=if (missing(lastCollapse)) 3 else Inf,
+                   maxTail=if (is.finite(maxHead)) 1 else Inf,
+                   abbreviate="...") {
   maxHead <- as.double(maxHead)
   maxTail <- as.double(maxTail)
   if (is.null(lastCollapse)) lastCollapse <- collapse
@@ -22,12 +25,13 @@ hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL, maxHead=if (mi
 
   if (!is.null(collapse) && n > 1) {
     if (lastCollapse == collapse) {
-      x <- paste(x, collapse=collapse)
+      x <- paste(x, collapse = collapse)
     } else {
-      xT <- paste(x[1:(n-1)], collapse=collapse)
-      x <- paste(xT, x[n], sep=lastCollapse)
+      xT <- paste(x[1:(n - 1)], collapse = collapse)
+      x <- paste(xT, x[n], sep = lastCollapse)
     }
   }
 
   x
-} # hpaste()
+}
+

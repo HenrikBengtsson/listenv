@@ -7,7 +7,7 @@
 INSTALL[.]md
 OVERVIEW[.]md
 README[.]md
-
+#
 #----------------------------
 # Travis-CI et al.
 #----------------------------
@@ -17,7 +17,7 @@ README[.]md
 ^appveyor[.]yml$
 ^covr-utils.R$
 ^[.]covr[.]R$
-
+#
 #----------------------------
 # R related
 #----------------------------

@@ -21,4 +21,3 @@ A named list.
 Helper function to infer target from expression and environment
 }
 \keyword{internal}
-
