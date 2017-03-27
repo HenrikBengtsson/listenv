@@ -9,8 +9,12 @@ dim.listenv <- function(x) attr(x, "dim.")
     value <- as.integer(value)
     p <- prod(as.double(value))
     if (p != n) {
-      stop(sprintf("dims [product %d] do not match the length of object [%d]",
-                   p, n))
+      if (n == 0) {
+        length(x) <- p
+      } else {
+        stop(sprintf(
+          "dims [product %d] do not match the length of object [%d]", p, n))
+      }
     }
     names(value) <- names
   }

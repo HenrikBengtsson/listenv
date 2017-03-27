@@ -247,12 +247,14 @@ stopifnot(all(unlist(x) == unlist(x0)))
 message("* x[i] <- value, x[i,j] <- value ... DONE")
 
 
+message("* dim(x) <- dim on length(x) == 0 ...")
+x <- listenv()
+dim(x) <- c(2, 3)
+stopifnot(length(x) == 6, nrow(x) == 2, ncol(x) == 3)
+
+
 message("* Exceptions ...")
 x <- listenv()
-res <- try(dim(x) <- c(2, 3), silent = TRUE)
-stopifnot(inherits(res, "try-error"))
-
-length(x) <- 6
 dim(x) <- c(2, 3)
 
 res <- try(x[[3, 3]], silent = TRUE)

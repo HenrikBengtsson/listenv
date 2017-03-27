@@ -1,7 +1,9 @@
 Package: listenv
 ================
 
-Version: 0.6.0-9000 [2016-03-08]
+Version: 0.6.0-9000 [2017-03-26]
+o Now it is possible to set the dimension on an empty list environment without
+  first resizing it with length(), e.g. x <- listenv(); dim(x) <- c(2, 3).
 o Added is.matrix(), is.array(), as.vector() and as.matrix() for list
   environments.
 o Added lengths() for list environments.  Requires R (>= 3.3.0).
