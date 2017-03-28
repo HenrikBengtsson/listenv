@@ -56,16 +56,6 @@ with_r_330({
 })
 
 
-withCallingHandlers({
-  x <- listenv(length = 3)
-}, warning = function(warn) {
-  cat("WARNING:", warn$message)
-  invokeRestart("muffleWarning")
-})
-print(x)
-stopifnot(length(x) == 3)
-stopifnot(is.null(names(x)))
-
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Single-element assignments and subsetting
@@ -728,6 +718,12 @@ stopifnot(inherits(res, "try-error"))
 
 res <- try(x[[""]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
+
+## Defunct
+res <- tryCatch({
+  x <- listenv(length = 3L)
+}, error = identity)
+stopifnot(inherits(res, "error"))
 
 
 ## Cleanup

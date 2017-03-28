@@ -1,7 +1,7 @@
 Package: listenv
 ================
 
-Version: 0.6.0-9000 [2017-03-26]
+Version: 0.6.0-9000 [2017-03-27]
 
 NEW FEATURES:
 
@@ -17,7 +17,11 @@ BUG FIXES:
 
  o Removing an element from a list environment did not remove dimensions,
    e.g. x$a <- NULL.
- 
+
+DEPRECATED AND DEFUNCT:
+
+ o x <- listenv(length = n) is defunct; use x <- listenv(); length(x) <- n.
+
  
 Version: 0.6.0 [2015-12-27]
 

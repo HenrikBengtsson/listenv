@@ -18,17 +18,9 @@ listenv <- function(...) {
   metaenv <- new.env(parent = parent.frame())
   env <- new.env(parent = metaenv)
 
-  ## Add elements?
-  if (nargs > 0L) {
-    ## Backward compatibility
-    if (nargs == 1L && identical(names[1L], "length")) {
-      .Deprecated(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")
-      length <- args$length
-      stopifnot(length >= 0L)
-      args <- vector("list", length = length)
-      nargs <- length
-      names <- NULL
-    }
+  ## Defunct call?
+  if (nargs == 1L && identical(names[1L], "length")) {
+    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")
   }
 
   ## Allocate internal variables
