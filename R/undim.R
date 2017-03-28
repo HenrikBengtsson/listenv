@@ -17,7 +17,7 @@
 undim <- function(x, ...) UseMethod("undim")
 
 #' @export
-undim.default <- function(x, ...) {
+undim.default <- function(x, ...) {  #nolint
   if (is.null(dim(x))) return(x)
   attr(x, "dim") <- NULL
   ## Dimnames seems to be unset above, but in case it changes ...
@@ -26,7 +26,7 @@ undim.default <- function(x, ...) {
 }
 
 #' @export
-undim.listenv <- function(x, ...) {
+undim.listenv <- function(x, ...) {  #nolint
   x <- NextMethod("undim")
   attr(x, "dim.") <- NULL
   attr(x, "dimnames.") <- NULL

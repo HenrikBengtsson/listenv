@@ -20,7 +20,7 @@ listenv <- function(...) {
 
   ## Defunct call?
   if (nargs == 1L && identical(names[1L], "length")) {
-    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")
+    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")  #nolint
   }
 
   ## Allocate internal variables
@@ -83,7 +83,7 @@ as.listenv.default <- function(x, ...) {
 
 #' @export
 print.listenv <- function(x, ...) {
-  n <- length(x)
+  n <- length(x)  #nolint
   dim <- dim(x)
   ndim <- length(dim)
   names <- names(x)
@@ -187,7 +187,7 @@ length.listenv <- function(x) {
 
 ## BACKPORT for R (< 3.2.0)
 if (!exists("lengths", mode = "function")) {
-  lengths <- function(x, use.names = FALSE) UseMethod("lengths")
+  lengths <- function(x, use.names = FALSE) UseMethod("lengths")  #nolint
 }
 
 #' @export
@@ -251,7 +251,7 @@ names.listenv <- function(x) {
 
 #' @export
 #' @S3method lengths listenv
-lengths.listenv <- function(x, use.names=TRUE) {
+lengths.listenv <- function(x, use.names=TRUE) {  #nolint
   ns <- lapply(x, FUN = length)
   if (length(ns) == 0L) return(integer(0L))
   unlist(ns, use.names = use.names)
@@ -457,7 +457,7 @@ to_index <- function(x, idxs) {
 #' @export
 `[.listenv` <- function(x, ..., drop=TRUE) {
   # Need to allow for implicit indices, e.g. x[1,,2]
-  idxs <- as.list(sys.call())[-(1:2)]
+  idxs <- as.list(sys.call())[-(1:2)]  #nolint
   idxs$drop <- NULL
   nidxs <- length(idxs)
 
@@ -814,7 +814,7 @@ remove_by_index <- function(x, i) {
 #' @export
 `[<-.listenv` <- function(x, ..., value) {
   ## Need to allow for implicit indices, e.g. x[1,,2]
-  idxs <- as.list(sys.call())[-(1:2)]
+  idxs <- as.list(sys.call())[-(1:2)]  #nolint
   idxs$value <- NULL
   nidxs <- length(idxs)
 
@@ -904,7 +904,7 @@ remove_by_index <- function(x, i) {
 
 #' @export
 #' @method unlist listenv
-unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
+unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {  #nolint
   names <- names(x)
   x <- as.list(x)
   names(x) <- names
@@ -929,8 +929,8 @@ unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {
 
 #' @export
 #' @method all.equal listenv
-all.equal.listenv <- function(target, current, all.names=TRUE, sorted=FALSE,
-                              ...) {
+all.equal.listenv <- function(target, current, all.names=TRUE,  #nolint
+                              sorted=FALSE, ...) {
   if (identical(target, current)) return(TRUE)
 
   ## Coerce to lists
