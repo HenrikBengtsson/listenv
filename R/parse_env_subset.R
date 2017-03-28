@@ -151,7 +151,8 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       ## Multi-dimensional subsetting?
       if (length(subset) > 1L) {
         if (is.null(dim)) {
-          stop("Multi-dimensional subsetting on list environment without dimensions: ", sQuote(code), call. = TRUE)
+          stop("Multi-dimensional subsetting on list environment without dimensions: ",
+               sQuote(code), call. = TRUE)
         }
         dimnames <- dimnames(envir)
         exists <- TRUE

@@ -29,7 +29,9 @@ get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ..
   } else {
     ndim <- length(dim)
     if (length(name) != 1L && length(name) != ndim) {
-      stop(sprintf("Subscript must be a scalar or of equal length as the number of dimension (%d): %d", ndim, length(name)), call. = FALSE)
+      stop(sprintf(
+        "Subscript must be a scalar or of equal length to the number of dimension (%d): %d",
+        ndim, length(name)), call. = FALSE)
     }
 
     ## Map multi-dimensional index to scalar index

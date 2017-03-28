@@ -339,6 +339,12 @@ vignettes: $(R_OUTDIR)/vigns
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Static code validation etc
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+lint:
+	$(R_SCRIPT) -e "library(lintr); lint_package(linters = with_defaults(commented_code_linter = NULL, closed_curly_linter = closed_curly_linter(allow_single_line = TRUE), open_curly_linter = open_curly_linter(allow_single_line = TRUE), line_length_linter = line_length_linter(95)))"
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Run package tests
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 $(R_OUTDIR)/tests/%.R: $(FILES_TESTS)

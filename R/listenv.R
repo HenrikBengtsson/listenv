@@ -343,7 +343,7 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 
 
 ## [[i,j,...]] -> [[idx]]
-toIndex <- function(x, idxs) {
+to_index <- function(x, idxs) {
   nidxs <- length(idxs)
 
   dim <- dim(x)
@@ -431,7 +431,7 @@ toIndex <- function(x, idxs) {
 
   ## Subsetting by multiple dimensions?
   if (nidxs > 1L) {
-    i <- toIndex(x, idxs)
+    i <- to_index(x, idxs)
   } else {
     i <- idxs[[1L]]
     if (is.character(i)) {
@@ -443,7 +443,8 @@ toIndex <- function(x, idxs) {
     }
 
     if (length(i) != 1L) {
-      stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))
+      stop("Subsetting of more than one element at the time is not allowed for listenv's: ",
+           length(i))
     }
 
     if (i < 1L || i > n) {
@@ -507,7 +508,7 @@ toIndex <- function(x, idxs) {
   if (nidxs <= 1L) {
     i <- idxs[[1L]]
   } else {
-    i <- toIndex(x, idxs)
+    i <- to_index(x, idxs)
   }
 
   map <- map(x)
@@ -789,7 +790,7 @@ remove_by_index <- function(x, i) {
 
   ## Subsetting by multiple dimensions?
   if (nidxs > 1L) {
-    i <- toIndex(x, idxs)
+    i <- to_index(x, idxs)
   } else {
     i <- idxs[[1L]]
     if (is.character(i)) {
@@ -809,7 +810,9 @@ remove_by_index <- function(x, i) {
       x <- assign_by_index(x, i = i, value = value)
     }
   } else {
-    stop(sprintf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call. = FALSE)
+    stop(sprintf(
+      "Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s",
+      mode(i)), call. = FALSE)
   }
 
   return(invisible(x))
@@ -862,7 +865,7 @@ remove_by_index <- function(x, i) {
   if (nidxs <= 1L) {
     i <- idxs[[1L]]
   } else {
-    i <- toIndex(x, idxs)
+    i <- to_index(x, idxs)
   }
 
   ni <- length(i)
@@ -882,7 +885,9 @@ remove_by_index <- function(x, i) {
 
   if (ni != nvalue) {
     if (ni < nvalue || ni %% nvalue != 0) {
-      warning(sprintf("Number of items to replace is not a multiple of replacement length: %d != %d", ni, nvalue), call. = FALSE)
+      warning(sprintf(
+        "Number of items to replace is not a multiple of replacement length: %d != %d",
+        ni, nvalue), call. = FALSE)
     }
     value <- rep(value, length.out = ni)
     nvalue <- length(value)
@@ -897,7 +902,9 @@ remove_by_index <- function(x, i) {
       x <- assign_by_index(x, i = i[kk], value = value[[kk]])
     }
   } else {
-    stop(sprintf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i)), call. = FALSE)
+    stop(sprintf(
+      "Subsetted [<- assignment to listenv's is only supported for names and indices, not %s",
+      mode(i)), call. = FALSE)
   }
   return(invisible(x))
 }
