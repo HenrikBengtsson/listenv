@@ -83,7 +83,7 @@ as.listenv.default <- function(x, ...) {
 
 #' @export
 print.listenv <- function(x, ...) {
-  n <- length(x)  #nolint
+  n <- length(x)
   dim <- dim(x)
   ndim <- length(dim)
   names <- names(x)
@@ -775,7 +775,6 @@ remove_by_index <- function(x, i) {
 #' @export
 `[[<-.listenv` <- function(x, ..., value) {
   map <- map(x)
-  n <- length(map)
 
   idxs <- list(...)
   nidxs <- length(idxs)
