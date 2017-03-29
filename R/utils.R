@@ -34,3 +34,12 @@ hpaste <- function(..., sep="", collapse=", ", last_collapse=NULL,
 
   x
 }
+
+
+stopf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
+  stop(sprintf(fmt, ...), call. = call., domain = domain)
+}
+
+warnf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
+  warning(sprintf(fmt, ...), call. = call., domain = domain)
+}

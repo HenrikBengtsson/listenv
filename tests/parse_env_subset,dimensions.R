@@ -7,7 +7,7 @@ if (exists("y")) rm(list = "y")
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Multi-dimensional subsetting
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("*** parse_env_subset() on multi-dimensional listenv ...")
+message("*** parse_env_subset() on multi-dim listenv ...")
 
 x <- listenv()
 length(x) <- 6
@@ -69,13 +69,13 @@ str(target)
 stopifnot(identical(target$envir, x), length(target$idx) == 2,
           all(target$idx == c(3, 5)))
 
-message("*** parse_env_subset() on multi-dimensional listenv ... DONE")
+message("*** parse_env_subset() on multi-dim listenv ... DONE")
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
-message("*** parse_env_subset() on multi-dimensional listenv - exceptions ...")
+message("*** parse_env_subset() on multi-dim listenv - exceptions ...")
 
 x <- listenv()
 
@@ -104,7 +104,7 @@ res <- try(target <- parse_env_subset(x[[1, 2, 3]], substitute = TRUE),
            silent = TRUE)
 ## stopifnot(inherits(res, "try-error"))
 
-message("*** parse_env_subset() on multi-dimensional listenv - exceptions ... DONE")
+message("*** parse_env_subset() on multi-dim listenv - exceptions ... DONE")
 
 
 ## Cleanup

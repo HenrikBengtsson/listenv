@@ -12,8 +12,7 @@ dim.listenv <- function(x) attr(x, "dim.")
       if (n == 0) {
         length(x) <- p
       } else {
-        stop(sprintf(
-          "dims [product %d] do not match the length of object [%d]", p, n))
+        stopf("dims [product %d] do not match the length of object [%d]", p, n)
       }
     }
     names(value) <- names
@@ -42,7 +41,7 @@ dimnames.listenv <- function(x) attr(x, "dimnames.")
     if (is.null(names)) next
     n <- length(names)
     if (n != dim[kk]) {
-      stop(sprintf("length of 'dimnames' [%d] not equal to array extent", kk))
+      stopf("length of 'dimnames' [%d] not equal to array extent", kk)
     }
   }
   attr(x, "dimnames.") <- value

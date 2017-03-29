@@ -22,15 +22,15 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   } else if (is.character(expr)) {
     ## Variable specified as a name
     if (length(expr) > 1L) {
-      stop(sprintf("Does not specify a single variable, but %d: %s",
-                   length(expr), hpaste(sQuote(expr))), call. = FALSE)
+      stopf("Does not specify a single variable, but %d: %s",
+            length(expr), hpaste(sQuote(expr)), call. = FALSE)
     }
     res$name <- expr
   } else if (is.numeric(expr)) {
     ## Variable specified as a subset of envir
     if (length(expr) > 1L) {
-      stop(sprintf("Does not specify a single index, but %d: %s",
-                   length(expr), hpaste(sQuote(expr))), call. = FALSE)
+      stopf("Does not specify a single index, but %d: %s",
+            length(expr), hpaste(sQuote(expr)), call. = FALSE)
     }
     res$subset <- list(expr)
   } else {
@@ -50,15 +50,14 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       ## Target
       objname <- deparse(expr[[2]])
       if (!exists(objname, envir = envir, inherits = TRUE)) {
-        stop(sprintf("Object %s not found: %s", sQuote(objname), sQuote(code)),
-             call. = FALSE)
+        stopf("Object %s not found: %s", sQuote(objname), sQuote(code),
+              call. = FALSE)
       }
 
       obj <- get(objname, envir = envir, inherits = TRUE)
       if (!is.environment(obj)) {
-        stop(sprintf(
-          "Subsetting can not be done on a %s; only to an environment: %s",
-          sQuote(mode(obj)), sQuote(code)), call. = FALSE)
+        stopf("Subsetting can not be done on a %s; only to an environment: %s",
+              sQuote(mode(obj)), sQuote(code), call. = FALSE)
       }
       res$envir <- obj
 
@@ -75,8 +74,8 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
           subset_kk <- deparse(subset_kk)
           if (op == "[[") {
             if (!exists(subset_kk, envir = envir, inherits = TRUE)) {
-              stop(sprintf("Object %s not found: %s",
-                           sQuote(subset_kk), sQuote(code)), call. = FALSE)
+              stopf("Object %s not found: %s",
+                    sQuote(subset_kk), sQuote(code), call. = FALSE)
             }
             subset_kk <- get(subset_kk, envir = envir, inherits = TRUE)
           }
@@ -106,31 +105,29 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   subset <- res$subset
   if (!is.null(subset)) {
     if (!is.list(subset)) {
-      stop(sprintf("INTERNAL ERROR (expected 'subset' to be a list): %s",
-                   sQuote(code)), call. = FALSE)
+      stopf("INTERNAL ERROR (expected 'subset' to be a list): %s",
+            sQuote(code), call. = FALSE)
     }
     if (length(subset) == 0L) {
-      stop(sprintf("Subsetting of at least on element is required: %s",
-                   sQuote(code)), call. = FALSE)
+      stopf("Subsetting of at least on element is required: %s",
+            sQuote(code), call. = FALSE)
     }
 
     for (kk in seq_along(subset)) {
       subset_kk <- subset[[kk]]
       if (is.null(subset_kk)) {
       } else if (any(is.na(subset_kk))) {
-        stop(sprintf(
-          "Invalid subsetting. Subset must not contain missing values: %s",
-          sQuote(code)), call. = FALSE)
+        stopf("Invalid subsetting. Subset must not contain missing values: %s",
+              sQuote(code), call. = FALSE)
       } else if (is.character(subset_kk)) {
         if (!all(nzchar(subset_kk))) {
-          stop(sprintf(
-            "Invalid subset. Subset must not contain empty names: %s",
-            sQuote(code)), call. = FALSE)
+          stopf("Invalid subset. Subset must not contain empty names: %s",
+                sQuote(code), call. = FALSE)
         }
       } else if (is.numeric(subset_kk)) {
       } else {
-        stop(sprintf("Invalid subset of type %s: %s",
-                     sQuote(typeof(subset_kk)), sQuote(code)), call. = FALSE)
+        stopf("Invalid subset of type %s: %s", sQuote(typeof(subset_kk)),
+              sQuote(code), call. = FALSE)
       }
     } # for (kk ...)
 
@@ -149,8 +146,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
       ## Multi-dimensional subsetting?
       if (length(subset) > 1L) {
         if (is.null(dim)) {
-          stop("Multi-dimensional subsetting on list environment without dimensions: ",
-               sQuote(code), call. = TRUE)
+          stop("Multi-dimensional subsetting on list environment without dimensions: ", sQuote(code), call. = TRUE)  #nolint
         }
         dimnames <- dimnames(envir)
         exists <- TRUE

@@ -14,7 +14,8 @@
 get_variable <- function(...) UseMethod("get_variable")
 
 #' @export
-get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ...) {
+get_variable.listenv <- function(x, name, mustExist = FALSE,
+                                 create = !mustExist, ...) {
   if (is.character(name)) {
   } else if (is.numeric(name)) {
   } else {
@@ -29,9 +30,7 @@ get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ..
   } else {
     ndim <- length(dim)
     if (length(name) != 1L && length(name) != ndim) {
-      stop(sprintf(
-        "Subscript must be a scalar or of equal length to the number of dimension (%d): %d",
-        ndim, length(name)), call. = FALSE)
+      stopf("Subscript must be a scalar or of equal length to the number of dimension (%d): %d", ndim, length(name), call. = FALSE)  #nolint
     }
 
     ## Map multi-dimensional index to scalar index
@@ -42,8 +41,7 @@ get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ..
 
       for (kk in seq_len(ndim)) {
         if (idxs[kk] < 1 || idxs[kk] > dim[kk]) {
-          stop(sprintf("Index #%d out of range [1,%d]: %s",
-                       kk, dim[kk], idxs[kk]))
+          stopf("Index #%d out of range [1,%d]: %s", kk, dim[kk], idxs[kk])
         }
       }
       bases <- rev(c(cumprod(dim[-ndim]), 1))
@@ -59,7 +57,7 @@ get_variable.listenv <- function(x, name, mustExist=FALSE, create=!mustExist, ..
   if (length(var) == 1L && !is.na(var)) return(var)
 
   if (mustExist) {
-    stop(sprintf("No such %s element: %s", sQuote(class(x)[1]), name))
+    stopf("No such %s element: %s", sQuote(class(x)[1]), name)
   }
 
   ## Create new variable

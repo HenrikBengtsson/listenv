@@ -237,9 +237,8 @@ names.listenv <- function(x) {
   map <- map(x)
   if (is.null(value)) {
   } else if (length(value) != length(map)) {
-    stop(sprintf(
-      "Number of names does not match the number of elements: %s != %s",
-      length(value), length(map)))
+    stopf("Number of names does not match the number of elements: %s != %s",
+          length(value), length(map))
   }
 ##  if (any(duplicated(value))) {
 ##    stop("Environments cannot have duplicate names on elements")
@@ -399,8 +398,7 @@ to_index <- function(x, idxs) {
   dim <- dim(idx)
   ndim <- length(dim)
   if (ndim != nidxs) {
-    stop(sprintf("INTERNAL ERROR: Incompatible dimensions: %d != %d",
-                 ndim, nidxs))
+    stopf("INTERNAL ERROR: Incompatible dimensions: %d != %d", ndim, nidxs)
   }
 
   ## Preserve names(dim)
@@ -435,13 +433,12 @@ to_index <- function(x, idxs) {
     }
 
     if (length(i) != 1L) {
-      stop("Subsetting of more than one element at the time is not allowed for listenv's: ",
-           length(i))
+      stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))  #nolint
     }
 
     if (i < 1L || i > n) {
-      stop(sprintf("Subscript out of bounds [%d,%d]: %d",
-                   min(1, n), n, i), call. = FALSE)
+      stopf("Subscript out of bounds [%d,%d]: %d",
+            min(1, n), n, i, call. = FALSE)
     }
   }
 
@@ -465,8 +462,8 @@ to_index <- function(x, idxs) {
   dim <- dim(x)
   ndim <- length(dim)
   if (nidxs > 1 && nidxs != ndim) {
-    stop(sprintf("Incorrect subsetting. Expected %d dimensions but got %d",
-                 ndim, nidxs))
+    stopf("Incorrect subsetting. Expected %d dimensions but got %d",
+          ndim, nidxs)
   }
 
   ## Implicitly specified dimensions
@@ -801,9 +798,7 @@ remove_by_index <- function(x, i) {
       x <- assign_by_index(x, i = i, value = value)
     }
   } else {
-    stop(sprintf(
-      "Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s",
-      mode(i)), call. = FALSE)
+    stopf("Subsetted [[<- assignment to listenv's is only supported for names and indices, not %s", mode(i), call. = FALSE)  #nolint
   }
 
   return(invisible(x))
@@ -821,8 +816,8 @@ remove_by_index <- function(x, i) {
   dim <- dim(x)
   ndim <- length(dim)
   if (nidxs > 1 && nidxs != ndim) {
-    stop(sprintf("Incorrect subsetting. Expected %d dimensions but got %d",
-                 ndim, nidxs))
+    stopf("Incorrect subsetting. Expected %d dimensions but got %d",
+          ndim, nidxs)
   }
 
   ## Implicitly specified dimensions
@@ -876,9 +871,7 @@ remove_by_index <- function(x, i) {
 
   if (ni != nvalue) {
     if (ni < nvalue || ni %% nvalue != 0) {
-      warning(sprintf(
-        "Number of items to replace is not a multiple of replacement length: %d != %d",
-        ni, nvalue), call. = FALSE)
+      warnf("Number of items to replace is not a multiple of replacement length: %d != %d", ni, nvalue, call. = FALSE)  #nolint
     }
     value <- rep(value, length.out = ni)
     nvalue <- length(value)
@@ -893,9 +886,7 @@ remove_by_index <- function(x, i) {
       x <- assign_by_index(x, i = i[kk], value = value[[kk]])
     }
   } else {
-    stop(sprintf(
-      "Subsetted [<- assignment to listenv's is only supported for names and indices, not %s",
-      mode(i)), call. = FALSE)
+    stopf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i), call. = FALSE)  #nolint
   }
   return(invisible(x))
 }
