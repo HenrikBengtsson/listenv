@@ -38,7 +38,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     stopifnot(n >= 2L)
 
     if (n >= 3L) {
-      ## Assignment to enviroment via $ and [[
+      ## Assignment to environment via $ and [[
       op <- as.character(expr[[1]])
       res$op <- op
       if (op == "$" && n > 3L) {
