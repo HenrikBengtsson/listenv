@@ -19,21 +19,15 @@
 
 # Revdeps
 
-## Broken (1)
-
-|package                      |version |error  |warning |note |
-|:----------------------------|:-------|:------|:-------|:----|
-|[future](problems.md#future) |1.6.1   |__+1__ |        |     |
-
 ## All (7)
 
-|package                                          |version |error  |warning |note |
-|:------------------------------------------------|:-------|:------|:-------|:----|
-|[aroma.affymetrix](problems.md#aroma.affymetrix) |3.1.0   |       |        |2    |
-|[aroma.core](problems.md#aroma.core)             |3.1.1   |       |        |3    |
-|[future](problems.md#future)                     |1.6.1   |__+1__ |        |     |
-|future.BatchJobs                                 |0.15.0  |       |        |     |
-|future.batchtools                                |0.6.0   |       |        |     |
-|[origami](problems.md#origami)                   |0.8.0   |       |1       |2    |
-|[PSCBS](problems.md#pscbs)                       |0.63.0  |       |        |1    |
+|package                                          |version |error |warning |note |
+|:------------------------------------------------|:-------|:-----|:-------|:----|
+|[aroma.affymetrix](problems.md#aroma.affymetrix) |3.1.0   |      |        |2    |
+|[aroma.core](problems.md#aroma.core)             |3.1.1   |      |        |3    |
+|future                                           |1.6.1   |      |        |     |
+|future.BatchJobs                                 |0.15.0  |      |        |     |
+|future.batchtools                                |0.6.0   |      |        |     |
+|[origami](problems.md#origami)                   |0.8.0   |      |1       |2    |
+|[PSCBS](problems.md#pscbs)                       |0.63.0  |      |        |1    |
 

@@ -46,34 +46,6 @@ Version: 3.1.1
     Package unavailable to check Rd xrefs: 'GLAD'
     ```
 
-# future
-
-Version: 1.6.1
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in 'tests/futures.R' failed.
-    Last 13 lines of output:
-      - args: function (expr, envir = parent.frame(), substitute = TRUE, lazy = FALSE, seed = NULL, globals = TRUE, persistent = FALSE, workers = availableWorkers(), user = NULL, revtunnel = TRUE, homogeneous = TRUE, gc = FALSE, earlySignal = FALSE, label = NULL, ...)
-      - tweaked: FALSE
-      - call: plan(strategy)
-      Workers: [n = 2] 'localhost', 'localhost'
-      Base port: 11215
-      Creating node 1 of 2 ...
-      - setting up node
-      Starting worker #1 on 'localhost': '/home/shared/cbc/software_cbc/R/R-3.4.1-20170630/lib64/R/bin/Rscript' --default-packages=datasets,utils,grDevices,graphics,stats,methods -e 'parallel:::.slaveRSOCK()' MASTER=localhost PORT=11215 OUT=/dev/null TIMEOUT=2592000 XDR=TRUE
-      Waiting for worker #1 on 'localhost' to connect back
-      Warning in socketConnection("localhost", port = port, server = TRUE, blocking = TRUE,  :
-        port 11215 cannot be opened
-      Error in socketConnection("localhost", port = port, server = TRUE, blocking = TRUE,  : 
-        cannot open the connection
-      Calls: plan ... makeClusterPSOCK -> makeNode -> <Anonymous> -> socketConnection
-      Execution halted
-    ```
-
 # origami
 
 Version: 0.8.0
