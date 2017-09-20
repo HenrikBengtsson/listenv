@@ -5,7 +5,18 @@
 #' @param substitute If TRUE, then the expression is
 #'        \code{substitute()}:ed, otherwise not.
 #'
-#' @return A named list.
+#' @return A named list with elements:
+#' \describe{
+#'  \item{\code{envir}}{An environment (defaults to argument \code{envir})}
+#'  \item{\code{name}}{A character vector. ...}
+#'  \item{\code{op}}{...}
+#'  \item{\code{subset}}{A list of \code{NULL}. ...}
+#'  \item{\code{idx}}{An integer vector or \code{NULL}. ...}
+#'  \item{\code{exists}}{A logical vector of length \code{length(idx)} with
+#'        \code{TRUE} and \code{FALSE} values.}
+#'  \item{\code{code}}{The deparsed expression \code{expr} coerced to a
+#'        single character string.}
+#' }
 #'
 #' @export
 #' @keywords internal
@@ -94,7 +105,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   } # if (is.symbol(expr))
 
 
-  ## Validat name, iff any
+  ## Validate name, iff any
   name <- res$name
   if (nzchar(name) && !grepl("^[.a-zA-Z]+", name)) {
     stop("Not a valid variable name: ", sQuote(name), call. = FALSE)
@@ -262,6 +273,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
   ## Sanity check
   stopifnot(is.environment(res$envir))
   stopifnot(is.character(res$name))
+  stopifnot(is.null(res$subset) || is.list(res$subset))
   stopifnot(is.null(res$idx) || all(is.numeric(res$idx)))
   stopifnot(is.logical(res$exists), !anyNA(res$exists))
   stopifnot(length(res$exists) == length(res$idx))

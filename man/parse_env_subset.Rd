@@ -15,7 +15,18 @@ parse_env_subset(expr, envir = parent.frame(), substitute = TRUE)
 \code{substitute()}:ed, otherwise not.}
 }
 \value{
-A named list.
+A named list with elements:
+\describe{
+ \item{\code{envir}}{An environment (defaults to argument \code{envir})}
+ \item{\code{name}}{A character vector. ...}
+ \item{\code{op}}{...}
+ \item{\code{subset}}{A list of \code{NULL}. ...}
+ \item{\code{idx}}{An integer vector or \code{NULL}. ...}
+ \item{\code{exists}}{A logical vector of length \code{length(idx)} with
+       \code{TRUE} and \code{FALSE} values.}
+ \item{\code{code}}{The deparsed expression \code{expr} coerced to a
+       single character string.}
+}
 }
 \description{
 Helper function to infer target from expression and environment
