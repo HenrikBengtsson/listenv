@@ -57,17 +57,20 @@ stopifnot(identical(target$envir, x), target$idx == 3, target$exists)
 target <- parse_env_subset(x["a", 1:3], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), length(target$idx) == 3,
-          all(target$idx == c(1, 3, 5)))
+          all(target$idx == c(1, 3, 5)),
+          all(target$exists == c(FALSE, TRUE, FALSE)))
 
 target <- parse_env_subset(x["a", ], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), length(target$idx) == 3,
-          all(target$idx == c(1, 3, 5)))
+          all(target$idx == c(1, 3, 5)),
+          all(target$exists == c(FALSE, TRUE, FALSE)))
 
 target <- parse_env_subset(x["a", -1], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), length(target$idx) == 2,
-          all(target$idx == c(3, 5)))
+          all(target$idx == c(3, 5)),
+          all(target$exists == c(TRUE, FALSE)))
 
 message("*** parse_env_subset() on multi-dim listenv ... DONE")
 
