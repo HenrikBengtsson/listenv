@@ -352,7 +352,7 @@ attr(x, "foo")
 ```
 
 
-[listenv]: http://cran.r-project.org/package=listenv
+[listenv]: https://cran.r-project.org/package=listenv
 
 ---
-Copyright Henrik Bengtsson, 2015
+Copyright Henrik Bengtsson, 2015-2017
