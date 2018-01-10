@@ -6,7 +6,7 @@
 |os       |Ubuntu 16.04.3 LTS           |
 |system   |x86_64, linux-gnu            |
 |ui       |X11                          |
-|language |en                           |
+|language |en_US:en                     |
 |collate  |en_US.UTF-8                  |
 |tz       |US/Pacific                   |
 |date     |2018-01-10                   |
