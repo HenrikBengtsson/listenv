@@ -28,6 +28,6 @@
 |[future](problems.md#future)                      |1.6.2   |      |1       |     |
 |[future.BatchJobs](problems.md#futurebatchjobs)   |0.15.0  |      |1       |     |
 |[future.batchtools](problems.md#futurebatchtools) |0.6.0   |      |1       |     |
-|[origami](problems.md#origami)                    |0.8.0   |1     |1       |1    |
-|[PSCBS](problems.md#pscbs)                        |0.63.0  |1     |1       |     |
+|[origami](problems.md#origami)                    |0.8.0   |      |1       |1    |
+|[PSCBS](problems.md#pscbs)                        |0.63.0  |      |1       |     |
 
