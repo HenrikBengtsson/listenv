@@ -21,13 +21,13 @@
 
 ## All (7)
 
-|package                                           |version |error |warning |note |
-|:-------------------------------------------------|:-------|:-----|:-------|:----|
-|[aroma.affymetrix](problems.md#aromaaffymetrix)   |3.1.0   |      |1       |     |
-|[aroma.core](problems.md#aromacore)               |3.1.1   |      |1       |1    |
-|[future](problems.md#future)                      |1.6.2   |      |1       |     |
-|[future.BatchJobs](problems.md#futurebatchjobs)   |0.15.0  |      |1       |     |
-|[future.batchtools](problems.md#futurebatchtools) |0.6.0   |      |1       |     |
-|[origami](problems.md#origami)                    |0.8.0   |      |1       |1    |
-|[PSCBS](problems.md#pscbs)                        |0.63.0  |      |1       |     |
+|package                             |version |error |warning |note |
+|:-----------------------------------|:-------|:-----|:-------|:----|
+|aroma.affymetrix                    |3.1.0   |      |        |     |
+|[aroma.core](problems.md#aromacore) |3.1.1   |      |        |1    |
+|future                              |1.6.2   |      |        |     |
+|future.BatchJobs                    |0.15.0  |      |        |     |
+|future.batchtools                   |0.6.0   |      |        |     |
+|[origami](problems.md#origami)      |0.8.0   |      |        |1    |
+|PSCBS                               |0.63.0  |      |        |     |
 
