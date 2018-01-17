@@ -185,7 +185,13 @@ length.listenv <- function(x) {
   length(map(x))
 }
 
-## BACKPORT for R (< 3.2.0)
+## BACKPORT / WORKAROUND:
+## lengths() was introduced in R 3.2.0, but only became a generic in R 3.3.0.
+## Since this packages is supported on R (>= 3.1.2), declaring above methods
+## as S3method() in the NAMESPACE would given an error on R (< 3.2.0).
+## Because of this, lengths() is declared as a generic if missing, i.e.
+## in R (< 3.2.0).  This will make lengths() for list environments to work
+## with R (<= 3.2.0) and R (>= 3.3.0) but not with R 3.2.x versions.
 if (!exists("lengths", mode = "function")) {
   lengths <- function(x, use.names = FALSE) UseMethod("lengths")  #nolint
 }
