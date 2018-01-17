@@ -20,7 +20,7 @@ listenv <- function(...) {
 
   ## Defunct call?
   if (nargs == 1L && identical(names[1L], "length")) {
-    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is deprecated. Use x <- listenv(); length(x) <- n instead.")  #nolint
+    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is defunct. Use x <- listenv(); length(x) <- n instead.")  #nolint
   }
 
   ## Allocate internal variables
