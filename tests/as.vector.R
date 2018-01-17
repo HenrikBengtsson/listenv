@@ -10,7 +10,11 @@ for (dim in dims) {
   }
   y <- as.listenv(x)
 
-##  stopifnot(is.vector(x) == is.vector(y))
+  ## NOTE: is.vector() will always be FALSE for list environments, because:
+  ##  "is.vector returns TRUE if x is a vector of the specified mode having
+  ##   no attributes other than names. It returns FALSE otherwise."
+  ## Source: help("is.vector", package = "base")
+  stopifnot(!is.vector(y))
   stopifnot(is.matrix(x) == is.matrix(y))
   stopifnot(is.array(x) == is.array(y))
 
