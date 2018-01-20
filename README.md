@@ -301,7 +301,7 @@ install.packages('listenv')
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-source('http://callr.org/install#HenrikBengtsson/listenv@develop')
+remotes::install_github('HenrikBengtsson/listenv@develop')
 ```
 This will install the package from source.  
 
