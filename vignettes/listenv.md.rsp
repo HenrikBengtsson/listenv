@@ -11,7 +11,7 @@
 <%
 R.utils::use("R.utils")
 use("listenv")
-options("withCapture/newline"=FALSE)
+options("withCapture/newline" = FALSE)
 %>
 # <%@meta name="title"%>
 
@@ -55,10 +55,6 @@ identical(y, x)
 for (ii in seq_along(x)) {
   cat(sprintf("Element %d (%s): %s\n", ii, sQuote(names(x)[ii]), x[[ii]]))
 }
-<%---
-get(mapping(x)["b"], envir=x)
-assign(mapping(x)["b"], 3, envir=x)
----%>
 
 x[c(1, 3)] <- list(2, "Hello world!")
 
@@ -142,8 +138,15 @@ length(x) <- 4
 x
 })%>
 ```
-_Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length=4)`; that construct is only supported for the basic data types.
+_Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length = 4)`; that construct is only supported for the basic data types.
 
+Elements can be dropped by assigning `NULL`, e.g. to drop the first and third element of a list environment, do:
+```r
+<%=withCapture({
+x[c(1, 3)] <- NULL
+x
+})%>
+```
 
 
 ## Iterating over elements
@@ -249,7 +252,6 @@ as.list(x)
 })%>
 ```
 
-
 Concurrently with dimensional names it is possible to have names of the invidual elements just as for list environments without dimensions.  For example,
 ```r
 <%=withCapture({
@@ -282,6 +284,26 @@ Note, whenever dimensions are set using `dim(x) <- dims` both the dimensional na
 NULL
 ```
 This behavior is by design, cf. `help("dim", package="base")`.
+
+
+To allocate an "empty" list environment array (with all `NULL`:s) of a given dimension, do
+```r
+<%=withCapture({
+x <- listenv()
+dim(x) <- c(2, 3)
+dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
+x
+})%>
+```
+Rows and columns can be dropped by assigning `NULL`, e.g. to drop the first and third column of a list-environment matrix, do:
+```r
+<%=withCapture({
+x[, c(1, 3)] <- NULL
+x
+})%>
+```
+
+
 <%---
 Because of this, the listenv package provides the `undim()` function, which removes the dimensions but preserves the names, e.g.
 ```r
@@ -348,6 +370,17 @@ x <- listenv(a = 1)
 y <- x
 attr(y, "foo") <- "Hello!"
 attr(x, "foo")
+})%>
+```
+More importantly, since dimensions and their names are also attributes, this also means they are mutable.  For example,
+```r
+<%=withCapture({
+x <- as.listenv(1:6)
+dim(x) <- c(2, 3)
+x
+y <- x
+dim(y) <- c(3, 2)
+x
 })%>
 ```
 

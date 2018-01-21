@@ -68,8 +68,14 @@ To allocate an "empty" list environment (with all `NULL`:s) of a given length, d
 > x
 A 'listenv' vector with 4 elements (unnamed).
 ```
-_Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length=4)`; that construct is only supported for the basic data types.
+_Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length = 4)`; that construct is only supported for the basic data types.
 
+Elements can dropped by assigning `NULL`, e.g. to drop the first and third element of a list environment, do:
+```r
+> x[c(1, 3)] <- NULL
+> x
+A 'listenv' vector with 2 elements (unnamed).
+```
 
 
 ## Iterating over elements
@@ -193,7 +199,6 @@ a 1 3 5
 b 2 4 6
 ```
 
-
 Concurrently with dimensional names it is possible to have names of the invidual elements just as for list environments without dimensions.  For example,
 ```r
 > names(x) <- letters[seq_along(x)]
@@ -241,6 +246,24 @@ NULL
 This behavior is by design, cf. `help("dim", package="base")`.
 
 
+To allocate an "empty" list environment array (with all `NULL`:s) of a given dimension, do
+```r
+> x <- listenv()
+> dim(x) <- c(2, 3)
+> dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
+> x
+A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+```
+Rows and columns can be dropped by assigning `NULL`, e.g. to drop the first and third column of a list-environment matrix, do:
+```r
+> x[, c(1, 3)] <- NULL
+> x
+A 'listenv' matrix with 2 elements (unnamed) arranged in 2x1 rows ('a', 'b') and columns ('B').
+```
+
+
+
+
 ## Important about environments
 List environments are as their name suggests _environments_.  Whenever working with environments in R, it is important to understand that _environments are mutable_ whereas all other of the basic data types in R are immutable.  For example, consider the following function that assigns zero to element `a` of object `x`:
 ```r
@@ -285,6 +308,17 @@ What is also important to understand is that it is not just the _content_ of an 
 > attr(y, "foo") <- "Hello!"
 > attr(x, "foo")
 [1] "Hello!"
+```
+More importantly, since dimensions and their names are also attributes, this also means they are mutable.  For example,
+```r
+> x <- as.listenv(1:6)
+> dim(x) <- c(2, 3)
+> x
+A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 unnamed rows and columns.
+> y <- x
+> dim(y) <- c(3, 2)
+> x
+A 'listenv' matrix with 6 elements (unnamed) arranged in 3x2 unnamed rows and columns.
 ```
 
 
