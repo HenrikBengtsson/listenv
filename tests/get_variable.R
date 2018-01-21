@@ -8,43 +8,43 @@ x <- listenv()
 length(x) <- 3L
 names(x) <- c("a", "b", "c")
 stopifnot(length(x) == 3L)
-print(map(x))
+print(mapping(x))
 
 var <- get_variable(x, "a")
 stopifnot(!is.na(var))
 stopifnot(length(x) == 3L)
-print(map(x))
+print(mapping(x))
 
 var <- get_variable(x, "b")
 stopifnot(!is.na(var))
 stopifnot(length(x) == 3L)
-print(map(x))
+print(mapping(x))
 
 var <- get_variable(x, "c")
 stopifnot(!is.na(var))
 stopifnot(length(x) == 3L)
-print(map(x))
+print(mapping(x))
 
 var <- get_variable(x, "d")
 stopifnot(!is.na(var))
 stopifnot(length(x) == 4L)
-print(map(x))
+print(mapping(x))
 
 var <- get_variable(x, 4L)
 stopifnot(!is.na(var))
 stopifnot(length(x) == 4L)
-print(map(x))
+print(mapping(x))
 
 x$b <- 2
 var <- get_variable(x, "b")
 stopifnot(!is.na(var))
 stopifnot(length(x) == 4L)
-print(map(x))
+print(mapping(x))
 
 var <- get_variable(x, length(x) + 1L)
 stopifnot(length(x) == 5L)
 print(names(x))
-print(map(x))
+print(mapping(x))
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Allocation

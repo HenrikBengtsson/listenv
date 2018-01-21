@@ -159,16 +159,27 @@ print.listenv <- function(x, ...) {
 #'
 #' @param x A list environment.
 #'
-#' @return The a named character vector
+#' @return A named character vector
 #'
+#' @details
+#' \emph{Functions \code{map()} and \code{map<-()} have been renamed to
+#' \code{mapping()} and \code{mapping<-()}. The former will soon become
+#' deprecated and eventually defunct. Please update accordingly.}
+#' 
+#' @aliases mapping.listenv
 #' @aliases map.listenv
 #' @export
 #' @keywords internal
-map <- function(x, ...) {
+mapping <- function(x, ...) {
   get(".listenv.map", envir = parent.env(x), inherits = FALSE)
 }
 
-`map<-` <- function(x, value) {
+#' @rdname mapping
+#' @export
+#' @keywords internal
+map <- mapping
+
+`mapping<-` <- function(x, value) {
   stopifnot(is.character(value))
   assign(".listenv.map", value, envir = parent.env(x), inherits = FALSE)
   invisible(x)
@@ -182,7 +193,7 @@ map <- function(x, ...) {
 #' @export
 #' @keywords internal
 length.listenv <- function(x) {
-  length(map(x))
+  length(mapping(x))
 }
 
 ## BACKPORT / WORKAROUND:
@@ -198,7 +209,7 @@ if (!exists("lengths", mode = "function")) {
 
 #' @export
 `length<-.listenv` <- function(x, value) {
-  map <- map(x)
+  map <- mapping(x)
   n <- length(map)
   value <- as.numeric(value)
 
@@ -221,7 +232,7 @@ if (!exists("lengths", mode = "function")) {
     if (length(var) > 0) remove(list = var, envir = x, inherits = FALSE)
     map <- map[-drop]
   }
-  map(x) <- map
+  mapping(x) <- map
 
   invisible(x)
 }
@@ -235,12 +246,12 @@ if (!exists("lengths", mode = "function")) {
 #' @export
 #' @keywords internal
 names.listenv <- function(x) {
-  names(map(x))
+  names(mapping(x))
 }
 
 #' @export
 `names<-.listenv` <- function(x, value) {
-  map <- map(x)
+  map <- mapping(x)
   if (is.null(value)) {
   } else if (length(value) != length(map)) {
     stopf("Number of names does not match the number of elements: %s != %s",
@@ -250,7 +261,7 @@ names.listenv <- function(x) {
 ##    stop("Environments cannot have duplicate names on elements")
 ##  }
   names(map) <- value
-  map(x) <- map
+  mapping(x) <- map
   invisible(x)
 }
 
@@ -276,7 +287,7 @@ lengths.listenv <- function(x, use.names=TRUE) {  #nolint
 #' @export
 #' @keywords internal
 as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
-  vars <- map(x)
+  vars <- mapping(x)
   nvars <- length(vars)
   names <- names(x)
 
@@ -329,7 +340,7 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 #' @keywords internal
 `$.listenv` <- function(x, name) {
 #' @keywords internal
-  map <- map(x)
+  map <- mapping(x)
   var <- map[name]
 
   # Non-existing variable?
@@ -419,7 +430,7 @@ to_index <- function(x, idxs) {
 
 #' @export
 `[[.listenv` <- function(x, ...) {
-  map <- map(x)
+  map <- mapping(x)
   n <- length(map)
 
   idxs <- list(...)
@@ -506,7 +517,7 @@ to_index <- function(x, idxs) {
     i <- to_index(x, idxs)
   }
 
-  map <- map(x)
+  map <- mapping(x)
   nmap <- length(map)
   names <- names(map)
 
@@ -615,7 +626,7 @@ assign_by_name <- function(x, name, value) {
     stop("Cannot assign value. Empty name specific: ", name, call. = FALSE)
   }
 
-  map <- map(x)
+  map <- mapping(x)
   names <- names(map)
 
   ## Map to an existing or a new element?
@@ -626,7 +637,7 @@ assign_by_name <- function(x, name, value) {
     if (is.na(var)) {
       var <- name
       map[name] <- name
-      map(x) <- map
+      mapping(x) <- map
     }
   } else {
     var <- name
@@ -636,7 +647,7 @@ assign_by_name <- function(x, name, value) {
     if (is.null(names)) names <- rep("", times = length(map))
     names[length(map)] <- var
     names(map) <- names
-    map(x) <- map
+    mapping(x) <- map
   }
 
   ## Assign value
@@ -659,7 +670,7 @@ assign_by_index <- function(x, i, value) {
     stop("Cannot assign value. Non-positive index: ", i, call. = FALSE)
   }
 
-  map <- map(x)
+  map <- mapping(x)
   n <- length(map)
 
   ## Variable name
@@ -677,7 +688,7 @@ assign_by_index <- function(x, i, value) {
     map[i] <- new_variable(x, value = value)
 
     ## Update map
-    map(x) <- map
+    mapping(x) <- map
   } else {
     assign(var, value, envir = x, inherits = FALSE)
   }
@@ -697,7 +708,7 @@ remove_by_name <- function(x, name) {
     stop("Cannot remove element. Empty name specific: ", name, call. = FALSE)
   }
 
-  map <- map(x)
+  map <- mapping(x)
 
   ## Position in names map?
   idx <- match(name, names(map))
@@ -710,7 +721,7 @@ remove_by_name <- function(x, name) {
   if (!is.na(var)) remove(list = var, envir = x, inherits = FALSE)
 
   map <- map[-idx]
-  map(x) <- map
+  mapping(x) <- map
 
   ## Remove dimensions
   names <- names(x)
@@ -734,7 +745,7 @@ remove_by_index <- function(x, i) {
     stop("Cannot remove element. Non-positive index: ", i, call. = FALSE)
   }
 
-  map <- map(x)
+  map <- mapping(x)
 
   ## Nothing to do?
   if (i > length(map)) return(invisible(x))
@@ -744,7 +755,7 @@ remove_by_index <- function(x, i) {
   if (!is.na(var)) remove(list = var, envir = x, inherits = FALSE)
 
   map <- map[-i]
-  map(x) <- map
+  mapping(x) <- map
 
   ## Remove dimensions
   names <- names(x)
@@ -777,7 +788,7 @@ remove_by_index <- function(x, i) {
 
 #' @export
 `[[<-.listenv` <- function(x, ..., value) {
-  map <- map(x)
+  map <- mapping(x)
 
   idxs <- list(...)
   nidxs <- length(idxs)

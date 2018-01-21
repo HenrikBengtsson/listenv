@@ -50,7 +50,7 @@ get_variable.listenv <- function(x, name, mustExist = FALSE,
     }
   }
 
-  map <- map(x)
+  map <- mapping(x)
 
   ## Existing variable?
   var <- map[name]
@@ -82,7 +82,7 @@ get_variable.listenv <- function(x, name, mustExist = FALSE,
   }
 
   ## Update map?
-  if (create) map(x) <- map
+  if (create) mapping(x) <- map
 
   var
 }

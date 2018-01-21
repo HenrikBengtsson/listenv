@@ -148,7 +148,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
 
     if (inherits(envir, "listenv")) {
       names <- names(envir)
-      map <- map(envir)
+      map <- mapping(envir)
       dim <- dim(envir)
 
       op <- res$op
@@ -253,7 +253,7 @@ parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
     if (any(is.na(res$idx)) && nzchar(res$name)) {
       res$idx <- match(res$name, names(envir))
     }
-    res$exists <- !is.na(res$idx) & !is.na(map(envir)[res$idx])
+    res$exists <- !is.na(res$idx) & !is.na(mapping(envir)[res$idx])
   }
 
   ## Validate
