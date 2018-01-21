@@ -1,8 +1,8 @@
 ## From R.utils 2.0.2 (2015-05-23)
-hpaste <- function(..., sep="", collapse=", ", last_collapse=NULL,
-                   max_head=if (missing(last_collapse)) 3 else Inf,
-                   max_tail=if (is.finite(max_head)) 1 else Inf,
-                   abbreviate="...") {
+hpaste <- function(..., sep = "", collapse = ", ", last_collapse = NULL,
+                   max_head = if (missing(last_collapse)) 3 else Inf,
+                   max_tail = if (is.finite(max_head)) 1 else Inf,
+                   abbreviate = "...") {
   max_head <- as.double(max_head)
   max_tail <- as.double(max_tail)
   if (is.null(last_collapse)) last_collapse <- collapse

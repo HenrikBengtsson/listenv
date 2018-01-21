@@ -270,7 +270,7 @@ names.listenv <- function(x) {
 
 #' @export
 #' @S3method lengths listenv
-lengths.listenv <- function(x, use.names=TRUE) {  #nolint
+lengths.listenv <- function(x, use.names = TRUE) {  #nolint
   ns <- lapply(x, FUN = length)
   if (length(ns) == 0L) return(integer(0L))
   unlist(ns, use.names = use.names)
@@ -476,7 +476,7 @@ to_index <- function(x, idxs) {
 
 
 #' @export
-`[.listenv` <- function(x, ..., drop=TRUE) {
+`[.listenv` <- function(x, ..., drop = TRUE) {
   # Need to allow for implicit indices, e.g. x[1,,2]
   idxs <- as.list(sys.call())[-(1:2)]  #nolint
   idxs$drop <- NULL
@@ -604,7 +604,7 @@ to_index <- function(x, idxs) {
 }
 
 
-new_variable <- function(envir, value, create=TRUE) {
+new_variable <- function(envir, value, create = TRUE) {
   count <- get(".listenv_var_count", envir = envir, inherits = FALSE)
 
   count <- count + 1L
@@ -968,7 +968,7 @@ remove_by_index <- function(x, i) {
 
 #' @export
 #' @method unlist listenv
-unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {  #nolint
+unlist.listenv <- function(x, recursive = TRUE, use.names = TRUE) {  #nolint
   names <- names(x)
   x <- as.list(x)
   names(x) <- names
@@ -993,8 +993,8 @@ unlist.listenv <- function(x, recursive=TRUE, use.names=TRUE) {  #nolint
 
 #' @export
 #' @method all.equal listenv
-all.equal.listenv <- function(target, current, all.names=TRUE,  #nolint
-                              sorted=FALSE, ...) {
+all.equal.listenv <- function(target, current, all.names = TRUE,  #nolint
+                              sorted = FALSE, ...) {
   if (identical(target, current)) return(TRUE)
 
   ## Coerce to lists

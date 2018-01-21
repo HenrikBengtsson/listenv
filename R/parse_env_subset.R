@@ -22,7 +22,7 @@
 #'
 #' @export
 #' @keywords internal
-parse_env_subset <- function(expr, envir=parent.frame(), substitute=TRUE) {
+parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
   if (substitute) expr <- substitute(expr)
   code <- paste(deparse(expr), collapse = "")
 

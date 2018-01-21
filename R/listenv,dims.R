@@ -102,7 +102,7 @@ is.array.listenv <- function(x, ...) {
 
 #' @export
 #' @method as.vector listenv
-as.vector.listenv <- function(x, mode="any") {
+as.vector.listenv <- function(x, mode = "any") {
   if (mode == "any") mode <- "list"
   x <- as.list(x)
   if (mode != "list") {
