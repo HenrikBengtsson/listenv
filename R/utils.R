@@ -1,11 +1,14 @@
 ## From R.utils 2.0.2 (2015-05-23)
-hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL, maxHead=if (missing(lastCollapse)) 3 else Inf, maxTail=if (is.finite(maxHead)) 1 else Inf, abbreviate="...") {
-  maxHead <- as.double(maxHead)
-  maxTail <- as.double(maxTail)
-  if (is.null(lastCollapse)) lastCollapse <- collapse
+hpaste <- function(..., sep = "", collapse = ", ", last_collapse = NULL,
+                   max_head = if (missing(last_collapse)) 3 else Inf,
+                   max_tail = if (is.finite(max_head)) 1 else Inf,
+                   abbreviate = "...") {
+  max_head <- as.double(max_head)
+  max_tail <- as.double(max_tail)
+  if (is.null(last_collapse)) last_collapse <- collapse
 
   # Build vector 'x'
-  x <- paste(..., sep=sep)
+  x <- paste(..., sep = sep)
   n <- length(x)
 
   # Nothing todo?
@@ -13,21 +16,30 @@ hpaste <- function(..., sep="", collapse=", ", lastCollapse=NULL, maxHead=if (mi
   if (is.null(collapse)) return(x)
 
   # Abbreviate?
-  if (n > maxHead + maxTail + 1) {
-    head <- x[seq(length=maxHead)]
-    tail <- rev(rev(x)[seq(length=maxTail)])
+  if (n > max_head + max_tail + 1) {
+    head <- x[seq_len(max_head)]
+    tail <- rev(rev(x)[seq_len(max_tail)])
     x <- c(head, abbreviate, tail)
     n <- length(x)
   }
 
   if (!is.null(collapse) && n > 1) {
-    if (lastCollapse == collapse) {
-      x <- paste(x, collapse=collapse)
+    if (last_collapse == collapse) {
+      x <- paste(x, collapse = collapse)
     } else {
-      xT <- paste(x[1:(n-1)], collapse=collapse)
-      x <- paste(xT, x[n], sep=lastCollapse)
+      x_head <- paste(x[1:(n - 1)], collapse = collapse)
+      x <- paste(x_head, x[n], sep = last_collapse)
     }
   }
 
   x
-} # hpaste()
+}
+
+
+stopf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
+  stop(sprintf(fmt, ...), call. = call., domain = domain)
+}
+
+warnf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
+  warning(sprintf(fmt, ...), call. = call., domain = domain)
+}

@@ -1,8 +1,11 @@
 library("listenv")
 
-ovars <- ls(envir=globalenv())
-oopts <- options(warn=1)
-
+ovars <- ls(envir = globalenv())
+oopts <- options(warn = 1)
+with_r_330 <- function(expr) {
+  if (getRversion() < "3.3.0") return()
+  eval(substitute(expr), envir = parent.frame())
+}
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Allocation
@@ -11,43 +14,52 @@ x <- listenv()
 print(x)
 stopifnot(length(x) == 0)
 stopifnot(is.null(names(x)))
+with_r_330({
+  stopifnot(identical(lengths(x), integer(0L)))
+})
 
-x <- listenv(a=1)
+## Named, empty list environment
+x <- listenv()
+names(x) <- character(0L)
+print(x)
+
+x <- listenv(a = 1)
 print(x)
 stopifnot(length(x) == 1)
 stopifnot(identical(names(x), c("a")))
 stopifnot(identical(x$a, 1))
+with_r_330({
+  stopifnot(identical(lengths(x), c(a = 1L)))
+})
 
-x <- listenv(a=1, b=2:3)
+x <- listenv(a = 1, b = 2:3)
 print(x)
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$a, 1), identical(x$b, 2:3))
+with_r_330({
+  stopifnot(identical(lengths(x), c(a = 1L, b = 2L)))
+  stopifnot(identical(lengths(x, use.names = FALSE), c(1L, 2L)))
+})
 
-
-x <- listenv(b=2:3, .a=1)
+x <- listenv(b = 2:3, .a = 1)
 print(x)
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("b", ".a")))
 stopifnot(identical(x$.a, 1), identical(x$b, 2:3))
+with_r_330({
+  stopifnot(identical(lengths(x), c(b = 2L, .a = 1L)))
+})
 
-
-x <- listenv(length=3, a=1)
+x <- listenv(length = 3, a = 1)
 print(x)
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("length", "a")))
 stopifnot(identical(x$length, 3), identical(x$a, 1))
-
-
-withCallingHandlers({
-  x <- listenv(length=3)
-}, warning = function(warn) {
-  cat("WARNING:", warn$message)
-  invokeRestart("muffleWarning")
+with_r_330({
+  stopifnot(identical(lengths(x), c(length = 1L, a = 1L)))
 })
-print(x)
-stopifnot(length(x) == 3)
-stopifnot(is.null(names(x)))
+
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -90,6 +102,9 @@ print(names(x))
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("a", "b")))
 stopifnot(identical(x$a, 1))
+with_r_330({
+  stopifnot(identical(lengths(x), c(a = 1L, b = 1L)))
+})
 
 x[["a"]] <- 0
 print(x)
@@ -118,7 +133,11 @@ stopifnot(identical(x[[3]], 3.14))
 names(x) <- c("a", "b", "c")
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14), identical(x$c, 3.14))
+stopifnot(identical(x[[3]], 3.14), identical(x[["c"]], 3.14),
+          identical(x$c, 3.14))
+with_r_330({
+  stopifnot(identical(lengths(x), c(a = 1L, b = 1L, c = 1L)))
+})
 
 
 
@@ -130,6 +149,9 @@ x <- listenv()
 x[1:3] <- list(1, NULL, 3)
 print(x)
 stopifnot(is.null(names(x)))
+with_r_330({
+  stopifnot(identical(lengths(x), c(1L, 0L, 1L)))
+})
 
 y <- x[]
 print(y)
@@ -137,6 +159,9 @@ stopifnot(length(y) == length(x))
 stopifnot(all.equal(y, x))
 stopifnot(!identical(y, x))
 stopifnot(is.null(names(y)))
+with_r_330({
+  stopifnot(identical(lengths(y), c(1L, 0L, 1L)))
+})
 
 y <- x[1]
 print(y)
@@ -145,34 +170,43 @@ stopifnot(is.null(names(y)))
 y <- x[2:3]
 print(y)
 stopifnot(is.null(names(y)))
+with_r_330({
+  stopifnot(identical(lengths(y), c(0L, 1L)))
+})
 
 y <- x[-1]
 print(y)
 stopifnot(is.null(names(y)))
+with_r_330({
+  stopifnot(identical(lengths(y), c(0L, 1L)))
+})
 
-x[c('c', '.a', 'b')] <- list(NULL, 3, 1)
+x[c("c", ".a", "b")] <- list(NULL, 3, 1)
 print(x)
 stopifnot(identical(names(x), c("", "", "", "c", ".a", "b")))
+with_r_330({
+  stopifnot(identical(lengths(x), c(1L, 0L, 1L, c = 0L, .a = 1L, b = 1L)))
+})
 
 y <- as.list(x)
 str(y)
 stopifnot(identical(names(y), c("", "", "", "c", ".a", "b")))
 
-y <- as.list(x, all.names=FALSE)
+y <- as.list(x, all.names = FALSE)
 str(y)
 stopifnot(identical(names(y), c("", "", "", "c", "b")))
 
-y <- as.list(x, sorted=TRUE)
+y <- as.list(x, sorted = TRUE)
 str(y)
 stopifnot(identical(names(y), c("", "", "", ".a", "b", "c")))
 
-y <- as.list(x, all.names=FALSE, sorted=TRUE)
+y <- as.list(x, all.names = FALSE, sorted = TRUE)
 str(y)
 stopifnot(identical(names(y), c("", "", "", "b", "c")))
 
 
 x <- listenv()
-x[c('a', 'b', 'c')] <- list(1, NULL, 3)
+x[c("a", "b", "c")] <- list(1, NULL, 3)
 
 y <- x[NULL]
 print(y)
@@ -190,62 +224,62 @@ y <- x["a"]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(a=1)))
+stopifnot(identical(z, list(a = 1)))
 
-y <- x[c("a","c")]
+y <- x[c("a", "c")]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(a=1, c=3)))
+stopifnot(identical(z, list(a = 1, c = 3)))
 
-y <- x[c("c","a")]
+y <- x[c("c", "a")]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(c=3, a=1)))
+stopifnot(identical(z, list(c = 3, a = 1)))
 
-y <- x[c(1,3)]
+y <- x[c(1, 3)]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(a=1, c=3)))
+stopifnot(identical(z, list(a = 1, c = 3)))
 
 y <- x[-2]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(a=1, c=3)))
+stopifnot(identical(z, list(a = 1, c = 3)))
 
-y <- x[-c(1,3)]
+y <- x[-c(1, 3)]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(b=NULL)))
+stopifnot(identical(z, list(b = NULL)))
 
-y <- x[rep(1L, times=6L)]
+y <- x[rep(1L, times = 6L)]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, rep(list(a=1), times=6L)))
+stopifnot(identical(z, rep(list(a = 1), times = 6L)))
 
 y <- x[1:10]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, c(as.list(x), rep(list(NULL), times=7L))))
+stopifnot(identical(z, c(as.list(x), rep(list(NULL), times = 7L))))
 
 
 y <- x[c(TRUE, FALSE, TRUE)]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(a=1, c=3)))
+stopifnot(identical(z, list(a = 1, c = 3)))
 
 y <- x[c(TRUE, FALSE)]
 print(y)
 z <- as.list(y)
 print(z)
-stopifnot(identical(z, list(a=1, c=3)))
+stopifnot(identical(z, list(a = 1, c = 3)))
 
 y <- x[TRUE]
 print(y)
@@ -259,17 +293,20 @@ z <- as.list(y)
 print(z)
 stopifnot(identical(z, list()))
 
-y <- x[rep(TRUE, times=5L)]
+y <- x[rep(TRUE, times = 5L)]
 print(y)
 z <- as.list(y)
 print(z)
 stopifnot(identical(z, c(as.list(x), list(NULL), list(NULL))))
+with_r_330({
+  stopifnot(identical(lengths(z), c(a = 1L, b = 0L, c = 1L, 0L, 0L)))
+})
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Local access
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- listenv(a=1, b=2, c=3.14)
+x <- listenv(a = 1, b = 2, c = 3.14)
 
 y <- local({
   x[[3]]
@@ -362,7 +399,7 @@ print(names(x))
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("", "")))
 
-x['c'] <- list(NULL)
+x["c"] <- list(NULL)
 print(x)
 print(length(x))
 print(names(x))
@@ -374,59 +411,59 @@ stopifnot(identical(names(x), c("", "", "c")))
 ## Assigning multiple elements at once
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
-x[c('a', 'b', 'c')] <- 1:3
+x[c("a", "b", "c")] <- 1:3
 print(x)
 str(as.list(x))
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(as.list(x), list(a=1L, b=2L, c=3L)))
-stopifnot(identical(unlist(x), c(a=1L, b=2L, c=3L)))
+stopifnot(identical(as.list(x), list(a = 1L, b = 2L, c = 3L)))
+stopifnot(identical(unlist(x), c(a = 1L, b = 2L, c = 3L)))
 
 x[] <- 3:1
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(as.list(x), list(a=3L, b=2L, c=1L)))
+stopifnot(identical(as.list(x), list(a = 3L, b = 2L, c = 1L)))
 
-x[c('c', 'b')] <- 2:3
+x[c("c", "b")] <- 2:3
 print(x)
 str(as.list(x))
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(as.list(x), list(a=3L, b=3L, c=2L)))
+stopifnot(identical(as.list(x), list(a = 3L, b = 3L, c = 2L)))
 
-x[c('a', 'c')] <- 1L
+x[c("a", "c")] <- 1L
 print(x)
 str(as.list(x))
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "c")))
-stopifnot(identical(as.list(x), list(a=1L, b=3L, c=1L)))
+stopifnot(identical(as.list(x), list(a = 1L, b = 3L, c = 1L)))
 
-x[c('d', 'e')] <- 4:5
+x[c("d", "e")] <- 4:5
 print(x)
 str(as.list(x))
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 5)
 stopifnot(identical(names(x), c("a", "b", "c", "d", "e")))
-stopifnot(identical(as.list(x), list(a=1L, b=3L, c=1L, d=4L, e=5L)))
+stopifnot(identical(as.list(x), list(a = 1L, b = 3L, c = 1L, d = 4L, e = 5L)))
 
 
 x <- listenv()
-x[c('a', 'b')] <- 1:2
-x[c(TRUE,FALSE)] <- 2L
+x[c("a", "b")] <- 1:2
+x[c(TRUE, FALSE)] <- 2L
 print(x)
 str(as.list(x))
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("a", "b")))
-stopifnot(identical(as.list(x), list(a=2L, b=2L)))
+stopifnot(identical(as.list(x), list(a = 2L, b = 2L)))
 
 x[c(TRUE)] <- 1L
 print(x)
@@ -435,17 +472,56 @@ print(length(x))
 print(names(x))
 stopifnot(length(x) == 2)
 stopifnot(identical(names(x), c("a", "b")))
-stopifnot(identical(as.list(x), list(a=1L, b=1L)))
+stopifnot(identical(as.list(x), list(a = 1L, b = 1L)))
 
-x[c(TRUE,FALSE,TRUE,FALSE)] <- 3L
+x[c(TRUE, FALSE, TRUE, FALSE)] <- 3L
 print(x)
 str(as.list(x))
 print(length(x))
 print(names(x))
 stopifnot(length(x) == 3)
 stopifnot(identical(names(x), c("a", "b", "")))
-stopifnot(identical(as.list(x), list(a=3L, b=1L, 3L)))
+stopifnot(identical(as.list(x), list(a = 3L, b = 1L, 3L)))
 
+
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Removing multiple elements at once
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- as.listenv(1:6)
+names(x) <- letters[seq_along(x)]
+y <- as.list(x)
+stopifnot(identical(as.list(x), y))
+
+x[2] <- NULL
+y[2] <- NULL
+stopifnot(identical(as.list(x), y))
+
+x[4:3] <- NULL
+y[4:3] <- NULL
+stopifnot(identical(as.list(x), y))
+
+x[rep(2, times = 10)] <- NULL
+y[rep(2, times = 10)] <- NULL
+stopifnot(identical(as.list(x), y))
+
+## Erase all elements
+y[] <- NULL
+x[] <- NULL
+stopifnot(identical(as.list(x), y))
+
+x <- as.listenv(1:6)
+names(x) <- letters[seq_along(x)]
+y <- as.list(x)
+stopifnot(identical(as.list(x), y))
+
+# Every other by logical indexing
+x[c(TRUE, FALSE)] <- NULL
+y[c(TRUE, FALSE)] <- NULL
+stopifnot(identical(as.list(x), y))
+
+x[c("b", "f")] <- NULL
+y[c("b", "f")] <- NULL
+stopifnot(identical(as.list(x), y))
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -463,7 +539,8 @@ print(x)
 y <- as.list(x)
 str(y)
 stopifnot(identical(names(y), c("item1", "item2", "item3")))
-stopifnot(identical(y[[1]], "a"), identical(y[[2]], "b"), identical(y[[3]], "c"))
+stopifnot(identical(y[[1]], "a"), identical(y[[2]], "b"),
+          identical(y[[3]], "c"))
 x[[2]] <- "B"
 stopifnot(identical(x$item2, "B"))
 
@@ -493,7 +570,7 @@ x[[3]] <- 3
 print(names(x))
 stopifnot(identical(names(x), c("a", "", "")))
 
-# First element (should be named 'a')
+# First element (should be named "a")
 var <- get_variable(x, "a")
 stopifnot(var == "a")
 var <- get_variable(x, 1)
@@ -508,8 +585,8 @@ stopifnot(var != "c")
 var <- get_variable(x, "c")
 stopifnot(var != "c")
 
-## Second element (should become 'b', because it was never used
-#                  before it was "named" 'b')
+## Second element (should become "b", because it was never used
+#                  before it was "named" "b")
 x$b <- 2
 var <- get_variable(x, 2)
 stopifnot(var == "b")
@@ -535,7 +612,7 @@ stopifnot(is.null(names(x)))
 names(x) <- c("a", "b", "c")
 x$a <- 2
 stopifnot(identical(x$a, 2))
-x[c("a", "c")] <- c(2,1)
+x[c("a", "c")] <- c(2, 1)
 stopifnot(identical(x$a, 2), identical(x$c, 1))
 
 length(x) <- 4L
@@ -549,23 +626,23 @@ stopifnot(identical(x$a, 2))
 
 length(x) <- 0L
 stopifnot(length(x) == 0L)
-stopifnot(length(names(x)) == 0) ## Actually, character(0), cf. lists
+stopifnot(length(names(x)) == 0) # Actually, character(0), cf. lists
 
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Flatten
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 for (recursive in c(FALSE, TRUE)) {
-  x <- list(); x$a <- list(B=1:3); x$b <- list(C=1:3, D=4:5)
-  y1 <- unlist(x, recursive=recursive)
+  x <- list(); x$a <- list(B = 1:3); x$b <- list(C = 1:3, D = 4:5)
+  y1 <- unlist(x, recursive = recursive)
 
-  x <- listenv(); x$a <- list(B=1:3); x$b <- list(C=1:3, D=4:5)
-  y2 <- unlist(x, recursive=recursive)
+  x <- listenv(); x$a <- list(B = 1:3); x$b <- list(C = 1:3, D = 4:5)
+  y2 <- unlist(x, recursive = recursive)
   stopifnot(identical(y2, y1))
 } # for (recursive ...)
 
-x <- listenv(); x$a <- list(B=1:3); x$b <- as.listenv(list(C=1:3, D=4:5))
-y3 <- unlist(x, recursive=TRUE)
+x <- listenv(); x$a <- list(B = 1:3); x$b <- as.listenv(list(C = 1:3, D = 4:5))
+y3 <- unlist(x, recursive = TRUE)
 stopifnot(identical(y3, y1))
 
 x <- listenv()
@@ -578,25 +655,25 @@ stopifnot(is.null(y))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Comparisons
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-x <- listenv(c=NULL, .a=3, b=1)
+x <- listenv(c = NULL, .a = 3, b = 1)
 print(x)
 
 ## A list environment is always equal to itself
 stopifnot(all.equal(x, x))
 
 ## List environments emulate lists
-stopifnot(all.equal(x, list(c=NULL, .a=3, b=1)))
-stopifnot(all.equal(x, list(c=NULL, .a=3, b=1), sorted=TRUE))
-stopifnot(all.equal(x, list(.a=3, b=1, c=NULL), sorted=TRUE))
+stopifnot(all.equal(x, list(c = NULL, .a = 3, b = 1)))
+stopifnot(all.equal(x, list(c = NULL, .a = 3, b = 1), sorted = TRUE))
+stopifnot(all.equal(x, list(.a = 3, b = 1, c = NULL), sorted = TRUE))
 
-stopifnot(all.equal(x, list(c=NULL, b=1), all.names=FALSE))
-stopifnot(all.equal(x, list(.a=3, c=NULL, b=1), all.names=FALSE))
-stopifnot(all.equal(x, list(b=1, c=NULL), all.names=FALSE, sorted=TRUE))
+stopifnot(all.equal(x, list(c = NULL, b = 1), all.names = FALSE))
+stopifnot(all.equal(x, list(.a = 3, c = NULL, b = 1), all.names = FALSE))
+stopifnot(all.equal(x, list(b = 1, c = NULL), all.names = FALSE, sorted = TRUE))
 
-res <- all.equal(x, list(b=1, c=NULL), sorted=FALSE)
+res <- all.equal(x, list(b = 1, c = NULL), sorted = FALSE)
 stopifnot(!isTRUE(res))
 
-res <- all.equal(x, list(b=1, c=NULL), all.names=FALSE)
+res <- all.equal(x, list(b = 1, c = NULL), all.names = FALSE)
 stopifnot(!isTRUE(res))
 
 ## Assert listenv() -> as.list() -> as.listenv() equality
@@ -612,19 +689,19 @@ stopifnot(all.equal(x, y))
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 x <- listenv()
 x[1:3] <- 1:3
-res <- tryCatch(x[1:2] <- 1:4, warning=function(w) {
+res <- tryCatch(x[1:2] <- 1:4, warning = function(w) {
   class(w) <- "try-warning"
   w
 })
 stopifnot(inherits(res, "try-warning"))
 
-res <- tryCatch(x[1:3] <- 1:2, warning=function(w) {
+res <- tryCatch(x[1:3] <- 1:2, warning = function(w) {
   class(w) <- "try-warning"
   w
 })
 stopifnot(inherits(res, "try-warning"))
 
-res <- tryCatch(x[integer(0L)] <- 1, warning=function(w) {
+res <- tryCatch(x[integer(0L)] <- 1, warning = function(w) {
   class(w) <- "try-warning"
   w
 })
@@ -638,55 +715,61 @@ x <- listenv()
 length(x) <- 3L
 names(x) <- c("a", "b", "c")
 
-res <- try(names(x) <- c("a", "b"), silent=TRUE)
+res <- try(names(x) <- c("a", "b"), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[1:2]], silent=TRUE)
+res <- try(x[[1:2]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[0]], silent=TRUE)
+res <- try(x[[0]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[length(x)+1]], silent=TRUE)
+res <- try(x[[length(x) + 1]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[1+2i]], silent=TRUE)
+res <- try(x[[1 + 2i]], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[1+2i], silent=TRUE)
+res <- try(x[1 + 2i], silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[1+2i]] <- 1, silent=TRUE)
+res <- try(x[[1 + 2i]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[1+2i] <- 1, silent=TRUE)
+res <- try(x[1 + 2i] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[integer(0L)]] <- 1, silent=TRUE)
+res <- try(x[[integer(0L)]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[1:2]] <- 1, silent=TRUE)
+res <- try(x[[1:2]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[Inf]] <- 1, silent=TRUE)
+res <- try(x[[Inf]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[0]] <- 1, silent=TRUE)
+res <- try(x[[0]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[-1]] <- 1, silent=TRUE)
+res <- try(x[[-1]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[character(0L)]] <- 1, silent=TRUE)
+res <- try(x[[character(0L)]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[c("a", "b")]] <- 1, silent=TRUE)
+res <- try(x[[c("a", "b")]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
-res <- try(x[[""]] <- 1, silent=TRUE)
+res <- try(x[[""]] <- 1, silent = TRUE)
 stopifnot(inherits(res, "try-error"))
+
+## Defunct
+res <- tryCatch({
+  x <- listenv(length = 3L)
+}, error = identity)
+stopifnot(inherits(res, "error"))
 
 
 ## Cleanup
 options(oopts)
-rm(list=setdiff(ls(envir=globalenv()), ovars), envir=globalenv())
+rm(list = setdiff(ls(envir = globalenv()), ovars), envir = globalenv())

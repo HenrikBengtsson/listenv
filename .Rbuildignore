@@ -4,9 +4,15 @@
 ^.svn
 ^.git
 ^.make
-INSTALL[.]md
-OVERVIEW[.]md
-README[.]md
+^INSTALL[.]md$
+^OVERVIEW[.]md$
+^README[.]md$
+^CONDUCT[.]md$
+
+#----------------------------
+# devtools
+#----------------------------
+^revdep
 
 #----------------------------
 # Travis-CI et al.
@@ -17,10 +23,12 @@ README[.]md
 ^appveyor[.]yml$
 ^covr-utils.R$
 ^[.]covr[.]R$
+^[.]covr[.]rds$
 
 #----------------------------
 # R related
 #----------------------------
+Rplots.pdf$
 ^cran-comments[.].*$
 ^vignettes/.*[.](pdf|PDF)$
 ^vignettes/.*[.](r|R)$
@@ -35,3 +43,16 @@ README[.]md
 ^[.]test
 ^[.]check
 ^.*[.]tar[.]gz$
+
+#----------------------------
+# Package specific
+#----------------------------
+^[.]BatchJobs[.]R$
+[.]future
+
+#----------------------------
+# Miscellaneous
+#----------------------------
+^.ghi
+^.issues
+

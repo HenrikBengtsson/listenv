@@ -12,10 +12,9 @@ get_variable(...)
 
 \item{name}{The name or index of element of interest.}
 
-\item{mustExist}{If TRUE, an error is generated if \code{name}
-does not exist.}
+\item{mustExist}{If \code{TRUE}, an error is generated if \code{name} does not exist.}
 
-\item{create}{If TRUE, element \code{name} is created if missing.}
+\item{create}{If \code{TRUE}, element \code{name} is created if missing.}
 }
 \value{
 The name of the underlying variable
@@ -24,4 +23,3 @@ The name of the underlying variable
 Get name of variable for a specific element of list environment
 }
 \keyword{internal}
-

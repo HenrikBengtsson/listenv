@@ -1,11 +1,82 @@
 # listenv: Environments Behaving (Almost) as Lists
 
+## Summary
+
+_List environments_ are environments that have list-like properties.  They are implemented by the [listenv] package.  The main features of a list environment are summarized in the below table:
+
+| Property                                                                     | list environments |  lists | environments |
+|------------------------------------------------------------------------------|:-----------------:|:------:|:------------:|
+| Number of elements, e.g. `length()`                                          |              yes  |   yes  |         yes  |
+| Named elements, e.g. `names()`, `x$a` and `x[["a"]]`                         |              yes  |   yes  |         yes  |
+| Duplicated names                                                             |              yes  |   yes  |              |
+| Element names are optional                                                   |              yes  |   yes  |              |
+| Indexed elements, e.g. `x[[4]]`                                              |              yes  |   yes  |              |
+| Dimensions, e.g. `dim(x)`                                                    |              yes  |   yes  |              |
+| Names of dimensions, e.g. `dimnames(x)`                                      |              yes  |   yes  |              |
+| Indexing by dimensions, e.g. `x[[2, 4]]` and `x[[2, "D"]]`                   |              yes  |   yes  |              |
+| Multi-element subsetting, e.g. `x[c("a", "c")]`, `x[-1]` and `x[2:1, , 3]`   |              yes  |   yes  |              |
+| Multi-element subsetting preserves element names                             |              yes  |        |              |
+| Removing elements by assigning NULL, e.g. `x$c <- NULL` and `x[1:3] <- NULL` |              yes  |   yes  |              |
+| Removing parts of dimensions by assigning NULL, e.g. `x[,2] <- NULL`         |              yes  |        |              |
+| Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`                            |              yes  |        |         yes  |
+| Compatible* with `assign()`, `delayedAssign()`, `get()` and `exists()`       |              yes  |        |         yes  |
+
+For example,
+```r
+> x <- listenv(a = 1, b = 2, c = "hello")
+> x
+A 'listenv' vector with 3 elements ('a', 'b', 'c').
+> length(x)
+[1] 3
+> names(x)
+[1] "a" "b" "c"
+> x$a
+[1] 1
+> x[[3]] <- toupper(x[[3]])
+> x$c
+[1] "HELLO"
+> y <- x
+> y$d <- y$a + y[["b"]]
+> names(y)[2] <- "a"
+> y$a
+[1] 1
+> y
+A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+> identical(y, x)
+[1] TRUE
+> for (ii in seq_along(x)) {
++     cat(sprintf("Element %d (%s): %s\n", ii, sQuote(names(x)[ii]), 
++         x[[ii]]))
++ }
+Element 1 ('a'): 1
+Element 2 ('a'): 2
+Element 3 ('c'): HELLO
+Element 4 ('d'): 3
+> x[c(1, 3)] <- list(2, "Hello world!")
+> x
+A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+> y <- as.list(x)
+> str(y)
+List of 4
+ $ a: num 2
+ $ a: num 2
+ $ c: chr "Hello world!"
+ $ d: num 3
+> z <- as.listenv(y)
+> z
+A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+> identical(z, x)
+[1] FALSE
+> all.equal(z, x)
+[1] TRUE
+```
+
 ## Creating list environments
 List environments are created similarly to lists but also similarly to environments.  To create an empty list environment, use
 ```r
 > x <- listenv()
 > x
-A 'listenv' vector with 0 elements.
+A 'listenv' vector with 0 elements (unnamed).
 ```
 This can later can be populated using named assignments,
 ```r
@@ -66,10 +137,16 @@ To allocate an "empty" list environment (with all `NULL`:s) of a given length, d
 > x <- listenv()
 > length(x) <- 4
 > x
-A 'listenv' vector with 4 unnamed elements.
+A 'listenv' vector with 4 elements (unnamed).
 ```
-_Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length=4)`; that construct is only supported for the basic data types.
+_Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length = 4)`; that construct is only supported for the basic data types.
 
+Elements can be dropped by assigning `NULL`, e.g. to drop the first and third element of a list environment, do:
+```r
+> x[c(1, 3)] <- NULL
+> x
+A 'listenv' vector with 2 elements (unnamed).
+```
 
 
 ## Iterating over elements
@@ -148,7 +225,7 @@ Analogously to lists, and contrary to plain environments, list environments can 
 > dim(x) <- c(2, 3)
 > dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
 > x
-A 'listenv' matrix with 6 unnamed elements arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
 ```
 An easy way to quickly get an overview is to coerce to a list, e.g.
 ```r
@@ -193,7 +270,6 @@ a 1 3 5
 b 2 4 6
 ```
 
-
 Concurrently with dimensional names it is possible to have names of the invidual elements just as for list environments without dimensions.  For example,
 ```r
 > names(x) <- letters[seq_along(x)]
@@ -208,6 +284,12 @@ A 'listenv' vector with 2 elements ('a', 'f').
 > unlist(x)
 a b c d e f 
 1 2 3 4 5 6 
+> as.list(x)
+  A B C
+a 1 3 5
+b 2 4 6
+attr(,"names")
+[1] "a" "b" "c" "d" "e" "f"
 ```
 Contrary to lists, element names are preserved also with multi-dimensional subsetting, e.g.
 ```r
@@ -233,6 +315,23 @@ Note, whenever dimensions are set using `dim(x) <- dims` both the dimensional na
 NULL
 ```
 This behavior is by design, cf. `help("dim", package="base")`.
+
+
+To allocate an "empty" list environment array (with all `NULL`:s) of a given dimension, do
+```r
+> x <- listenv()
+> dim(x) <- c(2, 3)
+> dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
+> x
+A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+```
+Rows and columns can be dropped by assigning `NULL`, e.g. to drop the first and third column of a list-environment matrix, do:
+```r
+> x[, c(1, 3)] <- NULL
+> x
+A 'listenv' matrix with 2 elements (unnamed) arranged in 2x1 rows ('a', 'b') and columns ('B').
+```
+
 
 
 
@@ -281,24 +380,49 @@ What is also important to understand is that it is not just the _content_ of an 
 > attr(x, "foo")
 [1] "Hello!"
 ```
+More importantly, since dimensions and their names are also attributes, this also means they are mutable.  For example,
+```r
+> x <- as.listenv(1:6)
+> dim(x) <- c(2, 3)
+> x
+A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 unnamed rows and columns.
+> y <- x
+> dim(y) <- c(3, 2)
+> x
+A 'listenv' matrix with 6 elements (unnamed) arranged in 3x2 unnamed rows and columns.
+```
 
 
-[listenv]: http://cran.r-project.org/package=listenv
+[listenv]: https://cran.r-project.org/package=listenv
 
 
 ## Installation
-R package listenv is available on [CRAN](http://cran.r-project.org/package=listenv) and can be installed in R as:
+R package listenv is available on [CRAN](https://cran.r-project.org/package=listenv) and can be installed in R as:
 ```r
 install.packages('listenv')
 ```
 
+### Pre-release version
 
+To install the pre-release version that is available in Git branch `develop` on GitHub, use:
+```r
+remotes::install_github('HenrikBengtsson/listenv@develop')
+```
+This will install the package from source.  
+
+
+
+## Contributions
+
+This Git repository uses the [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model (the [`git flow`](https://github.com/petervanderdoes/gitflow-avh) extension is useful for this).  The [`develop`](https://github.com/HenrikBengtsson/listenv/tree/develop) branch contains the latest contributions and other code that will appear in the next release, and the [`master`](https://github.com/HenrikBengtsson/listenv) branch contains the code of the latest release, which is exactly what is currently on [CRAN](https://cran.r-project.org/package=listenv).
+
+Contributing to this package is easy.  Just send a [pull request](https://help.github.com/articles/using-pull-requests/).  When you send your PR, make sure `develop` is the destination branch on the [listenv repository](https://github.com/HenrikBengtsson/listenv).  Your PR should pass `R CMD check --as-cran`, which will also be checked by <a href="https://travis-ci.org/HenrikBengtsson/listenv">Travis CI</a> and <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv">AppVeyor CI</a> when the PR is submitted.
 
 
 ## Software status
 
-| Resource:     | CRAN        | Travis CI     | Appveyor         |
-| ------------- | ------------------- | ------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Linux_       | _Windows_        |
-| R CMD check   | <a href="http://cran.r-project.org/web/checks/check_results_listenv.html"><img border="0" src="http://www.r-pkg.org/badges/version/listenv" alt="CRAN version"></a> | <a href="https://travis-ci.org/HenrikBengtsson/listenv"><img src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a> | <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a> |
-| Test coverage |                     | <a href="https://coveralls.io/r/HenrikBengtsson/listenv"><img src="https://coveralls.io/repos/HenrikBengtsson/listenv/badge.svg?branch=develop" alt="Coverage Status"/></a>   |                  |
+| Resource:     | CRAN        | Travis CI       | Appveyor         |
+| ------------- | ------------------- | --------------- | ---------------- |
+| _Platforms:_  | _Multiple_          | _Linux & macOS_ | _Windows_        |
+| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_listenv.html"><img border="0" src="http://www.r-pkg.org/badges/version/listenv" alt="CRAN version"></a> | <a href="https://travis-ci.org/HenrikBengtsson/listenv"><img src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a> |
+| Test coverage |                     | <a href="https://codecov.io/gh/HenrikBengtsson/listenv"><img src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |

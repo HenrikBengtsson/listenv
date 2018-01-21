@@ -1,9 +1,11 @@
 .Rhistory
 *~
 **/*~
-.R
-.benchmark
 .check
 .test
 .o
 .dll
+.async
+revdep/data.sqlite
+revdep/checks/*
+revdep/library/*
