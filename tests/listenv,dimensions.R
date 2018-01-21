@@ -271,7 +271,34 @@ y[, 2] <- NULL
 print(as.list(y))
 stopifnot(identical(as.list(y), x))
 
-message("- Dropping dimensions from matrix")
+## Drop every 2nd row using logical select
+x <- x[c(FALSE, TRUE), , drop = FALSE]
+print(x)
+y[c(TRUE, FALSE), ] <- NULL
+print(as.list(y))
+stopifnot(identical(as.list(y), x))
+
+## Drop by row names
+x <- x["b", , drop = FALSE]
+print(x)
+y["d", ] <- NULL
+print(as.list(y))
+stopifnot(identical(as.list(y), x))
+
+## Dropping multiple, duplicated indices
+x <- as.list(1:12)
+dim(x) <- c(4, 3)
+dimnames(x) <- list(letters[1:4], LETTERS[1:3])
+y <- as.listenv(x)
+
+x <- x[3:4, 1, drop = FALSE]
+print(x)
+y[, 3:2] <- NULL
+y[c(1, 1, 1, 2), ] <- NULL
+print(as.list(y))
+stopifnot(identical(as.list(y), x))
+
+message("- Dropping dimensions from array")
 x <- as.list(1:12)
 dim(x) <- c(2, 2, 3)
 dimnames(x) <- list(c("u", "v"), c("a", "b"), c("A", "B", "C"))

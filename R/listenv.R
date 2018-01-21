@@ -862,14 +862,18 @@ remove_by_index <- function(x, i) {
       if (length(idxs_dd) == 0) next
       if (is.logical(idxs_dd)) {
         idxs_dd <- rep(idxs_dd, length.out = dim[dd])
+        idxs_dd <- which(idxs_dd)
       } else if (is.character(idxs_dd)) {
+        idxs_dd <- unique(idxs_dd)
         idxs_dd <- match(idxs_dd, dimnames[[dd]])
+      } else {
+        idxs_dd <- unique(idxs_dd)
       }
       stopifnot(is.numeric(idxs_dd))
       dim[dd] <- dim[dd] - length(idxs_dd)
       dimnames[[dd]] <- dimnames[[dd]][-idxs_dd]
     }
-    idxs_drop <- sort(idxs_drop, decreasing = TRUE)
+    idxs_drop <- sort(unique(idxs_drop), decreasing = TRUE)
     for (i in idxs_drop) x <- remove_by_index(x, i = i)
     dim(x) <- dim
     dimnames(x) <- dimnames
