@@ -1,5 +1,76 @@
 # listenv: Environments Behaving (Almost) as Lists
 
+## Summary
+
+_List environments_ are environments that have list-like properties.  They are implemented by the [listenv] package.  The main features of a list environment are summarized in the below table:
+
+| Property                                                                     | list environments |  lists | environments |
+|------------------------------------------------------------------------------|:-----------------:|:------:|:------------:|
+| Number of elements, e.g. `length()`                                          |              yes  |   yes  |         yes  |
+| Named elements, e.g. `names()`, `x$a` and `x[["a"]]`                         |              yes  |   yes  |         yes  |
+| Duplicated names                                                             |              yes  |   yes  |              |
+| Element names are optional                                                   |              yes  |   yes  |              |
+| Indexed elements, e.g. `x[[4]]`                                              |              yes  |   yes  |              |
+| Dimensions, e.g. `dim(x)`                                                    |              yes  |   yes  |              |
+| Names of dimensions, e.g. `dimnames(x)`                                      |              yes  |   yes  |              |
+| Indexing by dimensions, e.g. `x[[2, 4]]` and `x[[2, "D"]]`                   |              yes  |   yes  |              |
+| Multi-element subsetting, e.g. `x[c("a", "c")]`, `x[-1]` and `x[2:1, , 3]`   |              yes  |   yes  |              |
+| Multi-element subsetting preserves element names                             |              yes  |        |              |
+| Removing elements by assigning NULL, e.g. `x$c <- NULL` and `x[1:3] <- NULL` |              yes  |   yes  |              |
+| Removing parts of dimensions by assigning NULL, e.g. `x[,2] <- NULL`         |              yes  |        |              |
+| Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`                            |              yes  |        |         yes  |
+| Compatible* with `assign()`, `delayedAssign()`, `get()` and `exists()`       |              yes  |        |         yes  |
+
+For example,
+```r
+> x <- listenv(a = 1, b = 2, c = "hello")
+> x
+A 'listenv' vector with 3 elements ('a', 'b', 'c').
+> length(x)
+[1] 3
+> names(x)
+[1] "a" "b" "c"
+> x$a
+[1] 1
+> x[[3]] <- toupper(x[[3]])
+> x$c
+[1] "HELLO"
+> y <- x
+> y$d <- y$a + y[["b"]]
+> names(y)[2] <- "a"
+> y$a
+[1] 1
+> y
+A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+> identical(y, x)
+[1] TRUE
+> for (ii in seq_along(x)) {
++     cat(sprintf("Element %d (%s): %s\n", ii, sQuote(names(x)[ii]), 
++         x[[ii]]))
++ }
+Element 1 ('a'): 1
+Element 2 ('a'): 2
+Element 3 ('c'): HELLO
+Element 4 ('d'): 3
+> x[c(1, 3)] <- list(2, "Hello world!")
+> x
+A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+> y <- as.list(x)
+> str(y)
+List of 4
+ $ a: num 2
+ $ a: num 2
+ $ c: chr "Hello world!"
+ $ d: num 3
+> z <- as.listenv(y)
+> z
+A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+> identical(z, x)
+[1] FALSE
+> all.equal(z, x)
+[1] TRUE
+```
+
 ## Creating list environments
 List environments are created similarly to lists but also similarly to environments.  To create an empty list environment, use
 ```r
@@ -70,7 +141,7 @@ A 'listenv' vector with 4 elements (unnamed).
 ```
 _Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length = 4)`; that construct is only supported for the basic data types.
 
-Elements can dropped by assigning `NULL`, e.g. to drop the first and third element of a list environment, do:
+Elements can be dropped by assigning `NULL`, e.g. to drop the first and third element of a list environment, do:
 ```r
 > x[c(1, 3)] <- NULL
 > x
