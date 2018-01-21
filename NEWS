@@ -1,7 +1,7 @@
 Package: listenv
 ================
 
-Version: 0.6.0-9000 [2018-01-20]
+Version: 0.6.0-9000 [2018-01-21]
 
 NEW FEATURES:
 
@@ -9,7 +9,7 @@ NEW FEATURES:
    first resizing it with length(), e.g. x <- listenv(); dim(x) <- c(2, 3).
 
  o Now it is possible to remove multiple elements by assigning NULL, e.g.
-   x[c(2:3, 10)] <- NULL.
+   x[c(2:3, 10)] <- NULL and x[, "B"] <- NULL.
 
  o Added lengths() for list environments.  Requires R (>= 3.3.0).
 

@@ -844,6 +844,38 @@ remove_by_index <- function(x, i) {
   missing <- sapply(idxs, FUN = function(x) {
     is.symbol(x) && identical("", deparse(x))
   })
+
+  ## Drop elements from matrix or array, e.g. x[,2] <- NULL?
+  if (ndim > 0L && nidxs > 1L && is.null(value)) {
+    if (ndim - sum(missing) != 1L) {
+      stop("Only one dimension at the time can be dropped when assigning NULL")
+    }
+    envir <- parent.frame()
+    dimnames <- dimnames(x)
+    array_idxs <- array(seq_along(x), dim = dim)
+    dimnames(array_idxs) <- dimnames
+    args <- c(list(array_idxs), idxs, list(drop = FALSE))
+    idxs_drop <- do.call(`[`, args = args)
+    for (dd in which(!missing)) {
+      idxs_dd <- idxs[[dd]]
+      idxs_dd <- eval(idxs_dd, envir = envir)
+      if (length(idxs_dd) == 0) next
+      if (is.logical(idxs_dd)) {
+        idxs_dd <- rep(idxs_dd, length.out = dim[dd])
+      } else if (is.character(idxs_dd)) {
+        idxs_dd <- match(idxs_dd, dimnames[[dd]])
+      }
+      stopifnot(is.numeric(idxs_dd))
+      dim[dd] <- dim[dd] - length(idxs_dd)
+      dimnames[[dd]] <- dimnames[[dd]][-idxs_dd]
+    }
+    idxs_drop <- sort(idxs_drop, decreasing = TRUE)
+    for (i in idxs_drop) x <- remove_by_index(x, i = i)
+    dim(x) <- dim
+    dimnames(x) <- dimnames
+    return(invisible(x))
+  }
+  
   if (any(missing)) {
     if (nidxs == ndim) {
       envir <- parent.frame()
