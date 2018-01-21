@@ -1,10 +1,12 @@
 #' Get name of variable for a specific element of list environment
 #'
 #' @param x A list environment.
+#' 
 #' @param name The name or index of element of interest.
-#' @param mustExist If TRUE, an error is generated if \code{name}
-#'       does not exist.
-#' @param create If TRUE, element \code{name} is created if missing.
+#' 
+#' @param mustExist If `TRUE`, an error is generated if `name` does not exist.
+#' 
+#' @param create If `TRUE`, element `name` is created if missing.
 #'
 #' @return The name of the underlying variable
 #'

@@ -34,7 +34,7 @@ dim.listenv <- function(x) attr(x, "dim.")
 #'
 #' @param value A numeric vector coerced to integers.
 #' If one of the elements is missing, then its value is inferred from the
-#' other elements (which must be non-missing) and the length of \code{x}.
+#' other elements (which must be non-missing) and the length of `x`.
 #'
 #' @return An object with the dimensions set, similar to what
 #' \code{\link[base:dim]{dim(x) <- value}} returns.

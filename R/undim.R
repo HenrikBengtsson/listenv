@@ -1,19 +1,21 @@
 #' Removes the dimension of an object
 #'
 #' @param x An object with or without dimensions
+#' 
 #' @param ... Not used.
 #'
 #' @return The object with the dimension attribute removed.
 #'
 #' @details
-#' This function does \code{attr(x, "dim") <- NULL}, which
-#' automatically also does \code{attr(x, "dimnames") <- NULL}.
+#' This function does `attr(x, "dim") <- NULL`, which automatically also does
+#' `attr(x, "dimnames") <- NULL`.
 #' However, other attributes such as names attributes are preserved,
-#' which is not the case if one do \code{dim(x) <- NULL}.
+#' which is not the case if one do `dim(x) <- NULL`.
 #'
 #' @export
 #' @aliases undim.default
 #' @aliases undim.listenv
+#' @keywords internal
 undim <- function(x, ...) UseMethod("undim")
 
 #' @export

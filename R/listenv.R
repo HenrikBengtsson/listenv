@@ -1,7 +1,7 @@
 #' Create a list environment
 #'
-#' @param \dots (optional) Named and/or unnamed objects to be
-#' assigned to the list environment.
+#' @param \dots (optional) Named and/or unnamed objects to be assigned to the
+#' list environment.
 #'
 #' @return An environment of class `listenv`.
 #'
@@ -165,9 +165,9 @@ print.listenv <- function(x, ...) {
 #' @return A named character vector
 #'
 #' @details
-#' \emph{Functions \code{map()} and \code{map<-()} have been renamed to
-#' \code{mapping()} and \code{mapping<-()}. The former will soon become
-#' deprecated and eventually defunct. Please update accordingly.}
+#' _Functions `map()` and `map<-()` have been renamed to `mapping()` and
+#' `mapping<-()`. The former will soon become deprecated and eventually
+#' defunct. Please update accordingly._
 #' 
 #' @aliases mapping.listenv
 #' @aliases map.listenv
@@ -279,17 +279,20 @@ lengths.listenv <- function(x, use.names=TRUE) {  #nolint
 #' List representation of a list environment
 #'
 #' @param x A list environment.
-#' @param all.names If \code{TRUE}, variable names starting with
-#'        a period are included, otherwise not.
-#' @param sorted If \code{TRUE}, elements are ordered by their names
-#'        before being compared, otherwise not.
+#' 
+#' @param all.names If `TRUE`, variable names starting with a period are
+#' included, otherwise not.
+#' 
+#' @param sorted If `TRUE`, elements are ordered by their names before being
+#' compared, otherwise not.
+#' 
 #' @param ... Not used.
 #'
 #' @return A list.
 #'
 #' @export
 #' @keywords internal
-as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
+as.list.listenv <- function(x, all.names = TRUE, sorted = FALSE, ...) {
   vars <- mapping(x)
   nvars <- length(vars)
   names <- names(x)
@@ -333,9 +336,10 @@ as.list.listenv <- function(x, all.names=TRUE, sorted=FALSE, ...) {
 #' Get elements of list environment
 #'
 #' @param x A list environment.
+#' 
 #' @param name The name or index of the element to retrieve.
 #'
-#' @return The value of an element or NULL if the element does not exist
+#' @return The value of an element or `NULL` if the element does not exist.
 #'
 #' @aliases [[.listenv
 #' @aliases [.listenv

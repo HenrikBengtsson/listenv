@@ -1,21 +1,23 @@
 #' Helper function to infer target from expression and environment
 #'
 #' @param expr An expression.
+#' 
 #' @param envir An environment.
-#' @param substitute If TRUE, then the expression is
-#'        \code{substitute()}:ed, otherwise not.
+#' 
+#' @param substitute If `TRUE`, then the expression is [base::substitute()]:ed,
+#' otherwise not.
 #'
 #' @return A named list with elements:
 #' \describe{
-#'  \item{\code{envir}}{An environment (defaults to argument \code{envir})}
-#'  \item{\code{name}}{A character vector. ...}
-#'  \item{\code{op}}{...}
-#'  \item{\code{subset}}{A list of \code{NULL}. ...}
-#'  \item{\code{idx}}{An integer vector or \code{NULL}. ...}
-#'  \item{\code{exists}}{A logical vector of length \code{length(idx)} with
-#'        \code{TRUE} and \code{FALSE} values.}
-#'  \item{\code{code}}{The deparsed expression \code{expr} coerced to a
-#'        single character string.}
+#'  \item{`envir`}{An environment (defaults to argument `envir`)}
+#'  \item{`name`}{A character vector. ...}
+#'  \item{`op`}{...}
+#'  \item{`subset`}{A list of `NULL`. ...}
+#'  \item{`idx`}{An integer vector or `NULL`. ...}
+#'  \item{`exists`}{A logical vector of length `length(idx)` with `TRUE`
+#'        and `FALSE` values.}
+#'  \item{`code`}{The deparsed expression `expr` coerced to a single character
+#'        string.}
 #' }
 #'
 #' @export

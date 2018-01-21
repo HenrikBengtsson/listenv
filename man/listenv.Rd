@@ -11,11 +11,11 @@ listenv(...)
 as.listenv(...)
 }
 \arguments{
-\item{\dots}{(optional) Named and/or unnamed objects to be
-assigned to the list environment.}
+\item{\dots}{(optional) Named and/or unnamed objects to be assigned to the
+list environment.}
 }
 \value{
-An environment of class `listenv`.
+An environment of class \code{listenv}.
 }
 \description{
 Create a list environment

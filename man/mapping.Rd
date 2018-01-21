@@ -20,8 +20,8 @@ A named character vector
 Variable name map for elements of list environment
 }
 \details{
-\emph{Functions \code{map()} and \code{map<-()} have been renamed to
-\code{mapping()} and \code{mapping<-()}. The former will soon become
-deprecated and eventually defunct. Please update accordingly.}
+\emph{Functions \code{map()} and \code{map<-()} have been renamed to \code{mapping()} and
+\code{mapping<-()}. The former will soon become deprecated and eventually
+defunct. Please update accordingly.}
 }
 \keyword{internal}

@@ -13,7 +13,7 @@
 \item{name}{The name or index of the element to retrieve.}
 }
 \value{
-The value of an element or NULL if the element does not exist
+The value of an element or \code{NULL} if the element does not exist.
 }
 \description{
 Get elements of list environment
