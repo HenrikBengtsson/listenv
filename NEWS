@@ -16,7 +16,8 @@ NEW FEATURES:
  o dim_na(x) <- dims, where 'dims' contain exactly one missing value, will
    set the "missing" dimension based on the length of 'x' and the other
    dimensions specified, e.g. with length(x) == 6, dim_na(x) <- c(2, NA) will
-   set dim(x) <- c(2, 3).
+   set dim(x) <- c(2, 3).  This works for all types of object to which
+   dimensions can be assigned - not only list environments.
 
  o Added is.matrix(), is.array(), as.vector() and as.matrix() for list
    environments.
