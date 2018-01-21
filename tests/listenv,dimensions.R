@@ -63,6 +63,17 @@ for (kk in seq_along(dims)) {
   z <- as.listenv(y)
   stopifnot(all.equal(z, x))
 
+  ## Infer one of the dimensions if given as NA
+  dim0 <- dim(x)
+  for (dd in seq_along(dim0)) {
+    dim_dd <- dim0
+    dim_dd[dd] <- NA_integer_
+    dim_na(x) <- dim_dd
+    print(x)
+    stopifnot(identical(dim(x), dim0))
+  }
+  names(x) <- names
+  
   excls <- c(list(NULL), as.list(seq_along(dimnames)),
              list(seq_along(dimnames)))
   for (ll in seq_along(excls)) {

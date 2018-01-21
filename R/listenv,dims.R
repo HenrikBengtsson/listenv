@@ -27,6 +27,43 @@ dim.listenv <- function(x) attr(x, "dim.")
 }
 
 
+#' Set the dimension of an object
+#'
+#' @param x An \R object, e.g. a list environment, a matrix, an array, or
+#' a data frame.
+#'
+#' @param value A numeric vector coerced to integers.
+#' If one of the elements is missing, then its value is inferred from the
+#' other elements (which must be non-missing) and the length of \code{x}.
+#'
+#' @return An object with the dimensions set, similar to what
+#' \code{\link[base:dim]{dim(x) <- value}} returns.
+#'
+#' @examples
+#' x <- 1:6
+#' dim_na(x) <- c(2, NA)
+#' print(dim(x))  ## [1] 2 3
+#'
+#' @name dim_na
+#' @aliases dim_na<-
+#' @export
+`dim_na<-` <- function(x, value) {
+  if (!is.null(value)) {
+    value <- as.integer(value)
+    nas <- which(is.na(value))
+    if (length(nas) > 0) {
+      if (length(nas) > 1) {
+        stop("Argument 'value' may only have one NA: ",
+             sprintf("c(%s)", paste(value, collapse = ", ")))
+      }
+      value[nas] <- as.integer(length(x) / prod(value[-nas]))
+    }
+  }
+  dim(x) <- value
+  invisible(x)
+}
+
+
 #' @export
 dimnames.listenv <- function(x) attr(x, "dimnames.")
 
