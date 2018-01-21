@@ -16,6 +16,12 @@ Thanks in advance
 
 The package has been verified using `R CMD check --as-cran` on:
 
+* Platform x86_64-apple-darwin13.4.0 (64-bit) [Travis CI]:
+  - R version 3.3.3 (2017-03-06)
+
+* Platform x86_64-apple-darwin15.6.0 (64-bit) [Travis CI]:
+  - R version 3.4.3 (2017-11-30)
+
 * Platform x86_64-apple-darwin15.6.0 (64-bit) [r-hub]:
   - R version 3.4.1 (2017-06-30)
 
