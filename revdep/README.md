@@ -6,10 +6,10 @@
 |os       |Ubuntu 16.04.3 LTS           |
 |system   |x86_64, linux-gnu            |
 |ui       |X11                          |
-|language |en_US:en                     |
+|language |en                           |
 |collate  |en_US.UTF-8                  |
 |tz       |US/Pacific                   |
-|date     |2018-01-10                   |
+|date     |2018-01-20                   |
 
 # Dependencies
 
@@ -19,13 +19,14 @@
 
 # Revdeps
 
-## All (7)
+## All (8)
 
 |package                             |version |error |warning |note |
 |:-----------------------------------|:-------|:-----|:-------|:----|
 |aroma.affymetrix                    |3.1.0   |      |        |     |
 |[aroma.core](problems.md#aromacore) |3.1.1   |      |        |1    |
 |future                              |1.6.2   |      |        |     |
+|future.apply                        |0.1.0   |      |        |     |
 |future.BatchJobs                    |0.15.0  |      |        |     |
 |future.batchtools                   |0.6.0   |      |        |     |
 |[origami](problems.md#origami)      |0.8.0   |      |        |1    |
