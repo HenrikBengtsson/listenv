@@ -1,39 +1,61 @@
-# CRAN submission listenv 0.6.0
-on 2015-12-27
+# CRAN submission listenv 0.7.0
+on 2018-01-21
+
+FIX: Forgot to suggests required package 'markdown'.
+
+I've verified that this submission causes *no* issues for
+any of the 8 reverse (non-recursive) package dependencies
+available on CRAN and Bioconductor.
 
 Thanks in advance
 
 
 ## Notes not sent to CRAN
+
+### R CMD check --as-cran validation
+
 The package has been verified using `R CMD check --as-cran` on:
 
+* Platform x86_64-apple-darwin13.4.0 (64-bit) [Travis CI]:
+#  - R version 3.3.3 (2017-03-06)
+
+* Platform x86_64-apple-darwin15.6.0 (64-bit) [Travis CI]:
+#  - R version 3.4.3 (2017-11-30)
+
+* Platform x86_64-apple-darwin15.6.0 (64-bit) [r-hub]:
+  - R version 3.4.1 (2017-06-30)
+
+* Platform i386-pc-solaris2.10 (32-bit) [r-hub]:
+  - R version 3.4.1 Patched (2017-07-15 r72924)
+
 * Platform x86_64-unknown-linux-gnu (64-bit) [Travis CI]:
-  - R version 3.1.3 (2015-03-09)
-  - R version 3.2.2 (2015-08-14)
-  - R Under development (unstable) (2015-12-26 r69814)
-  
+  - R version 3.3.3 (2017-03-06)
+  - R version 3.4.2 (2017-09-28)
+  - R Under development (unstable) (2018-01-20 r74146)
+
+* Platform x86_64-pc-linux-gnu (64-bit) [r-hub]:
+  - R version 3.4.2 (2017-09-28)
+  - R Under development (unstable) (2018-01-20 r74146)
+
 * Platform x86_64-pc-linux-gnu (64-bit):
   - R version 3.1.2 (2014-10-31)
-  - R version 3.2.3 (2015-12-10)
-  - R version 3.2.3 Patched (2015-12-24 r69811)
-  - R Under development (unstable) (2015-12-24 r69811)
+  - R version 3.2.0 (2015-04-16)
+  - R version 3.3.0 (2016-05-03)
+  - R version 3.4.3 (2017-11-30)
+
+* Platform i686-pc-linux-gnu (32-bit):
+  - R version 3.4.3 (2017-11-30)
+
+* Platform i386-w64-mingw32 (32-bit) [Appveyor CI]:
+  - R Under development (unstable) (2018-01-20 r74146)
+
+* Platform x86_64-w64-mingw32 (64-bit) [r-hub]:
+  - R Under development (unstable) (2017-12-04 r73829)
 
 * Platform x86_64-w64-mingw32/x64 (64-bit) [Appveyor CI]:
-  - R Under development (unstable) (2015-12-24 r69811)
+  - R version 3.4.3 (2017-11-30)
+  - R Under development (unstable) (2018-01-20 r74146)
 
 * Platform x86_64-w64-mingw32/x64 (64-bit) [win-builder]:
-  - R version 3.2.3 (2015-12-10)
-  - R Under development (unstable) (2015-12-17 r69781)
-
-* Platform x86_64-w64-mingw32/x64 (64-bit):
-  - R version 3.1.3 (2015-03-09)
-  - R version 3.2.3 Patched (2015-12-14 r69777)
-  - R Under development (unstable) (2015-12-18 r69782)
-
-It has also verified using the <http://win-builder.r-project.org/>
-service.
-
-Moreover, the updates cause no issues for any of the following
-3 reverse dependency on CRAN, which have been tested with
-`R CMD check --as-cran`: PSCBS 0.60.0, R.filesets 2.9.0 and
-future 0.9.0.
+  - R version 3.4.3 (2017-11-30)
+  - R Under development (unstable) (2018-01-19 r74138)
