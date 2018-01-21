@@ -18,6 +18,11 @@ with_r_330({
   stopifnot(identical(lengths(x), integer(0L)))
 })
 
+## Named, empty list environment
+x <- listenv()
+names(x) <- character(0L)
+print(x)
+
 x <- listenv(a = 1)
 print(x)
 stopifnot(length(x) == 1)

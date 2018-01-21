@@ -99,16 +99,19 @@ print.listenv <- function(x, ...) {
   }
 
   s <- sprintf("A %s %s with %d", sQuote(class), what, n)
-  if (is.null(names) && n > 0) {
-    s <- sprintf("%s unnamed", s)
-  }
   if (n == 1) {
     s <- sprintf("%s element", s)
   } else {
     s <- sprintf("%s elements", s)
   }
-  if (!is.null(names)) {
-    s <- sprintf("%s (%s)", s, hpaste(sQuote(names)))
+  if (is.null(names)) {
+    s <- sprintf("%s (unnamed)", s)
+  } else {
+    if (n == 0) {
+      s <- sprintf("%s (named)", s)
+    } else {
+      s <- sprintf("%s (%s)", s, hpaste(sQuote(names)))
+    }
   }
   if (ndim > 1) {
     dimstr <- paste(dim, collapse = "x")

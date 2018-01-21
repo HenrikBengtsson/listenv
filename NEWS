@@ -18,6 +18,8 @@ NEW FEATURES:
 
 BUG FIXES:
 
+ o print() on a named, empty list environment would output an empty string.
+ 
  o Removing an element from a list environment did not remove dimensions,
    e.g. x$a <- NULL.
 

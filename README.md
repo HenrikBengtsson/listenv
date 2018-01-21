@@ -5,7 +5,7 @@ List environments are created similarly to lists but also similarly to environme
 ```r
 > x <- listenv()
 > x
-A 'listenv' vector with 0 elements.
+A 'listenv' vector with 0 elements (unnamed).
 ```
 This can later can be populated using named assignments,
 ```r
@@ -66,7 +66,7 @@ To allocate an "empty" list environment (with all `NULL`:s) of a given length, d
 > x <- listenv()
 > length(x) <- 4
 > x
-A 'listenv' vector with 4 unnamed elements.
+A 'listenv' vector with 4 elements (unnamed).
 ```
 _Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length=4)`; that construct is only supported for the basic data types.
 
@@ -148,7 +148,7 @@ Analogously to lists, and contrary to plain environments, list environments can 
 > dim(x) <- c(2, 3)
 > dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
 > x
-A 'listenv' matrix with 6 unnamed elements arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
 ```
 An easy way to quickly get an overview is to coerce to a list, e.g.
 ```r
