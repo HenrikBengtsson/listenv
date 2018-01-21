@@ -509,6 +509,17 @@ y[] <- NULL
 x[] <- NULL
 stopifnot(identical(as.list(x), y))
 
+x <- as.listenv(1:6)
+names(x) <- letters[seq_along(x)]
+y <- as.list(x)
+stopifnot(identical(as.list(x), y))
+
+# Every other by logical indexing
+x[c(TRUE, FALSE)] <- NULL
+y[c(TRUE, FALSE)] <- NULL
+stopifnot(identical(as.list(x), y))
+
+
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Expanding
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
