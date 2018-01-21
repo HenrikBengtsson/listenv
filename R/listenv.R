@@ -883,6 +883,22 @@ remove_by_index <- function(x, i) {
   # Nothing to do?
   if (ni == 0L) return(invisible(x))
 
+  if (!is.character(i) && !is.numeric(i)) {
+    stopf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i), call. = FALSE)  #nolint
+  }
+  
+  # Remove elements?
+  if (is.null(value)) {
+    idxs <- unique(i)
+    if (is.character(i)) {
+      for (i in idxs) x <- remove_by_name(x, name = i)
+    } else if (is.numeric(i)) {
+      idxs <- sort(idxs, decreasing = TRUE)
+      for (i in idxs) x <- remove_by_index(x, i = i)
+    }
+    return(invisible(x))
+  }
+  
   nvalue <- length(value)
   if (nvalue == 0L) stop("Replacement has zero length", call. = FALSE)
 
@@ -902,8 +918,6 @@ remove_by_index <- function(x, i) {
     for (kk in seq_len(ni)) {
       x <- assign_by_index(x, i = i[kk], value = value[[kk]])
     }
-  } else {
-    stopf("Subsetted [<- assignment to listenv's is only supported for names and indices, not %s", mode(i), call. = FALSE)  #nolint
   }
   return(invisible(x))
 }

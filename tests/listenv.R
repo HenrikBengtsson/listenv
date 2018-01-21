@@ -479,6 +479,30 @@ stopifnot(identical(names(x), c("a", "b", "")))
 stopifnot(identical(as.list(x), list(a = 3L, b = 1L, 3L)))
 
 
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+## Removing multiple elements at once
+## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+x <- as.listenv(1:6)
+names(x) <- letters[seq_along(x)]
+y <- as.list(x)
+stopifnot(identical(as.list(x), y))
+
+x[2] <- NULL
+y[2] <- NULL
+stopifnot(identical(as.list(x), y))
+
+x[4:3] <- NULL
+y[4:3] <- NULL
+stopifnot(identical(as.list(x), y))
+
+x[rep(2, times = 10)] <- NULL
+y[rep(2, times = 10)] <- NULL
+stopifnot(identical(as.list(x), y))
+
+## Erase all elements
+y[] <- NULL
+x[] <- NULL
+stopifnot(identical(as.list(x), y))
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Expanding
