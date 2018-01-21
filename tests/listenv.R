@@ -519,6 +519,10 @@ x[c(TRUE, FALSE)] <- NULL
 y[c(TRUE, FALSE)] <- NULL
 stopifnot(identical(as.list(x), y))
 
+x[c("b", "f")] <- NULL
+y[c("b", "f")] <- NULL
+stopifnot(identical(as.list(x), y))
+
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ## Expanding
