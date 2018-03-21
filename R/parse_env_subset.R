@@ -93,7 +93,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
             subset_kk <- get(subset_kk, envir = envir, inherits = TRUE)
           }
         } else if (is.language(subset_kk)) {
-          subset_kk <- eval(subset_kk, envir = envir)
+          subset_kk <- eval(subset_kk, envir = envir, enclos = baseenv())
         }
         if (is.null(subset_kk)) {
           subset[kk - 2L] <- list(NULL)
