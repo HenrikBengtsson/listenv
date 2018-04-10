@@ -37,7 +37,7 @@ get_variable.listenv <- function(x, name, mustExist = FALSE,
 
     ## Map multi-dimensional index to scalar index
     if (length(name) > 1L) {
-      stopifnot(is.numeric(name))
+      stop_if_not(is.numeric(name))
       idxs <- name
       if (anyNA(idxs)) stop("Unknown index detected")
 

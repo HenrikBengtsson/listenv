@@ -48,7 +48,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
     res$subset <- list(expr)
   } else {
     n <- length(expr)
-    stopifnot(n >= 2L)
+    stop_if_not(n >= 2L)
 
     if (n >= 3L) {
       ## Assignment to environment via $ and [[
@@ -146,7 +146,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
 
     ## Special: listenv:s
     envir <- res$envir
-    stopifnot(is.environment(envir))
+    stop_if_not(is.environment(envir))
 
     if (inherits(envir, "listenv")) {
       names <- names(envir)
@@ -182,7 +182,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
         idx <- 1
         for (kk in seq_along(subset)) {
           i <- subset[[kk]]
-          stopifnot(is.numeric(i))
+          stop_if_not(is.numeric(i))
           d <- dim[kk]
           if (any(i < 0)) {
             if (op == "[[") {
@@ -273,12 +273,12 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
   }
 
   ## Sanity check
-  stopifnot(is.environment(res$envir))
-  stopifnot(is.character(res$name))
-  stopifnot(is.null(res$subset) || is.list(res$subset))
-  stopifnot(is.null(res$idx) || all(is.numeric(res$idx)))
-  stopifnot(is.logical(res$exists), !anyNA(res$exists))
-  stopifnot(length(res$exists) == length(res$idx))
+  stop_if_not(is.environment(res$envir))
+  stop_if_not(is.character(res$name))
+  stop_if_not(is.null(res$subset) || is.list(res$subset))
+  stop_if_not(is.null(res$idx) || all(is.numeric(res$idx)))
+  stop_if_not(is.logical(res$exists), !anyNA(res$exists))
+  stop_if_not(length(res$exists) == length(res$idx))
 
   res
 }

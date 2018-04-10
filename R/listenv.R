@@ -183,7 +183,7 @@ mapping <- function(x, ...) {
 map <- mapping
 
 `mapping<-` <- function(x, value) {
-  stopifnot(is.character(value))
+  stop_if_not(is.character(value))
   assign(".listenv.map", value, envir = parent.env(x), inherits = FALSE)
   invisible(x)
 }
@@ -536,7 +536,7 @@ to_index <- function(x, idxs) {
   } else if (is.numeric(i)) {
     ## Exclude elements with negative indices?
     if (any(i < 0)) {
-      stopifnot(is.null(dim(i)))
+      stop_if_not(is.null(dim(i)))
       if (any(i > 0)) {
         stop("only 0's may be mixed with negative subscripts")
       }
@@ -873,7 +873,7 @@ remove_by_index <- function(x, i) {
       } else {
         idxs_dd <- unique(idxs_dd)
       }
-      stopifnot(is.numeric(idxs_dd))
+      stop_if_not(is.numeric(idxs_dd))
       dim[dd] <- dim[dd] - length(idxs_dd)
       dimnames[[dd]] <- dimnames[[dd]][-idxs_dd]
     }
