@@ -453,7 +453,7 @@ to_index <- function(x, idxs) {
       i <- match(name, table = names(map))
       if (is.na(i)) return(NULL)
     } else if (!is.numeric(i)) {
-      return(NextMethod("[["))
+      return(NextMethod())
     }
 
     if (length(i) != 1L) {
@@ -551,7 +551,7 @@ to_index <- function(x, idxs) {
     if (length(i) < nmap) i <- rep(i, length.out = nmap)
     i <- which(i)
   } else {
-    return(NextMethod("["))
+    return(NextMethod())
   }
 
   ## Nothing to do?
