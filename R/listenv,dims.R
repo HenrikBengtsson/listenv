@@ -1,5 +1,5 @@
 #' @export
-dim.listenv <- function(x) attr(x, "dim.")
+dim.listenv <- function(x) attr(x, "dim.", exact = TRUE)
 
 #' @export
 `dim<-.listenv` <- function(x, value) {
@@ -65,7 +65,7 @@ dim.listenv <- function(x) attr(x, "dim.")
 
 
 #' @export
-dimnames.listenv <- function(x) attr(x, "dimnames.")
+dimnames.listenv <- function(x) attr(x, "dimnames.", exact = TRUE)
 
 #' @export
 `dimnames<-.listenv` <- function(x, value) {
