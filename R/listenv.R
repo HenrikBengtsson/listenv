@@ -216,7 +216,7 @@ if (!exists("lengths", mode = "function")) {
   n <- length(map)
   value <- as.numeric(value)
 
-  if (value < 0) stop("invalid value")
+  if (value < 0) stop("Cannot set a negative length")
 
   ## Nothing to do?
   if (value == n) return(invisible(x))
@@ -257,12 +257,9 @@ names.listenv <- function(x) {
   map <- mapping(x)
   if (is.null(value)) {
   } else if (length(value) != length(map)) {
-    stopf("Number of names does not match the number of elements: %s != %s",
+    stopf("The number of names does not match the number of elements: %s != %s",
           length(value), length(map))
   }
-##  if (any(duplicated(value))) {
-##    stop("Environments cannot have duplicate names on elements")
-##  }
   names(map) <- value
   mapping(x) <- map
   invisible(x)
@@ -364,8 +361,8 @@ to_index <- function(x, idxs) {
   dim <- dim(x)
   if (is.null(dim)) dim <- length(x)
   ndim <- length(dim)
-  if (ndim != nidxs) {
-    stop("incorrect number of dimensions")
+  if (nidxs != ndim) {
+    stopf("Incorrect number of dimensions: %d != %d", nidxs, ndim)
   }
   dimnames <- dimnames(x)
   idx_dimnames <- dimnames
@@ -381,19 +378,29 @@ to_index <- function(x, idxs) {
     if (is.character(i)) {
       name <- i
       i <- match(name, table = dimnames[[kk]])
-      if (anyNA(i)) stop("subscript out of bounds")
+      if (anyNA(i)) {
+        unknown <- name[is.na(i)]
+        stopf("Unknown names for dimension #%d: %s",
+	      kk, hpaste(sQuote(unknown)))
+      }
     } else if (is.logical(i)) {
       d <- dim[kk]
       ni <- length(i)
-      if (ni > d) stop("(subscript) logical subscript too long")
+      if (ni > d) {
+        stopf("Logical subscript for dimension #%d too long: %d > %d",
+	      kk, ni, d)
+      }
       if (ni < d) i <- rep(i, length.out = d)
       i <- which(i)
     } else if (is.numeric(i)) {
       d <- dim[kk]
-      if (any(i > d)) stop("subscript out of bounds")
+      if (any(i > d)) {
+        stopf("Subscript for dimension #%d out of bounds [%d,%d]",
+	      kk, min(1, d), d)
+      }
       if (any(i < 0)) {
         if (any(i > 0)) {
-          stop("only 0's may be mixed with negative subscripts")
+          stopf("Only 0's may be mixed with negative subscripts (dimension #%d)", kk)
         }
         ## Drop elements
         i <- setdiff(seq_len(d), -i)
@@ -401,7 +408,8 @@ to_index <- function(x, idxs) {
       ## Drop zeros
       i <- i[i != 0]
     } else {
-      stop("invalid subscript type", sQuote(typeof(i)))
+      stopf("Invalid subscript type for dimension #%d: %s",
+            kk, sQuote(typeof(i)))
     }
 
     ## Subset dimnames?
@@ -538,7 +546,7 @@ to_index <- function(x, idxs) {
     if (any(i < 0)) {
       stop_if_not(is.null(dim(i)))
       if (any(i > 0)) {
-        stop("only 0's may be mixed with negative subscripts")
+        stop("Only 0's may be mixed with negative subscripts")
       }
       ## Drop elements
       i <- setdiff(seq_len(nmap), -i)
@@ -628,9 +636,9 @@ assign_by_name <- function(x, name, value) {
     stop("Cannot assign value. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
     stop("Cannot assign value. More than one name specified: ",
-         hpaste(name), call. = FALSE)
+         hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot assign value. Empty name specific: ", name, call. = FALSE)
+    stop("Cannot assign value. Empty name specific: ", sQuote(name), call. = FALSE)
   }
 
   map <- mapping(x)
@@ -709,10 +717,11 @@ remove_by_name <- function(x, name) {
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
-    stop("Cannot remove element. More than one name specified: ", hpaste(name),
-         call. = FALSE)
+    stop("Cannot remove element. More than one name specified: ",
+         hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot remove element. Empty name specific: ", name, call. = FALSE)
+    stop("Cannot remove element. Empty name specific: ",
+         sQuote(name), call. = FALSE)
   }
 
   map <- mapping(x)

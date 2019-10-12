@@ -1,8 +1,14 @@
 Package: listenv
 ================
 
-Version: 0.7.0-9000 [2018-10-11]
+Version: 0.7.0-9000 [2018-10-12]
 
+NEW FEATURES:
+
+ * Made several error messages more informative.  The downside is that
+   those messages are no longer aligned with built-in R error message which
+   means that they are also not translated.
+ 
 BUG FIXES:
 
  * parse_env_subset(x[1, names]) on a listenv 'x' matrix would throw error

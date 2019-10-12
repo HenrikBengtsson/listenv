@@ -39,7 +39,7 @@ get_variable.listenv <- function(x, name, mustExist = FALSE,
     if (length(name) > 1L) {
       stop_if_not(is.numeric(name))
       idxs <- name
-      if (anyNA(idxs)) stop("Unknown index detected")
+      if (anyNA(idxs)) stop("Unknown (NA) index detected")
 
       for (kk in seq_len(ndim)) {
         if (idxs[kk] < 1 || idxs[kk] > dim[kk]) {
