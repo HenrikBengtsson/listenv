@@ -74,11 +74,16 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
       }
       res$envir <- obj
 
+      ## Check whether an empty symbol or not
+      is_empty <- local({
+        symbol <- alist(empty=)
+	function(x) identical(x, symbol$empty)
+      })
+      
       ## Subset
       subset <- list()
       for (kk in 3:n) {
-        missing <- (length(expr[[kk]]) == 1L) && (expr[[kk]] == "")
-        if (missing) {
+        if (is_empty(expr[[kk]])) {
           subset_kk <- NULL
         } else {
           subset_kk <- expr[[kk]]
@@ -203,7 +208,6 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
 
         res$idx <- idx
         res$name <- names[res$idx]
-        if (length(res$name) == 0L) res$name <- ""
 
         ## Check if elements exist
         exists <- rep(TRUE, times = length(idx))
@@ -242,11 +246,13 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
           res$idx <- i
           res$exists <- !is.na(map[res$idx]) & (res$idx >= 1 & res$idx <= n)
           res$name <- names[i]
-          if (length(res$name) == 0L) res$name <- ""
         } else if (is.character(subset)) {
           res$idx <- match(subset, names)
           res$exists <- !is.na(res$idx) & !is.na(map[res$idx])
-        }
+        } else if (is.null(subset)) {
+	  res$idx <- seq_len(length(envir))
+          res$exists <- !is.na(res$idx) & !is.na(map[res$idx])
+	}
       }
     } else {
       if (length(subset) > 1L) {
@@ -265,6 +271,8 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
       res$name <- subset
     }
   }
+
+  if (length(res$name) == 0L) res$name <- ""
 
   ## Identify index?
   if (inherits(res$envir, "listenv")) {
