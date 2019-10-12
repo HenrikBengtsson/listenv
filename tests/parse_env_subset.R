@@ -130,6 +130,14 @@ stopifnot(identical(target$envir, x), target$name == "a", target$idx  == 1,
 stopifnot(x$a == 1)
 stopifnot(x[[1]] == 1)
 
+target <- parse_env_subset(x[[c("a", "a")]], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          length(target$name) == 2L, all(target$name == "a"),
+	  length(target$idx) == 2L, all(target$idx  == 1),
+          length(target$exists) == 2L, all(target$exists))
+
+
 target <- parse_env_subset(x[[1]], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$name == "a", target$idx  == 1,
@@ -212,6 +220,25 @@ message("*** parse_env_subset() on listenv ... DONE")
 ## Exception handling
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 message("*** parse_env_subset() - exceptions ...")
+
+x <- new.env()
+x$a <- 1
+
+res <- tryCatch({
+  parse_env_subset(x[[1]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[TRUE]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[c("a", "a")]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
 
 x <- listenv()
 

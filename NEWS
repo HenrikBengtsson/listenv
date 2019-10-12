@@ -1,9 +1,23 @@
 Package: listenv
 ================
 
-Version: 0.7.0-9000 [2018-01-21]
+Version: 0.7.0-9000 [2018-10-11]
 
- o ...
+BUG FIXES:
+
+ o parse_env_subset(x[names]) on a listenv 'x' would throw an error on
+   'length(x) = 2 > 1' in coercion to 'logical(1)' when length(names) > 1
+    and _R_CHECK_LENGTH_1_LOGIC2_=true.
+
+ o parse_env_subset(x[1,idxs]) on a listenv 'x' would throw an error on
+   'length(x) = 2 > 1' in coercion to 'logical(1)' with length(idxs) > 1
+   and _R_CHECK_LENGTH_1_LOGIC2_=true.
+
+ o parse_env_subset(x[[1]]) on a regular environment 'x' would not throw
+   an error, whereas x[[1]] would.
+
+ o parse_env_subset(x[[names]]) on a regular environment 'x' with
+   length(names) > 1 would not throw an error, whereas x[[names]] would.
 
 
 Version: 0.7.0 [2018-01-21]

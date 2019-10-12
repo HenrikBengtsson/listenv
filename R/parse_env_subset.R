@@ -162,17 +162,14 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
           stop("Multi-dimensional subsetting on list environment without dimensions: ", sQuote(code), call. = TRUE)  #nolint
         }
         dimnames <- dimnames(envir)
-        exists <- TRUE
+
+        ## Expland NULL indices and map names to indices
         for (kk in seq_along(subset)) {
           subset_kk <- subset[[kk]]
           if (is.null(subset_kk)) {
             subset[[kk]] <- seq_len(dim[kk])
-          } else if (is.numeric(subset_kk)) {
-            exists <- exists && (subset_kk >= 1 && subset_kk <= dim[kk])
           } else if (is.character(subset_kk)) {
-            subset_kk <- match(subset_kk, dimnames[[kk]])
-            exists <- exists && !is.na(subset_kk)
-            subset[[kk]] <- subset_kk
+            subset[[kk]] <- match(subset_kk, dimnames[[kk]])
           }
         }
 
@@ -207,9 +204,20 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
         res$idx <- idx
         res$name <- names[res$idx]
         if (length(res$name) == 0L) res$name <- ""
-        if (exists) {
-          exists <- !is.na(map[idx])
+
+        ## Check if elements exist
+        exists <- rep(TRUE, times = length(idx))
+        for (kk in seq_along(subset)) {
+          subset_kk <- subset[[kk]]
+          if (is.numeric(subset_kk)) {
+            exists <- exists & (subset_kk >= 1 & subset_kk <= dim[kk])
+          } else {
+	    stop("Internal error: Subset should already be an index: ",
+	         mode(subset_kk))
+          }
         }
+        stop_if_not(length(exists) == length(idx))
+        exists[exists] <- !is.na(map[idx])
         res$exists <- exists
       } else {
         subset <- subset[[1L]]
@@ -237,7 +245,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
           if (length(res$name) == 0L) res$name <- ""
         } else if (is.character(subset)) {
           res$idx <- match(subset, names)
-          res$exists <- !is.na(res$idx) && !is.na(map[res$idx])
+          res$exists <- !is.na(res$idx) & !is.na(map[res$idx])
         }
       }
     } else {
@@ -245,8 +253,17 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
         stop("Invalid subset: ", sQuote(code), call. = TRUE)
       }
       subset <- subset[[1L]]
+      if (length(subset) > 1L) {
+        stop("wrong arguments for subsetting an environment", call. = TRUE)
+      }
+      if (!is.character(subset)) {
+        stop("wrong arguments for subsetting an environment", call. = TRUE)
+      }
     }
-    if (is.character(subset)) res$name <- subset
+    
+    if (is.character(subset)) {
+      res$name <- subset
+    }
   }
 
   ## Identify index?
