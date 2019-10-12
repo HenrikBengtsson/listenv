@@ -174,7 +174,11 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
           if (is.null(subset_kk)) {
             subset[[kk]] <- seq_len(dim[kk])
           } else if (is.character(subset_kk)) {
-            subset[[kk]] <- match(subset_kk, dimnames[[kk]])
+            subset_kk <- match(subset_kk, dimnames[[kk]])
+	    if (any(is.na(subset_kk))) {
+	      stop("subscript out of bounds")
+	    }
+            subset[[kk]] <- subset_kk
           }
         }
 

@@ -5,6 +5,10 @@ Version: 0.7.0-9000 [2018-10-11]
 
 BUG FIXES:
 
+ * parse_env_subset(x[1, names]) on a listenv 'x' matrix would throw error
+   'Error in if (any(i < 0)) { : missing value where TRUE/FALSE needed' if
+   one of the elements in 'names' specifies a non-existing column name.
+   
  * parse_env_subset(x[]) on a listenv 'x' would throw an error on
    "Invalid subset: 'x[]'".
 
@@ -16,11 +20,11 @@ BUG FIXES:
    'length(x) = 2 > 1' in coercion to 'logical(1)' with length(idxs) > 1
    and _R_CHECK_LENGTH_1_LOGIC2_=true.
 
- * parse_env_subset(x[[1]]) on a regular environment 'x' would not throw
-   an error, whereas x[[1]] would.
-
  * parse_env_subset(x[[names]]) on a regular environment 'x' with
    length(names) > 1 would not throw an error, whereas x[[names]] would.
+
+ * parse_env_subset(x[[1]]) on a regular environment 'x' would not throw
+   an error, whereas x[[1]] would.
 
 
 Version: 0.7.0 [2018-01-21]
