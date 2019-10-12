@@ -270,7 +270,7 @@ a 1 3 5
 b 2 4 6
 ```
 
-Concurrently with dimensional names it is possible to have names of the invidual elements just as for list environments without dimensions.  For example,
+Concurrently with dimensional names it is possible to have names of the individual elements just as for list environments without dimensions.  For example,
 ```r
 > names(x) <- letters[seq_along(x)]
 > x
@@ -399,14 +399,14 @@ A 'listenv' matrix with 6 elements (unnamed) arranged in 3x2 unnamed rows and co
 ## Installation
 R package listenv is available on [CRAN](https://cran.r-project.org/package=listenv) and can be installed in R as:
 ```r
-install.packages('listenv')
+install.packages("listenv")
 ```
 
 ### Pre-release version
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-remotes::install_github('HenrikBengtsson/listenv@develop')
+remotes::install_github("HenrikBengtsson/listenv@develop")
 ```
 This will install the package from source.  
 
@@ -421,7 +421,7 @@ Contributing to this package is easy.  Just send a [pull request](https://help.g
 
 ## Software status
 
-| Resource:     | CRAN        | Travis CI       | Appveyor         |
+| Resource:     | CRAN        | Travis CI       | AppVeyor         |
 | ------------- | ------------------- | --------------- | ---------------- |
 | _Platforms:_  | _Multiple_          | _Linux & macOS_ | _Windows_        |
 | R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_listenv.html"><img border="0" src="http://www.r-pkg.org/badges/version/listenv" alt="CRAN version"></a> | <a href="https://travis-ci.org/HenrikBengtsson/listenv"><img src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a> |
