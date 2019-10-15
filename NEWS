@@ -1,13 +1,13 @@
 Package: listenv
 ================
 
-Version: 0.7.0-9000 [2018-10-12]
+Version: 0.7.0-9000 [2019-10-12]
 
 NEW FEATURES:
 
- * Made several error messages more informative.  The downside is that
-   those messages are no longer aligned with built-in R error message which
-   means that they are also not translated.
+ * Made several error messages more informative.  The downside is that those
+   messages are no longer translated (because they are no longer aligned with
+   built-in R error messages which have translations)
  
 BUG FIXES:
 
