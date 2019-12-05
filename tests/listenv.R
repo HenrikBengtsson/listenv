@@ -4,7 +4,7 @@ ovars <- ls(envir = globalenv())
 oopts <- options(warn = 1)
 with_r_330 <- function(expr) {
   if (getRversion() < "3.3.0") return()
-  eval(substitute(expr), envir = parent.frame())
+  eval(substitute(expr), envir = parent.frame(), enclos = baseenv())
 }
 
 ## - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -3,6 +3,7 @@
 \name{mapping}
 \alias{mapping}
 \alias{mapping.listenv}
+\alias{map.listenv}
 \alias{map}
 \title{Variable name map for elements of list environment}
 \usage{
@@ -20,8 +21,8 @@ A named character vector
 Variable name map for elements of list environment
 }
 \details{
-\emph{Functions \code{map()} and \code{map<-()} have been renamed to \code{mapping()} and
-\code{mapping<-()}. The former will soon become deprecated and eventually
+\emph{Functions \code{map()} and \verb{map<-()} have been renamed to \code{mapping()} and
+\verb{mapping<-()}. The former will soon become deprecated and eventually
 defunct. Please update accordingly.}
 }
 \keyword{internal}

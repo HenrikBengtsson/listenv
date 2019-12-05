@@ -3,7 +3,6 @@
 \name{listenv}
 \alias{listenv}
 \alias{as.listenv}
-\alias{as.listenv}
 \title{Create a list environment}
 \usage{
 listenv(...)

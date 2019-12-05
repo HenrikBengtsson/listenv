@@ -3,6 +3,7 @@
 \name{undim}
 \alias{undim}
 \alias{undim.default}
+\alias{undim.listenv}
 \title{Removes the dimension of an object}
 \usage{
 undim(x, ...)

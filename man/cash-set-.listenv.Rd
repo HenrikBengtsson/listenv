@@ -3,6 +3,7 @@
 \name{$<-.listenv}
 \alias{$<-.listenv}
 \alias{[[<-.listenv}
+\alias{[<-.listenv}
 \title{Set an element of list environment}
 \usage{
 \method{$}{listenv}(x, name) <- value

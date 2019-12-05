@@ -13,22 +13,50 @@ x <- listenv()
 length(x) <- 6
 dim(x) <- c(2, 3)
 
+target <- parse_env_subset(x[2], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx  == 2, !target$exists)
+
 target <- parse_env_subset(x[[2]], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$idx  == 2, !target$exists)
+
+target <- parse_env_subset(x[1, 2], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx == 3, !target$exists)
 
 target <- parse_env_subset(x[[1, 2]], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$idx == 3, !target$exists)
 
 x[[1, 2]] <- 1.2
+target <- parse_env_subset(x[1, 2], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x), target$idx == 3, target$exists)
+
 target <- parse_env_subset(x[[1, 2]], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$idx == 3, target$exists)
 
+target <- parse_env_subset(x[1, 4], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x), is.na(target$idx), !target$exists)
+
 target <- parse_env_subset(x[[1, 4]], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), is.na(target$idx), !target$exists)
+
+target <- parse_env_subset(x[1, 1:2], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          length(target$idx) == 2L, all(target$idx == c(1,3)),
+	  length(target$exists) == 2L, all(target$exists == c(FALSE, TRUE)))
+
+target <- parse_env_subset(x[1, -3], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          length(target$idx) == 2L, all(target$idx == c(1,3)),
+	  length(target$exists) == 2L, all(target$exists == c(FALSE, TRUE)))
 
 ## Assert that x[[1, 4]] is not the same as x[[c(1, 4)]]
 target <- parse_env_subset(x[[1, 4]], substitute = TRUE)

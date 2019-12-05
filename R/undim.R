@@ -29,7 +29,7 @@ undim.default <- function(x, ...) {  #nolint
 
 #' @export
 undim.listenv <- function(x, ...) {  #nolint
-  x <- NextMethod("undim")
+  x <- NextMethod()
   attr(x, "dim.") <- NULL
   attr(x, "dimnames.") <- NULL
   x

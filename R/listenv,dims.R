@@ -1,5 +1,5 @@
 #' @export
-dim.listenv <- function(x) attr(x, "dim.")
+dim.listenv <- function(x) attr(x, "dim.", exact = TRUE)
 
 #' @export
 `dim<-.listenv` <- function(x, value) {
@@ -12,7 +12,7 @@ dim.listenv <- function(x) attr(x, "dim.")
       if (n == 0) {
         length(x) <- p
       } else {
-        stopf("dims [product %d] do not match the length of object [%d]", p, n)
+        stopf("Cannot set dimension to c(%s) because its length do not match the length of the object: %d != %s", paste(value, collapse = ", "), p, n)
       }
     }
     names(value) <- names
@@ -65,7 +65,7 @@ dim.listenv <- function(x) attr(x, "dim.")
 
 
 #' @export
-dimnames.listenv <- function(x) attr(x, "dimnames.")
+dimnames.listenv <- function(x) attr(x, "dimnames.", exact = TRUE)
 
 #' @export
 `dimnames<-.listenv` <- function(x, value) {
@@ -78,7 +78,7 @@ dimnames.listenv <- function(x) attr(x, "dimnames.")
     if (is.null(names)) next
     n <- length(names)
     if (n != dim[kk]) {
-      stopf("length of 'dimnames' [%d] not equal to array extent", kk)
+      stopf("Length of 'dimnames' for dimension #%d not equal to array extent: %d != %d", kk, n, dim[kk])
     }
   }
   attr(x, "dimnames.") <- value
@@ -86,6 +86,7 @@ dimnames.listenv <- function(x) attr(x, "dimnames.")
 }
 
 
+#' @method is.matrix listenv
 #' @export
 is.matrix.listenv <- function(x, ...) {
   dim <- dim(x)
@@ -100,8 +101,8 @@ is.array.listenv <- function(x, ...) {
 }
 
 
-#' @export
 #' @method as.vector listenv
+#' @export
 as.vector.listenv <- function(x, mode = "any") {
   if (mode == "any") mode <- "list"
   x <- as.list(x)
@@ -114,7 +115,6 @@ as.vector.listenv <- function(x, mode = "any") {
 
 #' @export
 #' @method as.matrix listenv
-#' @method is.matrix listenv
 as.matrix.listenv <- function(x, ...) {
   dim <- dim(x)
   if (length(dim) != 2L) {

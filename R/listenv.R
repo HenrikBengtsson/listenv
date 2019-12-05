@@ -183,7 +183,7 @@ mapping <- function(x, ...) {
 map <- mapping
 
 `mapping<-` <- function(x, value) {
-  stopifnot(is.character(value))
+  stop_if_not(is.character(value))
   assign(".listenv.map", value, envir = parent.env(x), inherits = FALSE)
   invisible(x)
 }
@@ -216,7 +216,7 @@ if (!exists("lengths", mode = "function")) {
   n <- length(map)
   value <- as.numeric(value)
 
-  if (value < 0) stop("invalid value")
+  if (value < 0) stop("Cannot set a negative length")
 
   ## Nothing to do?
   if (value == n) return(invisible(x))
@@ -257,19 +257,15 @@ names.listenv <- function(x) {
   map <- mapping(x)
   if (is.null(value)) {
   } else if (length(value) != length(map)) {
-    stopf("Number of names does not match the number of elements: %s != %s",
+    stopf("The number of names does not match the number of elements: %s != %s",
           length(value), length(map))
   }
-##  if (any(duplicated(value))) {
-##    stop("Environments cannot have duplicate names on elements")
-##  }
   names(map) <- value
   mapping(x) <- map
   invisible(x)
 }
 
-#' @export
-#' @S3method lengths listenv
+#' @exportS3Method lengths listenv
 lengths.listenv <- function(x, use.names = TRUE) {  #nolint
   ns <- lapply(x, FUN = length)
   if (length(ns) == 0L) return(integer(0L))
@@ -364,8 +360,8 @@ to_index <- function(x, idxs) {
   dim <- dim(x)
   if (is.null(dim)) dim <- length(x)
   ndim <- length(dim)
-  if (ndim != nidxs) {
-    stop("incorrect number of dimensions")
+  if (nidxs != ndim) {
+    stopf("Incorrect number of dimensions: %d != %d", nidxs, ndim)
   }
   dimnames <- dimnames(x)
   idx_dimnames <- dimnames
@@ -381,19 +377,29 @@ to_index <- function(x, idxs) {
     if (is.character(i)) {
       name <- i
       i <- match(name, table = dimnames[[kk]])
-      if (anyNA(i)) stop("subscript out of bounds")
+      if (anyNA(i)) {
+        unknown <- name[is.na(i)]
+        stopf("Unknown names for dimension #%d: %s",
+	      kk, hpaste(sQuote(unknown)))
+      }
     } else if (is.logical(i)) {
       d <- dim[kk]
       ni <- length(i)
-      if (ni > d) stop("(subscript) logical subscript too long")
+      if (ni > d) {
+        stopf("Logical subscript for dimension #%d too long: %d > %d",
+	      kk, ni, d)
+      }
       if (ni < d) i <- rep(i, length.out = d)
       i <- which(i)
     } else if (is.numeric(i)) {
       d <- dim[kk]
-      if (any(i > d)) stop("subscript out of bounds")
+      if (any(i > d)) {
+        stopf("Subscript for dimension #%d out of bounds [%d,%d]",
+	      kk, min(1, d), d)
+      }
       if (any(i < 0)) {
         if (any(i > 0)) {
-          stop("only 0's may be mixed with negative subscripts")
+          stopf("Only 0's may be mixed with negative subscripts (dimension #%d)", kk)
         }
         ## Drop elements
         i <- setdiff(seq_len(d), -i)
@@ -401,7 +407,8 @@ to_index <- function(x, idxs) {
       ## Drop zeros
       i <- i[i != 0]
     } else {
-      stop("invalid subscript type", sQuote(typeof(i)))
+      stopf("Invalid subscript type for dimension #%d: %s",
+            kk, sQuote(typeof(i)))
     }
 
     ## Subset dimnames?
@@ -453,7 +460,7 @@ to_index <- function(x, idxs) {
       i <- match(name, table = names(map))
       if (is.na(i)) return(NULL)
     } else if (!is.numeric(i)) {
-      return(NextMethod("[["))
+      return(NextMethod())
     }
 
     if (length(i) != 1L) {
@@ -501,7 +508,7 @@ to_index <- function(x, idxs) {
         if (missing[kk]) {
           idxs[[kk]] <- seq_len(dim[kk])
         } else {
-          idxs[[kk]] <- eval(idxs[[kk]], envir = envir)
+          idxs[[kk]] <- eval(idxs[[kk]], envir = envir, enclos = baseenv())
         }
       }
     } else if (nidxs == 1) {
@@ -515,7 +522,7 @@ to_index <- function(x, idxs) {
     }
   } else {
     envir <- parent.frame()
-    idxs <- lapply(idxs, FUN = eval, envir = envir)
+    idxs <- lapply(idxs, FUN = eval, envir = envir, enclos = baseenv())
   }
 
   if (nidxs <= 1L) {
@@ -536,9 +543,9 @@ to_index <- function(x, idxs) {
   } else if (is.numeric(i)) {
     ## Exclude elements with negative indices?
     if (any(i < 0)) {
-      stopifnot(is.null(dim(i)))
+      stop_if_not(is.null(dim(i)))
       if (any(i > 0)) {
-        stop("only 0's may be mixed with negative subscripts")
+        stop("Only 0's may be mixed with negative subscripts")
       }
       ## Drop elements
       i <- setdiff(seq_len(nmap), -i)
@@ -551,7 +558,7 @@ to_index <- function(x, idxs) {
     if (length(i) < nmap) i <- rep(i, length.out = nmap)
     i <- which(i)
   } else {
-    return(NextMethod("["))
+    return(NextMethod())
   }
 
   ## Nothing to do?
@@ -628,9 +635,9 @@ assign_by_name <- function(x, name, value) {
     stop("Cannot assign value. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
     stop("Cannot assign value. More than one name specified: ",
-         hpaste(name), call. = FALSE)
+         hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot assign value. Empty name specific: ", name, call. = FALSE)
+    stop("Cannot assign value. Empty name specific: ", sQuote(name), call. = FALSE)
   }
 
   map <- mapping(x)
@@ -709,10 +716,11 @@ remove_by_name <- function(x, name) {
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
-    stop("Cannot remove element. More than one name specified: ", hpaste(name),
-         call. = FALSE)
+    stop("Cannot remove element. More than one name specified: ",
+         hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot remove element. Empty name specific: ", name, call. = FALSE)
+    stop("Cannot remove element. Empty name specific: ",
+         sQuote(name), call. = FALSE)
   }
 
   map <- mapping(x)
@@ -862,7 +870,7 @@ remove_by_index <- function(x, i) {
     idxs_drop <- do.call(`[`, args = args)
     for (dd in which(!missing)) {
       idxs_dd <- idxs[[dd]]
-      idxs_dd <- eval(idxs_dd, envir = envir)
+      idxs_dd <- eval(idxs_dd, envir = envir, enclos = baseenv())
       if (length(idxs_dd) == 0) next
       if (is.logical(idxs_dd)) {
         idxs_dd <- rep(idxs_dd, length.out = dim[dd])
@@ -873,7 +881,7 @@ remove_by_index <- function(x, i) {
       } else {
         idxs_dd <- unique(idxs_dd)
       }
-      stopifnot(is.numeric(idxs_dd))
+      stop_if_not(is.numeric(idxs_dd))
       dim[dd] <- dim[dd] - length(idxs_dd)
       dimnames[[dd]] <- dimnames[[dd]][-idxs_dd]
     }
@@ -891,7 +899,7 @@ remove_by_index <- function(x, i) {
         if (missing[kk]) {
           idxs[[kk]] <- seq_len(dim[kk])
         } else {
-          idxs[[kk]] <- eval(idxs[[kk]], envir = envir)
+          idxs[[kk]] <- eval(idxs[[kk]], envir = envir, enclos = baseenv())
         }
       }
     } else if (nidxs == 1) {
@@ -905,7 +913,7 @@ remove_by_index <- function(x, i) {
     }
   } else {
     envir <- parent.frame()
-    idxs <- lapply(idxs, FUN = eval, envir = envir)
+    idxs <- lapply(idxs, FUN = eval, envir = envir, enclos = baseenv())
   }
 
   if (nidxs <= 1L) {

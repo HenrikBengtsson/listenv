@@ -116,6 +116,13 @@ str(target)
 stopifnot(identical(target$envir, x), target$name == "", target$idx == 2,
           !target$exists)
 
+target <- parse_env_subset(x[], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          target$name == "",
+	  length(target$idx) == 0L, is.numeric(target$idx),
+	  length(target$exists) == 0L, is.logical(target$exists))
+
 x$a <- 1
 target <- parse_env_subset(x$a, substitute = TRUE)
 str(target)
@@ -130,11 +137,24 @@ stopifnot(identical(target$envir, x), target$name == "a", target$idx  == 1,
 stopifnot(x$a == 1)
 stopifnot(x[[1]] == 1)
 
+target <- parse_env_subset(x[[c("a", "a")]], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          length(target$name) == 2L, all(target$name == "a"),
+	  length(target$idx) == 2L, all(target$idx  == 1),
+          length(target$exists) == 2L, all(target$exists))
+
 target <- parse_env_subset(x[[1]], substitute = TRUE)
 str(target)
 stopifnot(identical(target$envir, x), target$name == "a", target$idx  == 1,
           target$exists)
 
+target <- parse_env_subset(x[], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          target$name == "",
+	  length(target$idx) == 1L, target$idx == 1,
+	  length(target$exists) == 1L, target$exists)
 
 x[[3]] <- 3
 target <- parse_env_subset(x[[3]], substitute = TRUE)
@@ -145,6 +165,13 @@ stopifnot(x[[3]] == 3)
 print(names(x))
 stopifnot(identical(names(x), c("a", "", "")))
 
+target <- parse_env_subset(x[], substitute = TRUE)
+str(target)
+stopifnot(identical(target$envir, x),
+          target$name == "",
+	  length(target$idx) == 3L, all(target$idx == 1:3),
+	  length(target$exists) == 3L,
+	  all(target$exists == c(TRUE, FALSE, TRUE)))
 
 b <- 1
 target <- parse_env_subset(x[[b]], substitute = TRUE)
@@ -202,8 +229,9 @@ stopifnot(length(target$idx) == length(x) - 1)
 str(target)
 
 ## Odds and ends
-target <- parse_env_subset(x[[""]], substitute = TRUE)
-stopifnot(length(target$idx) == 1L, !target$exists)
+#target <- parse_env_subset(x[[""]], substitute = TRUE)
+#str(target)
+#stopifnot(length(target$idx) == 1L, !target$exists)
 
 message("*** parse_env_subset() on listenv ... DONE")
 
@@ -213,7 +241,56 @@ message("*** parse_env_subset() on listenv ... DONE")
 ## - - - - - - - - - - - - - - - - - - - - - - - - - -
 message("*** parse_env_subset() - exceptions ...")
 
+x <- new.env()
+x$a <- 1
+
+res <- tryCatch({
+  parse_env_subset(x[], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[""], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[""]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[1]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[TRUE]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[c("a", "a")]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+
 x <- listenv()
+
+res <- tryCatch({
+  parse_env_subset(x[""], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
+
+res <- tryCatch({
+  parse_env_subset(x[[""]], substitute = TRUE)
+}, error = identity)
+stopifnot(inherits(res, "error"))
 
 res <- try(target <- parse_env_subset(x[[0]], substitute = TRUE), silent = TRUE)
 stopifnot(inherits(res, "try-error"))

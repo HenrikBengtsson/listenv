@@ -3,6 +3,7 @@
 \name{$.listenv}
 \alias{$.listenv}
 \alias{[[.listenv}
+\alias{[.listenv}
 \title{Get elements of list environment}
 \usage{
 \method{$}{listenv}(x, name)
