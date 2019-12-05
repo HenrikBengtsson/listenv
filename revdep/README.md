@@ -14,9 +14,9 @@
 
 # Dependencies
 
-|package |old   |new        |Δ  |
-|:-------|:-----|:----------|:--|
-|listenv |0.7.0 |0.7.0-9000 |*  |
+|package |old   |new   |Δ  |
+|:-------|:-----|:-----|:--|
+|listenv |0.7.0 |0.8.0 |*  |
 
 # Revdeps
 
