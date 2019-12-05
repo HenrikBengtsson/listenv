@@ -26,10 +26,6 @@ Run `revdep_details(,"aroma.affymetrix")` for more info
 
 *   checking dependencies in R code ... NOTE
     ```
-    Error in setClass("ProgressBarText", representation(steps = "integer",  : 
-      could not find function "setClass"
-    Error in setClass("ProgressBarText", representation(steps = "integer",  : 
-      could not find function "setClass"
     Error in setGeneric("getX", function(object, type) standardGeneric("getX")) : 
       could not find function "setGeneric"
     ```
