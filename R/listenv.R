@@ -266,7 +266,7 @@ names.listenv <- function(x) {
 }
 
 #' @export
-#' @S3method lengths listenv
+#' @rawNamespace S3method(lengths,listenv)
 lengths.listenv <- function(x, use.names = TRUE) {  #nolint
   ns <- lapply(x, FUN = length)
   if (length(ns) == 0L) return(integer(0L))
