@@ -86,6 +86,7 @@ dimnames.listenv <- function(x) attr(x, "dimnames.", exact = TRUE)
 }
 
 
+#' @method is.matrix listenv
 #' @export
 is.matrix.listenv <- function(x, ...) {
   dim <- dim(x)
@@ -100,8 +101,8 @@ is.array.listenv <- function(x, ...) {
 }
 
 
-#' @export
 #' @method as.vector listenv
+#' @export
 as.vector.listenv <- function(x, mode = "any") {
   if (mode == "any") mode <- "list"
   x <- as.list(x)
@@ -114,7 +115,6 @@ as.vector.listenv <- function(x, mode = "any") {
 
 #' @export
 #' @method as.matrix listenv
-#' @method is.matrix listenv
 as.matrix.listenv <- function(x, ...) {
   dim <- dim(x)
   if (length(dim) != 2L) {
