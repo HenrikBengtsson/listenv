@@ -1,7 +1,11 @@
 Package: listenv
 ================
 
-Version: 0.7.1 [2019-12-05]
+Version: 0.8.0 [2019-12-05]
+
+SIGNFICANT CHANGES:
+
+ * S3 method lengths.listenv() is no longer exported.
 
 NEW FEATURES:
 
