@@ -3,6 +3,7 @@
 #----------------------------
 ^.svn
 ^.git
+^.github
 ^.make
 ^INSTALL[.]md$
 ^OVERVIEW[.]md$
@@ -55,4 +56,3 @@ Rplots.pdf$
 #----------------------------
 ^.ghi
 ^.issues
-
