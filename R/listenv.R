@@ -18,11 +18,6 @@ listenv <- function(...) {
   metaenv <- new.env(parent = parent.frame())
   env <- new.env(parent = metaenv)
 
-  ## Defunct call?
-  if (nargs == 1L && identical(names[1L], "length")) {
-    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is defunct. Use x <- listenv(); length(x) <- n instead.")  #nolint
-  }
-
   ## Allocate internal variables
   maps <- sprintf(".listenv_var_%d", seq_len(nargs))
   names(maps) <- names
