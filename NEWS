@@ -3,6 +3,8 @@ Package: listenv
 
 Version: 0.8.0-9000 [2020-04-16]
 
+ * ...
+ 
 DEPRECATED AND DEFUNCT:
 
  * Dropped the defunct usage of listenv(length = n), meaning it no longer gives
