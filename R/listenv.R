@@ -117,7 +117,7 @@ print.listenv <- function(x, ...) {
 
     if (ndim == 2) {
       if (is.null(dimnames)) {
-        s <- sprintf("%s unnamed rows and columns", s, dimstr)
+        s <- sprintf("%s unnamed rows and columns", s)
       } else {
         if (all(has_dimnames)) {
           s <- sprintf("%s rows (%s) and columns (%s)", s,
@@ -127,7 +127,7 @@ print.listenv <- function(x, ...) {
         } else if (has_dimnames[2]) {
           s <- sprintf("%s unnamed rows and columns (%s)", s, dimnames_tmp[2L])
         } else {
-          s <- sprintf("%s unnamed rows and columns", s, dimstr)
+          s <- sprintf("%s unnamed rows and columns", s)
         }
       }
     } else {
