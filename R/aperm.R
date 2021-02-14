@@ -37,10 +37,16 @@ aperm.listenv <- function(a, perm, ...) {
   ## Remap
   idxs <- seq_len(prod(dim))
   dim(idxs) <- dim
+  dimnames(idxs) <- dimnames(a)
   idxs <- aperm(idxs, perm = perm, ...)
   map <- mapping(a)
   map <- map[idxs]
   mapping(a) <- map
+  map <- NULL
 
+  attr(a, "dim.") <- dim(idxs)
+  attr(a, "dimnames.") <- dimnames(idxs)
+  idxs <- NULL
+  
   a
 }
