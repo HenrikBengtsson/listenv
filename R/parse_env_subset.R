@@ -7,6 +7,9 @@
 #' @param substitute If `TRUE`, then the expression is [base::substitute()]:ed,
 #' otherwise not.
 #'
+#' @param is_variable (logical) If TRUE and an element name is specified, then
+#' the name is checked to be a valid variable name.
+#' 
 #' @return A named list with elements:
 #' \describe{
 #'  \item{`envir`}{An environment (defaults to argument `envir`)}
@@ -22,7 +25,7 @@
 #'
 #' @export
 #' @keywords internal
-parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
+parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is_variable = TRUE) {
   if (substitute) expr <- substitute(expr)
   code <- paste(deparse(expr), collapse = "")
 
@@ -112,10 +115,12 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE) {
   } # if (is.symbol(expr))
 
 
-  ## Validate name, iff any
-  name <- res$name
-  if (nzchar(name) && !grepl("^[.a-zA-Z]+", name)) {
-    stop("Not a valid variable name: ", sQuote(name), call. = FALSE)
+  ## Validate name, iff any?
+  if (is_variable) {
+    name <- res$name
+    if (nzchar(name) && !grepl("^[.a-zA-Z]+", name)) {
+      stop("Not a valid variable name: ", sQuote(name), call. = FALSE)
+    }
   }
 
 

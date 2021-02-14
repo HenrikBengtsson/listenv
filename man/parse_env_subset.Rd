@@ -4,7 +4,12 @@
 \alias{parse_env_subset}
 \title{Helper function to infer target from expression and environment}
 \usage{
-parse_env_subset(expr, envir = parent.frame(), substitute = TRUE)
+parse_env_subset(
+  expr,
+  envir = parent.frame(),
+  substitute = TRUE,
+  is_variable = TRUE
+)
 }
 \arguments{
 \item{expr}{An expression.}
@@ -13,6 +18,9 @@ parse_env_subset(expr, envir = parent.frame(), substitute = TRUE)
 
 \item{substitute}{If \code{TRUE}, then the expression is \code{\link[base:substitute]{base::substitute()}}:ed,
 otherwise not.}
+
+\item{is_variable}{(logical) If TRUE and an element name is specified, then
+the name is checked to be a valid variable name.}
 }
 \value{
 A named list with elements:
