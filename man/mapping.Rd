@@ -5,7 +5,7 @@
 \alias{mapping.listenv}
 \alias{map.listenv}
 \alias{map}
-\title{Variable name map for elements of list environment}
+\title{Name map for elements of list environment}
 \usage{
 mapping(x, ...)
 
@@ -18,7 +18,7 @@ map(x, ...)
 A named character vector
 }
 \description{
-Variable name map for elements of list environment
+Name map for elements of list environment
 }
 \details{
 \emph{Functions \code{map()} and \verb{map<-()} have been renamed to \code{mapping()} and

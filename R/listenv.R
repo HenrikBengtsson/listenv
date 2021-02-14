@@ -153,7 +153,7 @@ print.listenv <- function(x, ...) {
   cat(s)
 }
 
-#' Variable name map for elements of list environment
+#' Name map for elements of list environment
 #'
 #' @param x A list environment.
 #'
@@ -222,7 +222,7 @@ if (!exists("lengths", mode = "function")) {
     extra <- rep(NA_character_, times = value - n)
     map <- c(map, extra)
   } else {
-    ## Drop existing variables
+    ## Drop existing elements
     drop <- (value + 1):n
     var <- map[drop]
     ## Some may be internal place holders
@@ -271,7 +271,7 @@ lengths.listenv <- function(x, use.names = TRUE) {  #nolint
 #'
 #' @param x A list environment.
 #' 
-#' @param all.names If `TRUE`, variable names starting with a period are
+#' @param all.names If `TRUE`, element names starting with a period are
 #' included, otherwise not.
 #' 
 #' @param sorted If `TRUE`, elements are ordered by their names before being
@@ -341,7 +341,7 @@ as.list.listenv <- function(x, all.names = TRUE, sorted = FALSE, ...) {
   map <- mapping(x)
   var <- map[name]
 
-  # Non-existing variable?
+  # Non-existing element?
   if (is.na(var)) return(NULL)
 
   get(var, envir = x, inherits = FALSE)
@@ -642,7 +642,7 @@ assign_by_name <- function(x, name, value) {
   if (is.element(name, names)) {
     var <- map[name]
 
-    ## A new variable?
+    ## A new element?
     if (is.na(var)) {
       var <- name
       map[name] <- name
@@ -682,10 +682,10 @@ assign_by_index <- function(x, i, value) {
   map <- mapping(x)
   n <- length(map)
 
-  ## Variable name
+  ## Element name
   var <- map[i]
 
-  ## Non-existing variable?
+  ## Non-existing element?
   if (is.na(var)) {
     ## Expand map?
     if (i > n) {

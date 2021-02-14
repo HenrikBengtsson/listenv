@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A list environment.}
 
-\item{all.names}{If \code{TRUE}, variable names starting with a period are
+\item{all.names}{If \code{TRUE}, element names starting with a period are
 included, otherwise not.}
 
 \item{sorted}{If \code{TRUE}, elements are ordered by their names before being
