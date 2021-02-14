@@ -1,0 +1,46 @@
+#' Transpose a 'listenv' array by permuting its dimensions
+#'
+#' @param a (listenv) The list environment to be transposed
+#'
+#' @param perm (integer vector) An index vector of length `dim(a)`
+#'
+#' @param \ldots Additional arguments passed to [base::aperm()].
+#'
+#' @return Returns a list environment with permuted dimensions
+#'
+#' @seealso
+#' This works [base::aperm()].
+#'
+#' @export
+aperm.listenv <- function(a, perm, ...) {
+  dim <- dim(a)
+  if (is.null(dim)) {
+    stop("Argument 'a' must be a matrix or an array")
+  }
+  ndim <- length(dim)
+
+  if (length(perm) != ndim) {
+    stop("Length of argument 'perm' does not match the dimension of 'a': ", length(perm), " != ", ndim)
+  }
+
+  if (any(perm < 1 | perm > ndim)) {
+    stop("Argument 'perm' specified dimensions out of range")
+  }
+
+  if (anyDuplicated(perm) > 0L) {
+    stop("Argument 'perm' must not contain duplicates")
+  }
+
+  ## Nothing to do?
+  if (all(perm == seq_len(ndim))) return(a)
+
+  ## Remap
+  idxs <- seq_len(prod(dim))
+  dim(idxs) <- dim
+  idxs <- aperm(idxs, perm = perm, ...)
+  map <- mapping(a)
+  map <- map[idxs]
+  mapping(a) <- map
+
+  a
+}
