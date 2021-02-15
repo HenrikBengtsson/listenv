@@ -10,6 +10,8 @@ x <- listenv()
 dim(x) <- c(0, 0)
 print(x)
 stopifnot(length(x) == 0)
+stopifnot(is.null(dimnames(x)))
+stopifnot(is.null(names(x)))
 
 x <- listenv(a = 1)
 stopifnot(identical(names(x), "a"))
@@ -321,6 +323,17 @@ x <- listenv()
 dim(x) <- c(2, 3)
 stopifnot(length(x) == 6, nrow(x) == 2, ncol(x) == 3)
 
+message("* dim(x) <- n on length(x) == n ...")
+x <- as.listenv(1:3)
+dim(x) <- 3
+dimnames(x) <- list(letters[1:3])
+print(x)
+stopifnot(
+  length(x) == 3,
+  identical(dim(x), 3L),
+  identical(dimnames(x), list(letters[1:3])),
+  is.null(names(x))
+)
 
 message("* Exceptions ...")
 x <- listenv()
