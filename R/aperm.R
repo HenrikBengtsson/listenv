@@ -50,3 +50,24 @@ aperm.listenv <- function(a, perm, ...) {
   
   a
 }
+
+
+
+#' @rdname aperm
+#' @export
+t.listenv <- function(x) {
+  dim <- attr(x, "dim.")
+  ndim <- length(dim)
+  if (ndim == 0L) {
+    attr(x, "dim.") <- c(1L, length(x))
+    attr(x, "dimnames.") <- list(NULL, names(x))
+  } else if (ndim == 1L) {
+    attr(x, "dim.") <- c(1L, dim)
+    attr(x, "dimnames.") <- list(NULL, attr(x, "dimnames.")[[1]])
+  } else if (ndim == 2L) {
+    x <- aperm(x, perm = 2:1)
+  } else {
+    stop("Argument 'x' is not a matrix")
+  }
+  x
+}
