@@ -2,12 +2,15 @@
 % Please edit documentation in R/aperm.R
 \name{aperm.listenv}
 \alias{aperm.listenv}
+\alias{t.listenv}
 \title{Transpose a 'listenv' array by permuting its dimensions}
 \usage{
 \method{aperm}{listenv}(a, perm, ...)
+
+\method{t}{listenv}(x)
 }
 \arguments{
-\item{a}{(listenv) The list environment to be transposed}
+\item{a, x}{(listenv) The list environment to be transposed}
 
 \item{perm}{(integer vector) An index vector of length \code{dim(a)}}
 
@@ -19,6 +22,19 @@ Returns a list environment with permuted dimensions
 \description{
 Transpose a 'listenv' array by permuting its dimensions
 }
+\examples{
+x <- as.listenv(1:6)
+dim(x) <- c(2, 3)
+dimnames(x) <- list(letters[1:2], LETTERS[1:3])
+print(x)
+
+x <- t(x)
+print(x)
+
+x <- aperm(x, perm = 2:1)
+print(x)
+
+}
 \seealso{
-This works \code{\link[base:aperm]{base::aperm()}}.
+These functions works like \code{\link[base:aperm]{base::aperm()}} and \code{\link[base:t]{base::t()}}.
 }

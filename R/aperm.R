@@ -1,6 +1,11 @@
 #' Transpose a 'listenv' array by permuting its dimensions
 #'
-#' @param a (listenv) The list environment to be transposed
+#' @usage
+#' \method{aperm}{listenv}(a, perm, ...)
+#'
+#' \method{t}{listenv}(x)
+#'
+#' @param a,x (listenv) The list environment to be transposed
 #'
 #' @param perm (integer vector) An index vector of length `dim(a)`
 #'
@@ -9,8 +14,21 @@
 #' @return Returns a list environment with permuted dimensions
 #'
 #' @seealso
-#' This works [base::aperm()].
+#' These functions works like [base::aperm()] and [base::t()].
 #'
+#' @examples
+#' x <- as.listenv(1:6)
+#' dim(x) <- c(2, 3)
+#' dimnames(x) <- list(letters[1:2], LETTERS[1:3])
+#' print(x)
+#'
+#' x <- t(x)
+#' print(x)
+#'
+#' x <- aperm(x, perm = 2:1)
+#' print(x)
+#'
+#' @aliases t.listenv
 #' @export
 aperm.listenv <- function(a, perm, ...) {
   dim <- dim(a)
@@ -50,8 +68,6 @@ aperm.listenv <- function(a, perm, ...) {
   
   a
 }
-
-
 
 #' @rdname aperm
 #' @export
