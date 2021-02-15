@@ -81,7 +81,14 @@ t.listenv <- function(x) {
     attr(x, "dim.") <- c(1L, dim)
     attr(x, "dimnames.") <- list(NULL, attr(x, "dimnames.")[[1]])
   } else if (ndim == 2L) {
-    x <- aperm(x, perm = 2:1)
+    dim <- rev(dim)
+    idxs <- matrix(seq_len(prod(dim)), nrow = dim[1], ncol = dim[2], byrow = TRUE)
+    map <- mapping(x)
+    map <- map[idxs]
+    mapping(x) <- map
+    map <- NULL
+    attr(x, "dim.") <- dim
+    attr(x, "dimnames.") <- rev(attr(x, "dimnames."))
   } else {
     stop("Argument 'x' is not a matrix")
   }
