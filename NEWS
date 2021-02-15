@@ -13,6 +13,8 @@ NEW FEATURES:
  
 DEPRECATED AND DEFUNCT:
 
+ * map() is formally deprecated; use mapping() instead.
+
  * Dropped the defunct usage of listenv(length = n), meaning it no longer gives
    an error but instead produces a listenv with an element named 'length'.
  

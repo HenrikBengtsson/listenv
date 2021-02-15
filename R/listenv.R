@@ -159,11 +159,6 @@ print.listenv <- function(x, ...) {
 #'
 #' @return A named character vector
 #'
-#' @details
-#' _Functions `map()` and `map<-()` have been renamed to `mapping()` and
-#' `mapping<-()`. The former will soon become deprecated and eventually
-#' defunct. Please update accordingly._
-#' 
 #' @aliases mapping.listenv
 #' @aliases map.listenv
 #' @export
@@ -175,7 +170,10 @@ mapping <- function(x, ...) {
 #' @rdname mapping
 #' @export
 #' @keywords internal
-map <- mapping
+map <- function(x, ...) {
+  .Deprecated("mapping()", package = .packageName)
+  mapping(x)
+}
 
 `mapping<-` <- function(x, value) {
   stop_if_not(is.character(value))

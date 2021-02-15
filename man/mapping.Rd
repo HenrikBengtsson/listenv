@@ -20,9 +20,4 @@ A named character vector
 \description{
 Name map for elements of list environment
 }
-\details{
-\emph{Functions \code{map()} and \verb{map<-()} have been renamed to \code{mapping()} and
-\verb{mapping<-()}. The former will soon become deprecated and eventually
-defunct. Please update accordingly.}
-}
 \keyword{internal}
