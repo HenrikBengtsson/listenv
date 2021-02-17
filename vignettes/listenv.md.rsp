@@ -26,11 +26,12 @@ _List environments_ are environments that have list-like properties.  They are i
 | Duplicated names                                                             |              yes  |   yes  |              |
 | Element names are optional                                                   |              yes  |   yes  |              |
 | Indexed elements, e.g. `x[[4]]`                                              |              yes  |   yes  |              |
-| Dimensions, e.g. `dim(x)`, `t(x)`, and `aperm(x, perm)`                      |              yes  |   yes  |              |
+| Dimensions, e.g. `dim(x)`, `t(x)`, and `aperm(x, c(3,1,2))`                  |              yes  |   yes  |              |
 | Names of dimensions, e.g. `dimnames(x)`                                      |              yes  |   yes  |              |
 | Indexing by dimensions, e.g. `x[[2, 4]]` and `x[[2, "D"]]`                   |              yes  |   yes  |              |
 | Multi-element subsetting, e.g. `x[c("a", "c")]`, `x[-1]` and `x[2:1, , 3]`   |              yes  |   yes  |              |
 | Multi-element subsetting preserves element names                             |              yes  |        |              |
+| Resizing, e.g. `length(x) <- 6`                                              |              yes  |   yes  |              |
 | Removing elements by assigning NULL, e.g. `x$c <- NULL` and `x[1:3] <- NULL` |              yes  |   yes  |              |
 | Removing parts of dimensions by assigning NULL, e.g. `x[,2] <- NULL`         |              yes  |        |              |
 | Mutable, e.g. `y <- x; y$a <- 3; identical(y, x)`                            |              yes  |        |         yes  |
