@@ -3,8 +3,6 @@
 #' @usage
 #' \method{aperm}{listenv}(a, perm, ...)
 #'
-#' \method{t}{listenv}(x)
-#'
 #' @param a,x (listenv) The list environment to be transposed
 #'
 #' @param perm (integer vector) An index vector of length `dim(a)`
@@ -69,7 +67,7 @@ aperm.listenv <- function(a, perm, ...) {
   a
 }
 
-#' @rdname aperm
+#' @rdname aperm.listenv
 #' @export
 t.listenv <- function(x) {
   dim <- attr(x, "dim.")
