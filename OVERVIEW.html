@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Page not found (404) • listenv</title>
+<title>NA • listenv</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Page not found (404)" />
+<meta property="og:title" content="NA" />
 
 
 
@@ -115,10 +115,32 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>Page not found (404)</h1>
+      <h1>NA</h1>
     </div>
 
-Content not found. Please use links in the navbar.
+
+<p>&lt;%</p>
+<div id="reuse-the-package-vignette" class="section level2">
+<h2 class="hasAnchor">
+<a href="#reuse-the-package-vignette" class="anchor"></a>Reuse the package vignette</h2>
+<p>md &lt;- R.rsp::rstring(file=“vignettes/listenv.md.rsp”, postprocess=FALSE)</p>
+</div>
+<div id="drop-everything-before-the-first-subheader-h2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#drop-everything-before-the-first-subheader-h2" class="anchor"></a>Drop everything before the first subheader (“H2”)</h2>
+<p>md &lt;- unlist(strsplit(md, split=“\n”, fixed=TRUE)) md &lt;- md[-seq_len(grep(“^##”, md)[1]-1)]</p>
+</div>
+<div id="drop-the-footer" class="section level2">
+<h2 class="hasAnchor">
+<a href="#drop-the-footer" class="anchor"></a>Drop the footer</h2>
+<p>md &lt;- md[seq_len(grep(“^—”, md)[1]-1)]</p>
+</div>
+<div id="output" class="section level2">
+<h2 class="hasAnchor">
+<a href="#output" class="anchor"></a>Output</h2>
+<p>cat(md, sep=“\n”) %&gt;</p>
+</div>
+
 
   </div>
 

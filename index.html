@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,12 +39,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/listenv.html">Get started</a>
 </li>
@@ -78,8 +74,8 @@
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#summary" class="anchor"></a>Summary</h2>
-<p><em>List environments</em> are environments that have list-like properties. They are implemented by the <a href="https://cran.r-project.org/package=listenv">listenv</a> package. The main features of a list environment are summarized in the below table:</p>
-<table class="table">
+<p><em>List environments</em> are environments that have list-like properties. They are implemented by the <a href="https://cran.r-project.org/package=listenv" class="external-link">listenv</a> package. The main features of a list environment are summarized in the below table:</p>
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="64%">
 <col width="16%">
@@ -94,14 +90,14 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Number of elements, e.g. <code><a href="https://rdrr.io/r/base/length.html">length()</a></code>
+<td>Number of elements, e.g. <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 </tr>
 <tr class="even">
-<td>Named elements, e.g. <code><a href="https://rdrr.io/r/base/names.html">names()</a></code>, <code>x$a</code> and <code>x[["a"]]</code>
+<td>Named elements, e.g. <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names()</a></code>, <code>x$a</code> and <code>x[["a"]]</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
@@ -127,14 +123,14 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td>Dimensions, e.g. <code><a href="https://rdrr.io/r/base/dim.html">dim(x)</a></code>, <code><a href="https://rdrr.io/r/base/t.html">t(x)</a></code>, and <code><a href="https://rdrr.io/r/base/aperm.html">aperm(x, c(3,1,2))</a></code>
+<td>Dimensions, e.g. <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim(x)</a></code>, <code><a href="https://rdrr.io/r/base/t.html" class="external-link">t(x)</a></code>, and <code><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm(x, c(3,1,2))</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Names of dimensions, e.g. <code><a href="https://rdrr.io/r/base/dimnames.html">dimnames(x)</a></code>
+<td>Names of dimensions, e.g. <code><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames(x)</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
@@ -189,7 +185,7 @@
 <td align="center">yes</td>
 </tr>
 <tr class="odd">
-<td>Compatible* with <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code>, <code><a href="https://rdrr.io/r/base/delayedAssign.html">delayedAssign()</a></code>, <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> and <code><a href="https://rdrr.io/r/base/exists.html">exists()</a></code>
+<td>Compatible* with <code><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign()</a></code>, <code><a href="https://rdrr.io/r/base/delayedAssign.html" class="external-link">delayedAssign()</a></code>, <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code> and <code><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists()</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center"></td>
@@ -442,7 +438,7 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">2</span> <span 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="ot">NULL</span>
 <span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(x)
 <span class="ot">NULL</span></code></pre></div>
-<p>This behavior is by design, cf. <code><a href="https://rdrr.io/r/base/dim.html">help("dim", package="base")</a></code>.</p>
+<p>This behavior is by design, cf. <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">help("dim", package="base")</a></code>.</p>
 <p>To allocate an “empty” list environment array (with all <code>NULL</code>:s) of a given dimension, do</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>()
 <span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
@@ -503,15 +499,15 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span 
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>R package listenv is available on <a href="https://cran.r-project.org/package=listenv">CRAN</a> and can be installed in R as:</p>
+<p>R package listenv is available on <a href="https://cran.r-project.org/package=listenv" class="external-link">CRAN</a> and can be installed in R as:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"listenv"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"listenv"</span><span class="op">)</span></code></pre></div>
 <div id="pre-release-version" class="section level3">
 <h3 class="hasAnchor">
 <a href="#pre-release-version" class="anchor"></a>Pre-release version</h3>
 <p>To install the pre-release version that is available in Git branch <code>develop</code> on GitHub, use:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"HenrikBengtsson/listenv"</span>, ref<span class="op">=</span><span class="st">"develop"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"HenrikBengtsson/listenv"</span>, ref<span class="op">=</span><span class="st">"develop"</span><span class="op">)</span></code></pre></div>
 <p>This will install the package from source.</p>
 
 </div>
@@ -521,7 +517,7 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span 
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=listenv">https://​cloud.r-project.org/​package=listenv</a>
 </li>
@@ -529,47 +525,55 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span 
 </li>
 <li>Report a bug at <br><a href="https://github.com/HenrikBengtsson/listenv/issues">https://​github.com/​HenrikBengtsson/​listenv/​issues</a>
 </li>
+<li>The Futureverse Project at <br><a href="https://www.futureverse.org/">https://​www.futureverse.org/​</a>
+</li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>LGPL (&gt;= 2.1)</li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Henrik Bengtsson <br><small class="roles"> Author, maintainer, copyright holder </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/web/checks/check_results_listenv.html"><img border="0" src="http://www.r-pkg.org/badges/version/listenv" alt="CRAN version"></a></li>
-<li><a href="https://github.com/HenrikBengtsson/listenv/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/listenv/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></li>
-<li><a href="https://travis-ci.org/HenrikBengtsson/listenv"><img src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a></li>
-<li><a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a></li>
-<li><a href="https://codecov.io/gh/HenrikBengtsson/listenv"><img src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"></a></li>
+<li><a href="https://cran.r-project.org/web/checks/check_results_listenv.html" class="external-link"><img border="0" src="http://www.r-pkg.org/badges/version/listenv" alt="CRAN version"></a></li>
+<li><a href="https://github.com/HenrikBengtsson/listenv/actions?query=workflow%3AR-CMD-check" class="external-link"><img src="https://github.com/HenrikBengtsson/listenv/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></li>
+<li><a href="https://travis-ci.org/HenrikBengtsson/listenv" class="external-link"><img src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a></li>
+<li><a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv" class="external-link"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a></li>
+<li><a href="https://codecov.io/gh/HenrikBengtsson/listenv" class="external-link"><img src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Henrik Bengtsson.</p>
+  <p></p>
+<p>Developed by Henrik Bengtsson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9000.</p>
 </div>
 
       </footer>
@@ -577,6 +581,8 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span 
 
   
 
+
+  
 
   </body>
 </html>
