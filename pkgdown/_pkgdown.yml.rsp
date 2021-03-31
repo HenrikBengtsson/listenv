@@ -18,7 +18,7 @@ home:
 
 navbar:
   structure:
-    right: [futureverse, pkgs, github]
+    right: [futureverse, pkgs, cran, github]
   components:
     futureverse:
       icon: fas fa-fast-backward
@@ -26,10 +26,13 @@ navbar:
     pkgs:
       text: Packages
       menu:
-<% for (pkg in names(urls)) { %>
-      - text: <%= pkg %>
-        href: <%= urls[pkg] %>
+<% for (name in names(urls)) { %>
+      - text: <%= name %>
+        href: <%= urls[name] %>
 <% } %>
+    cran:
+      icon: fab fa-r-project
+      href: https://cloud.r-project.org/package=<%= pkg %>
 
 template:
   params:

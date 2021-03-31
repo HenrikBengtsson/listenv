@@ -7,7 +7,7 @@ home:
 
 navbar:
   structure:
-    right: [futureverse, pkgs, github]
+    right: [futureverse, pkgs, cran, github]
   components:
     futureverse:
       icon: fas fa-fast-backward
@@ -39,6 +39,9 @@ navbar:
         href: https://parallelly.futureverse.org
       - text: progressr
         href: https://progressr.futureverse.org
+    cran:
+      icon: fab fa-r-project
+      href: https://cloud.r-project.org/package=listenv
 
 template:
   params:
