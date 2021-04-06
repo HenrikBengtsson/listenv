@@ -2,6 +2,8 @@ url: https://listenv.futureverse.org
 
 home:
   links:
+  - text: Roadmap/Milestones
+    href: https://github.com/HenrikBengtsson/listenv/milestones
   - text: The Futureverse Project
     href: https://www.futureverse.org/
 
@@ -20,7 +22,7 @@ navbar:
       - text: doFuture
         href: https://doFuture.futureverse.org
       - text: furrr
-        href: https://davisvaughan.github.io/furrr
+        href: https://furrr.futureverse.org
       - text: future
         href: https://future.futureverse.org
       - text: future.apply
