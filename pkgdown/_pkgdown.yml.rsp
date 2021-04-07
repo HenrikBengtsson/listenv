@@ -37,9 +37,8 @@ navbar:
 
 template:
   params:
-<% if (pkg %in% c("future")) { %>
     docsearch:
       api_key: aa6e02fc501886fb0f7c91ac4e300456
       index_name: futureverse
-<% } %>
+      algoliaOptions: { 'facetFilters': ['project:<%= pkg %>'] }
     ganalytics: G-SB3EQSD9FR
