@@ -33,8 +33,6 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -54,7 +52,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../articles/listenv.html">Get started</a>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -62,10 +63,13 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
+<li>
+  <a href="../articles/listenv.html">Get started</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://www.futureverse.org/" class="external-link">
+  <a href="https://www.futureverse.org/">
     <span class="fas fa-fast-backward"></span>
      
   </a>
@@ -78,51 +82,54 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
+      <a href="https://doFuture.futureverse.org">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
+      <a href="https://furrr.futureverse.org">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org" class="external-link">future</a>
+      <a href="https://future.futureverse.org">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
+      <a href="https://future.apply.futureverse.org">future.apply</a>
     </li>
     <li>
-      <a href="https://future.batchtools.futureverse.org" class="external-link">future.batchtools</a>
+      <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
+      <a href="https://future.callr.futureverse.org">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
+      <a href="https://future.tests.futureverse.org">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org" class="external-link">globals</a>
+      <a href="https://globals.futureverse.org">globals</a>
     </li>
     <li>
       <a href="https://listenv.futureverse.org">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
+      <a href="https://marshal.futureverse.org">marshal</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
+      <a href="https://parallelly.futureverse.org">parallelly</a>
+    </li>
+    <li>
+      <a href="https://progressr.futureverse.org">progressr</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="https://cloud.r-project.org/package=listenv" class="external-link">
+  <a href="https://cloud.r-project.org/package=listenv">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/listenv/" class="external-link">
+  <a href="https://github.com/HenrikBengtsson/listenv/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -147,10 +154,10 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>List Environments</h1>
-                        <h4 data-toc-skip class="author">Henrik Bengtsson</h4>
+                        <h4 class="author">Henrik Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/listenv/blob/master/vignettes/listenv.md.rsp" class="external-link"><code>vignettes/listenv.md.rsp</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/listenv/blob/master/vignettes/listenv.md.rsp"><code>vignettes/listenv.md.rsp</code></a></small>
       <div class="hidden name"><code>listenv.md.rsp</code></div>
 
     </div>
@@ -160,8 +167,8 @@
 <div id="summary" class="section level2">
 <h2 class="hasAnchor">
 <a href="#summary" class="anchor"></a>Summary</h2>
-<p><em>List environments</em> are environments that have list-like properties. They are implemented by the <a href="https://cran.r-project.org/package=listenv" class="external-link">listenv</a> package. The main features of a list environment are summarized in the below table:</p>
-<table style="width:100%;" class="table">
+<p><em>List environments</em> are environments that have list-like properties. They are implemented by the <a href="https://cran.r-project.org/package=listenv">listenv</a> package. The main features of a list environment are summarized in the below table:</p>
+<table class="table">
 <colgroup>
 <col width="64%">
 <col width="16%">
@@ -176,14 +183,14 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Number of elements, e.g. <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>
+<td>Number of elements, e.g. <code><a href="https://rdrr.io/r/base/length.html">length()</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 </tr>
 <tr class="even">
-<td>Named elements, e.g. <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names()</a></code>, <code>x$a</code> and <code>x[["a"]]</code>
+<td>Named elements, e.g. <code><a href="https://rdrr.io/r/base/names.html">names()</a></code>, <code>x$a</code> and <code>x[["a"]]</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
@@ -209,14 +216,14 @@
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td>Dimensions, e.g. <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim(x)</a></code>, <code><a href="https://rdrr.io/r/base/t.html" class="external-link">t(x)</a></code>, and <code><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm(x, c(3,1,2))</a></code>
+<td>Dimensions, e.g. <code><a href="https://rdrr.io/r/base/dim.html">dim(x)</a></code>, <code><a href="https://rdrr.io/r/base/t.html">t(x)</a></code>, and <code><a href="https://rdrr.io/r/base/aperm.html">aperm(x, c(3,1,2))</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Names of dimensions, e.g. <code><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames(x)</a></code>
+<td>Names of dimensions, e.g. <code><a href="https://rdrr.io/r/base/dimnames.html">dimnames(x)</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
@@ -271,7 +278,7 @@
 <td align="center">yes</td>
 </tr>
 <tr class="odd">
-<td>Compatible* with <code><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign()</a></code>, <code><a href="https://rdrr.io/r/base/delayedAssign.html" class="external-link">delayedAssign()</a></code>, <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code> and <code><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists()</a></code>
+<td>Compatible* with <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code>, <code><a href="https://rdrr.io/r/base/delayedAssign.html">delayedAssign()</a></code>, <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> and <code><a href="https://rdrr.io/r/base/exists.html">exists()</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center"></td>
@@ -524,7 +531,7 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">2</span> <span 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="ot">NULL</span>
 <span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(x)
 <span class="ot">NULL</span></code></pre></div>
-<p>This behavior is by design, cf. <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">help("dim", package="base")</a></code>.</p>
+<p>This behavior is by design, cf. <code><a href="https://rdrr.io/r/base/dim.html">help("dim", package="base")</a></code>.</p>
 <p>To allocate an "empty" list environment array (with all <code>NULL</code>:s) of a given dimension, do</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>()
 <span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
@@ -597,13 +604,11 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span 
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Henrik Bengtsson.</p>
+  <p>Developed by Henrik Bengtsson.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9001.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9002.</p>
 </div>
 
       </footer>
