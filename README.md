@@ -1,4 +1,15 @@
-# listenv: Environments Behaving (Almost) as Lists
+
+
+<div id="badges"><!-- pkgdown markup -->
+<a href="https://CRAN.R-project.org/web/checks/check_results_listenv.html"><img border="0" src="https://www.r-pkg.org/badges/version/listenv" alt="CRAN check status"></a></a>
+<a href="https://github.com/HenrikBengtsson/listenv/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/listenv/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></a>
+<a href="https://travis-ci.org/HenrikBengtsson/listenv"><img border="0" src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a></a>
+<a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a></a>
+<a href="https://codecov.io/gh/HenrikBengtsson/listenv"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"></a></a>
+
+</div>
+
+# listenv: Environments Behaving (Almost) as Lists 
 
 ## Summary
 
@@ -403,27 +414,18 @@ R package listenv is available on [CRAN](https://cran.r-project.org/package=list
 install.packages("listenv")
 ```
 
+
 ### Pre-release version
 
 To install the pre-release version that is available in Git branch `develop` on GitHub, use:
 ```r
-remotes::install_github("HenrikBengtsson/listenv@develop")
+remotes::install_github("HenrikBengtsson/listenv", ref="develop")
 ```
 This will install the package from source.  
 
 
+<!-- pkgdown-drop-below -->
 
-## Contributions
+## Contributing
 
-This Git repository uses the [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model (the [`git flow`](https://github.com/petervanderdoes/gitflow-avh) extension is useful for this).  The [`develop`](https://github.com/HenrikBengtsson/listenv/tree/develop) branch contains the latest contributions and other code that will appear in the next release, and the [`master`](https://github.com/HenrikBengtsson/listenv) branch contains the code of the latest release, which is exactly what is currently on [CRAN](https://cran.r-project.org/package=listenv).
-
-Contributing to this package is easy.  Just send a [pull request](https://help.github.com/articles/using-pull-requests/).  When you send your PR, make sure `develop` is the destination branch on the [listenv repository](https://github.com/HenrikBengtsson/listenv).  Your PR should pass `R CMD check --as-cran`, which will also be checked by <a href="https://travis-ci.org/HenrikBengtsson/listenv">Travis CI</a> and <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv">AppVeyor CI</a> when the PR is submitted.
-
-
-## Software status
-
-| Resource      | CRAN        | GitHub Actions      | Travis CI       | AppVeyor CI      |
-| ------------- | ------------------- | ------------------- | --------------- | ---------------- |
-| _Platforms:_  | _Multiple_          | _Multiple_          | _Linux & macOS_ | _Windows_        |
-| R CMD check   | <a href="https://cran.r-project.org/web/checks/check_results_listenv.html"><img border="0" src="http://www.r-pkg.org/badges/version/listenv" alt="CRAN version"></a> | <a href="https://github.com/HenrikBengtsson/listenv/actions?query=workflow%3AR-CMD-check"><img src="https://github.com/HenrikBengtsson/listenv/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a>       | <a href="https://travis-ci.org/HenrikBengtsson/listenv"><img src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a>   | <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a> |
-| Test coverage |                     |                     | <a href="https://codecov.io/gh/HenrikBengtsson/listenv"><img src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"/></a>     |                  |
+To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).

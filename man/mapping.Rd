@@ -3,7 +3,6 @@
 \name{mapping}
 \alias{mapping}
 \alias{mapping.listenv}
-\alias{map.listenv}
 \alias{map}
 \title{Name map for elements of list environment}
 \usage{

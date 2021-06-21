@@ -160,7 +160,6 @@ print.listenv <- function(x, ...) {
 #' @return A named character vector
 #'
 #' @aliases mapping.listenv
-#' @aliases map.listenv
 #' @export
 #' @keywords internal
 mapping <- function(x, ...) {
