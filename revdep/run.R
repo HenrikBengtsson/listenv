@@ -6,4 +6,6 @@ precheck <- function() {
   unlink("revdep/checks/aroma.affymetrix", recursive = TRUE)
 }
 
+print(getOption("repos", NA_character_))
+
 revdepcheck.extras::run()
