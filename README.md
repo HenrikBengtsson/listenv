@@ -1,12 +1,7 @@
 
 
 <div id="badges"><!-- pkgdown markup -->
-<a href="https://CRAN.R-project.org/web/checks/check_results_listenv.html"><img border="0" src="https://www.r-pkg.org/badges/version/listenv" alt="CRAN check status"></a></a>
-<a href="https://github.com/HenrikBengtsson/listenv/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/listenv/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"></a></a>
-<a href="https://travis-ci.org/HenrikBengtsson/listenv"><img border="0" src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"></a></a>
-<a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"></a></a>
-<a href="https://codecov.io/gh/HenrikBengtsson/listenv"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"></a></a>
-
+<a href="https://CRAN.R-project.org/web/checks/check_results_listenv.html"><img border="0" src="https://www.r-pkg.org/badges/version/listenv" alt="CRAN check status"/></a> <a href="https://github.com/HenrikBengtsson/listenv/actions?query=workflow%3AR-CMD-check"><img border="0" src="https://github.com/HenrikBengtsson/listenv/workflows/R-CMD-check/badge.svg?branch=develop" alt="Build status"/></a> <a href="https://travis-ci.org/HenrikBengtsson/listenv"><img border="0" src="https://travis-ci.org/HenrikBengtsson/listenv.svg" alt="Build status"/></a> <a href="https://ci.appveyor.com/project/HenrikBengtsson/listenv"><img border="0" src="https://ci.appveyor.com/api/projects/status/github/HenrikBengtsson/listenv?svg=true" alt="Build status"/></a> <a href="https://codecov.io/gh/HenrikBengtsson/listenv"><img border="0" src="https://codecov.io/gh/HenrikBengtsson/listenv/branch/develop/graph/badge.svg" alt="Coverage Status"/></a> 
 </div>
 
 # listenv: Environments Behaving (Almost) as Lists 
@@ -423,9 +418,10 @@ remotes::install_github("HenrikBengtsson/listenv", ref="develop")
 ```
 This will install the package from source.  
 
-
 <!-- pkgdown-drop-below -->
+
 
 ## Contributing
 
 To contribute to this package, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+ 
