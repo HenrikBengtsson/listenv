@@ -12,6 +12,9 @@ jobs:
 
     strategy:
       fail-fast: false
+      matrix:
+        covr:
+          - { dummy: true }
 
     env:
       RSPM: https://packagemanager.rstudio.com/cran/__linux__/focal/latest
