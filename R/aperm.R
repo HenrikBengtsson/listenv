@@ -38,7 +38,7 @@ aperm.listenv <- function(a, perm, ...) {
   ndim <- length(dim)
 
   if (length(perm) != ndim) {
-    stop("Length of argument 'perm' does not match the dimension of 'a': ", length(perm), " != ", ndim)
+    stopf("Length of argument 'perm' does not match the dimension of 'a': %s != %s", length(perm), ndim)
   }
 
   if (any(perm < 1 | perm > ndim)) {

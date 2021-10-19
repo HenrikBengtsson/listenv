@@ -21,13 +21,13 @@ get_variable.listenv <- function(x, name, mustExist = FALSE,
   if (is.character(name)) {
   } else if (is.numeric(name)) {
   } else {
-    stop("Subscript must be a name or an index: ", mode(name), call. = FALSE)
+    stopf("Subscript must be a name or an index: %s", mode(name), call. = FALSE)
   }
 
   dim <- dim(x)
   if (is.null(dim)) {
     if (length(name) != 1L) {
-      stop("Subscript must be a scalar: ", length(name), call. = FALSE)
+      stopf("Subscript must be a scalar: %s", length(name), call. = FALSE)
     }
   } else {
     ndim <- length(dim)

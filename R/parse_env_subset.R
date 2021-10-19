@@ -58,9 +58,9 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
       op <- as.character(expr[[1]])
       res$op <- op
       if (op == "$" && n > 3L) {
-        stop("Invalid syntax: ", sQuote(code), call. = FALSE)
+        stopf("Invalid syntax: %s", sQuote(code), call. = FALSE)
       } else if (!is.element(op, c("$", "[[", "["))) {
-        stop("Invalid syntax: ", sQuote(code), call. = FALSE)
+        stopf("Invalid syntax: %s", sQuote(code), call. = FALSE)
       }
 
       ## Target
@@ -119,7 +119,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
   if (is_variable) {
     name <- res$name
     if (nzchar(name) && !grepl("^[.a-zA-Z]+", name)) {
-      stop("Not a valid variable name: ", sQuote(name), call. = FALSE)
+      stopf("Not a valid variable name: %s", sQuote(name), call. = FALSE)
     }
   }
 
@@ -169,7 +169,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
       ## Multi-dimensional subsetting?
       if (length(subset) > 1L) {
         if (is.null(dim)) {
-          stop("Multi-dimensional subsetting on list environment without dimensions: ", sQuote(code), call. = TRUE)  #nolint
+          stopf("Multi-dimensional subsetting on list environment without dimensions: %s", sQuote(code), call. = TRUE)  #nolint
         }
         dimnames <- dimnames(envir)
 
@@ -241,7 +241,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
           n <- length(envir)
           if (any(i < 0)) {
             if (op == "[[") {
-              stop("Invalid (negative) indices: ", hpaste(i))
+              stopf("Invalid (negative) indices: %s", hpaste(i))
             } else if (any(i > 0)) {
               stop("Only 0's may be mixed with negative subscripts")
             }
@@ -251,7 +251,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
           ## Drop zeros?
           keep <- which(i != 0)
           if (length(keep) != length(i)) {
-            if (op == "[[") stop("Invalid (zero) indices: ", hpaste(i))
+            if (op == "[[") stopf("Invalid (zero) indices: %s", hpaste(i))
             i <- i[keep]
           }
           res$idx <- i
@@ -267,7 +267,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
       }
     } else {
       if (length(subset) > 1L) {
-        stop("Invalid subset: ", sQuote(code), call. = TRUE)
+        stopf("Invalid subset: %s", sQuote(code), call. = TRUE)
       }
       subset <- subset[[1L]]
       if (length(subset) > 1L) {
@@ -299,7 +299,7 @@ parse_env_subset <- function(expr, envir = parent.frame(), substitute = TRUE, is
   ## Validate
   if (is.null(dim) && length(res$subset) == 1 && identical(res$op, "[")) {
     if (any(is.na(res$idx)) && !nzchar(res$name)) {
-      stop("Invalid subset: ", sQuote(code), call. = TRUE)
+      stopf("Invalid subset: %s", sQuote(code), call. = TRUE)
     }
   }
 

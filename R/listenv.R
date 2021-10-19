@@ -456,7 +456,7 @@ to_index <- function(x, idxs) {
     }
 
     if (length(i) != 1L) {
-      stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))  #nolint
+      stopf("Subsetting of more than one element at the time is not allowed for listenv's: %s", length(i))  #nolint
     }
 
     if (i < 1L || i > n) {
@@ -626,10 +626,10 @@ assign_by_name <- function(x, name, value) {
   if (length(name) == 0L) {
     stop("Cannot assign value. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
-    stop("Cannot assign value. More than one name specified: ",
+    stopf("Cannot assign value. More than one name specified: %s",
          hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot assign value. Empty name specific: ", sQuote(name), call. = FALSE)
+    stopf("Cannot assign value. Empty name specified: %s", sQuote(name), call. = FALSE)
   }
 
   map <- mapping(x)
@@ -668,12 +668,12 @@ assign_by_index <- function(x, i, value) {
   if (length(i) == 0L) {
     stop("Cannot assign value. Zero-length index.", call. = FALSE)
   } else if (length(i) > 1L) {
-    stop("Cannot assign value. More than one index specified: ", hpaste(i),
+    stopf("Cannot assign value. More than one index specified: %s", hpaste(i),
          call. = FALSE)
   } else if (!is.finite(i)) {
-    stop("Cannot assign value. Non-finite index: ", i, call. = FALSE)
+    stopf("Cannot assign value. Non-finite index: %s", i, call. = FALSE)
   } else if (i < 1L) {
-    stop("Cannot assign value. Non-positive index: ", i, call. = FALSE)
+    stopf("Cannot assign value. Non-positive index: %s", i, call. = FALSE)
   }
 
   map <- mapping(x)
@@ -708,10 +708,10 @@ remove_by_name <- function(x, name) {
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
-    stop("Cannot remove element. More than one name specified: ",
+    stopf("Cannot remove element. More than one name specified: %s",
          hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot remove element. Empty name specific: ",
+    stopf("Cannot remove element. Empty name specified: %s",
          sQuote(name), call. = FALSE)
   }
 
@@ -744,12 +744,12 @@ remove_by_index <- function(x, i) {
   if (length(i) == 0L) {
     stop("Cannot remove element. Zero-length index.", call. = FALSE)
   } else if (length(i) > 1L) {
-    stop("Cannot remove element. More than one index specified: ", hpaste(i),
+    stopf("Cannot remove element. More than one index specified: %s", hpaste(i),
          call. = FALSE)
   } else if (!is.finite(i)) {
-    stop("Cannot remove element. Non-finite index: ", i, call. = FALSE)
+    stopf("Cannot remove element. Non-finite index: %s", i, call. = FALSE)
   } else if (i < 1L) {
-    stop("Cannot remove element. Non-positive index: ", i, call. = FALSE)
+    stopf("Cannot remove element. Non-positive index: %s", i, call. = FALSE)
   }
 
   map <- mapping(x)
