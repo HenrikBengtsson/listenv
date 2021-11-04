@@ -57,5 +57,6 @@ Rplots.pdf$
 #----------------------------
 # Miscellaneous
 #----------------------------
-^.ghi
-^.issues
+^[.]ghi
+^[.]issues
+^[.]local
