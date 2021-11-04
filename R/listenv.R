@@ -208,7 +208,7 @@ if (!exists("lengths", mode = "function")) {
   n <- length(map)
   value <- as.numeric(value)
 
-  if (value < 0) stop("Cannot set a negative length")
+  if (value < 0) stopf("Cannot set a negative length: %s", value)
 
   ## Nothing to do?
   if (value == n) return(invisible(x))
