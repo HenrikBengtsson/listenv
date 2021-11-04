@@ -37,11 +37,11 @@ hpaste <- function(..., sep = "", collapse = ", ", last_collapse = NULL,
 
 
 stopf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
-  stop(sprintf(fmt, ...), call. = call., domain = domain)
+  stop(gettextf(fmt, ...), call. = call., domain = domain)
 }
 
 warnf <- function(fmt, ..., call. = TRUE, domain = NULL) {  #nolint
-  warning(sprintf(fmt, ...), call. = call., domain = domain)
+  warning(gettextf(fmt, ...), call. = call., domain = domain)
 }
 
 stop_if_not <- function(...) {
