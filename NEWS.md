@@ -1,4 +1,4 @@
-# Version (develop version)
+# Version (development version)
 
 ## New Features
 
@@ -8,11 +8,9 @@
    whether or not the inferred element named should be checked if it
    is a valid variable name.
 
-
 ## Internationalization
 
  * All warning and error messages are now translatable.
-
 
 ## Deprecated and Defunct
 
@@ -63,7 +61,7 @@
    throw an error, whereas `x[[1]]` would.
  
  
- # Version 0.7.0 [2018-01-21]
+# Version 0.7.0 [2018-01-21]
  
 ## New Features
  
@@ -106,7 +104,7 @@
    length(x) <- n` instead.
  
  
- # Version 0.6.0 [2015-12-27]
+# Version 0.6.0 [2015-12-27]
  
 ## New Features
  
@@ -122,7 +120,7 @@
    which may not be true if `x` has been expanded.
  
  
- # Version 0.5.0 [2015-10-30]
+# Version 0.5.0 [2015-10-30]
  
 ## New Features
  
@@ -148,7 +146,7 @@
    names for non-named list environments.
  
  
- # Version 0.4.0 [2015-08-08]
+# Version 0.4.0 [2015-08-08]
  
 ## New Features
  
@@ -166,21 +164,21 @@
  * CLEANUP: Dropped stray debug code.
  
  
- # Version 0.3.0 [2015-05-23]
+# Version 0.3.0 [2015-05-23]
  
 ## Code Refactorization
  
  * Package no longer depends on other packages.
  
  
- # Version 0.2.4 [2015-05-22]
+# Version 0.2.4 [2015-05-22]
  
 ## New Features
  
  * Added helper function `parse_env_subset()`.
  
  
- # Version 0.2.3 [2015-05-21]
+# Version 0.2.3 [2015-05-21]
  
 ## New Features
  
@@ -188,28 +186,28 @@
    better.
  
  
- # Version 0.2.2 [2015-05-20]
+# Version 0.2.2 [2015-05-20]
  
 ## New Features
  
  * Now `listenv(length = ...)` always allocates internal variables.
  
  
- # Version 0.2.1 [2015-05-19]
+# Version 0.2.1 [2015-05-19]
  
 ## New Features
  
  * `get_variable()` gained argument `mustExist`.
  
  
- # Version 0.2.0 [2015-05-19]
+# Version 0.2.0 [2015-05-19]
  
 ## Signficant Changes
  
  * Moved list environments from an in-house package to its own package.
  
  
- # Version 0.1.4 [2015-05-02]
+# Version 0.1.4 [2015-05-02]
  
 ## New Features
  
@@ -223,3 +221,5 @@
 
 # Version 0.1.0 [2015-02-07]
 
+ * Created.
+ 
