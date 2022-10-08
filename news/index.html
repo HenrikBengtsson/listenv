@@ -123,6 +123,23 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="development version" id="version-development-version">Version (development version)<a class="anchor" aria-label="anchor" href="#version-development-version"></a></h2>
+<div class="section level3">
+<h3 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<ul><li><p>Add <code><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm()</a></code> and <code><a href="https://rdrr.io/r/base/t.html" class="external-link">t()</a></code> for list-environment arrays.</p></li>
+<li><p><code><a href="../reference/parse_env_subset.html">parse_env_subset()</a></code> gained argument <code>is_variable</code> to control whether or not the inferred element named should be checked if it is a valid variable name.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="internationalization-development-version">Internationalization<a class="anchor" aria-label="anchor" href="#internationalization-development-version"></a></h3>
+<ul><li>All warning and error messages are now translatable.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="deprecated-and-defunct-development-version">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-development-version"></a></h3>
+<ul><li><p><code><a href="../reference/mapping.html">map()</a></code> is formally deprecated; use <code><a href="../reference/mapping.html">mapping()</a></code> instead.</p></li>
+<li><p>Dropped the defunct usage of <code>listenv(length = n)</code>, meaning it no longer gives an error but instead produces a <code>listenv</code> with an element named <code>length</code>.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.8.0" id="version-080">Version 0.8.0<small>2019-12-05</small><a class="anchor" aria-label="anchor" href="#version-080"></a></h2>
 <div class="section level3">
 <h3 id="signficant-changes-0-8-0">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-0-8-0"></a></h3>
@@ -140,10 +157,12 @@
 <li><p><code>parse_env_subset(x[1,idxs])</code> on a listenv <code>x</code> would throw an error on <code>length(x) = 2 &gt; 1 in coercion to logical(1)</code> with <code>length(idxs) &gt; 1</code> and <code>_R_CHECK_LENGTH_1_LOGIC2_=true</code>.</p></li>
 <li><p><code>parse_env_subset(x[[names]])</code> on a regular environment <code>x</code> with <code>length(names) &gt; 1</code> would not throw an error, whereas <code>x[[names]]</code> would.</p></li>
 <li><p><code>parse_env_subset(x[[1]])</code> on a regular environment <code>x</code> would not throw an error, whereas <code>x[[1]]</code> would.</p></li>
-</ul><p># Version 0.7.0 [2018-01-21]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.7.0" id="version-070">Version 0.7.0<small>2018-01-21</small><a class="anchor" aria-label="anchor" href="#version-070"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-1">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-1"></a></h3>
+<h3 id="new-features-0-7-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-7-0"></a></h3>
 <ul><li><p>Now it is possible to set the dimension on an empty list environment without first resizing it with <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>, e.g. <code>x &lt;-    listenv(); dim(x) &lt;- c(2, 3)</code>.</p></li>
 <li><p>Now it is possible to remove multiple elements by assigning NULL, e.g. <code>x[c(2:3, 10)] &lt;- NULL</code> and <code>x[, "B"] &lt;- NULL</code>.</p></li>
 <li><p>Added <code><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths()</a></code> for list environments. Requires R (&gt;= 3.3.0).</p></li>
@@ -151,89 +170,109 @@
 <li><p>Added <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">is.matrix()</a></code>, <code><a href="https://rdrr.io/r/base/array.html" class="external-link">is.array()</a></code>, <code><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector()</a></code>, and <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> for list environments.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-8-0-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0-1"></a></h3>
+<h3 id="bug-fixes-0-7-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-7-0"></a></h3>
 <ul><li><p><code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> on a named, empty list environment would output an empty string.</p></li>
 <li><p>Removing an element from a list environment did not remove dimensions, e.g. <code>x$a &lt;- NULL</code>.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecated-and-defunct-0-8-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-8-0"></a></h3>
+<h3 id="deprecated-and-defunct-0-7-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-7-0"></a></h3>
 <ul><li><p>Function <code><a href="../reference/mapping.html">map()</a></code> has been renamed to <code><a href="../reference/mapping.html">mapping()</a></code> and same for the corresponding replacement function. The <code><a href="../reference/mapping.html">map()</a></code> and <code>map&lt;-()</code> functions will soon be deprecated and eventually defunct.</p></li>
 <li><p><code>x &lt;- listenv(length = n)</code> is defunct; use <code>x &lt;- listenv();    length(x) &lt;- n</code> instead.</p></li>
-</ul><p># Version 0.6.0 [2015-12-27]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.6.0" id="version-060">Version 0.6.0<small>2015-12-28</small><a class="anchor" aria-label="anchor" href="#version-060"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-2"></a></h3>
+<h3 id="new-features-0-6-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>
 <ul><li>Added support for multi-dimensional subsetting of list environments just as for list.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-8-0-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0-2"></a></h3>
+<h3 id="bug-fixes-0-6-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-6-0"></a></h3>
 <ul><li>
 <code>parse_env_subset(x[[idx]])</code> for list environment <code>x</code> and index <code>idx</code> claimed <code>x[[idx]]</code> existed as long as <code>idx</code> in <code>[1,length(x)]</code>, but it forgot to check if element really existed, which may not be true if <code>x</code> has been expanded.</li>
-</ul><p># Version 0.5.0 [2015-10-30]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.5.0" id="version-050">Version 0.5.0<small>2015-10-31</small><a class="anchor" aria-label="anchor" href="#version-050"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-3">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-3"></a></h3>
+<h3 id="new-features-0-5-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-5-0"></a></h3>
 <ul><li><p>Add support for assigning elements when creating list environment similarly how to lists work, e.g. <code>x &lt;- listenv(a = 1, b = 2)</code>.</p></li>
 <li><p><code>length(x) &lt;- n</code> now expand/truncate a list environment.</p></li>
 <li><p>Added <code><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist()</a></code> and <code><a href="https://rdrr.io/r/base/all.equal.html" class="external-link">all.equal()</a></code> for list environments.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="deprecated-and-defunct-0-8-0-1">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-8-0-1"></a></h3>
+<h3 id="deprecated-and-defunct-0-5-0">Deprecated and Defunct<a class="anchor" aria-label="anchor" href="#deprecated-and-defunct-0-5-0"></a></h3>
 <ul><li>Deprecated <code>x &lt;- listenv(length = n)</code>; use <code>x &lt;- listenv();    length(x) &lt;- n</code> instead.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-0-8-0-3">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0-3"></a></h3>
+<h3 id="bug-fixes-0-5-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-0"></a></h3>
 <ul><li><p><code>as.listenv(x)</code> would drop NULL elements in <code>x</code>.</p></li>
 <li><p><code>x[idxs]</code>, <code>x[name] &lt;- y</code>, and <code>x$&lt;name&gt; &lt;- y</code> would introduce NA names for non-named list environments.</p></li>
-</ul><p># Version 0.4.0 [2015-08-08]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.4.0" id="version-040">Version 0.4.0<small>2015-08-08</small><a class="anchor" aria-label="anchor" href="#version-040"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-4"></a></h3>
+<h3 id="new-features-0-4-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-4-0"></a></h3>
 <ul><li><p>Added <code><a href="../reference/listenv.html">as.listenv()</a></code>.</p></li>
 <li><p>CONSISTENCY: Assigning NULL now removes element just as lists, e.g. <code>x$a &lt;- NULL</code>. To assign value NULL, do <code>x['a'] &lt;-     list(NULL)</code>.</p></li>
 <li><p>Added support for subsetting with <code>[()</code>, which returns another list environment, e.g. <code>x[2:3]</code>, <code>x[-1]</code>, and <code>x[c(TRUE, FALSE)]</code>.</p></li>
 <li><p>Added <code>[&lt;-</code> assignment, e.g. <code>x['a'] &lt;- 1</code> and <code>x[2:3] &lt;- c(3,8)</code>.</p></li>
 <li><p>CLEANUP: Dropped stray debug code.</p></li>
-</ul><p># Version 0.3.0 [2015-05-23]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.3.0" id="version-030">Version 0.3.0<small>2015-05-28</small><a class="anchor" aria-label="anchor" href="#version-030"></a></h2>
 <div class="section level3">
-<h3 id="code-refactorization-0-8-0">Code Refactorization<a class="anchor" aria-label="anchor" href="#code-refactorization-0-8-0"></a></h3>
+<h3 id="code-refactorization-0-3-0">Code Refactorization<a class="anchor" aria-label="anchor" href="#code-refactorization-0-3-0"></a></h3>
 <ul><li>Package no longer depends on other packages.</li>
-</ul><p># Version 0.2.4 [2015-05-22]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.4" id="version-024">Version 0.2.4<a class="anchor" aria-label="anchor" href="#version-024"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-5">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-5"></a></h3>
+<h3 id="new-features-0-2-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-4"></a></h3>
 <ul><li>Added helper function <code><a href="../reference/parse_env_subset.html">parse_env_subset()</a></code>.</li>
-</ul><p># Version 0.2.3 [2015-05-21]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.3" id="version-023">Version 0.2.3<a class="anchor" aria-label="anchor" href="#version-023"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-6">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-6"></a></h3>
+<h3 id="new-features-0-2-3">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-3"></a></h3>
 <ul><li>
 <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> on <code>listenv</code> handles empty and no-named <code>listenv</code>:s better.</li>
-</ul><p># Version 0.2.2 [2015-05-20]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.2" id="version-022">Version 0.2.2<a class="anchor" aria-label="anchor" href="#version-022"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-7">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-7"></a></h3>
+<h3 id="new-features-0-2-2">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-2"></a></h3>
 <ul><li>Now <code>listenv(length = ...)</code> always allocates internal variables.</li>
-</ul><p># Version 0.2.1 [2015-05-19]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.1" id="version-021">Version 0.2.1<a class="anchor" aria-label="anchor" href="#version-021"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-8">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-8"></a></h3>
+<h3 id="new-features-0-2-1">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-2-1"></a></h3>
 <ul><li>
 <code><a href="../reference/get_variable.html">get_variable()</a></code> gained argument <code>mustExist</code>.</li>
-</ul><p># Version 0.2.0 [2015-05-19]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.2.0" id="version-020">Version 0.2.0<a class="anchor" aria-label="anchor" href="#version-020"></a></h2>
 <div class="section level3">
-<h3 id="signficant-changes-0-8-0-1">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-0-8-0-1"></a></h3>
+<h3 id="signficant-changes-0-2-0">Signficant Changes<a class="anchor" aria-label="anchor" href="#signficant-changes-0-2-0"></a></h3>
 <ul><li>Moved list environments from an in-house package to its own package.</li>
-</ul><p># Version 0.1.4 [2015-05-02]</p>
+</ul></div>
 </div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.1.4" id="version-014">Version 0.1.4<a class="anchor" aria-label="anchor" href="#version-014"></a></h2>
 <div class="section level3">
-<h3 id="new-features-0-8-0-9">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0-9"></a></h3>
+<h3 id="new-features-0-1-4">New Features<a class="anchor" aria-label="anchor" href="#new-features-0-1-4"></a></h3>
 <ul><li>Added <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> for <code>listenv</code>:s.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="code-refactorization-0-8-0-1">Code Refactorization<a class="anchor" aria-label="anchor" href="#code-refactorization-0-8-0-1"></a></h3>
+<h3 id="code-refactorization-0-1-4">Code Refactorization<a class="anchor" aria-label="anchor" href="#code-refactorization-0-1-4"></a></h3>
 <ul><li>Using <code>tempvar()</code> of <strong>R.utils</strong>.</li>
 </ul></div>
 </div>
