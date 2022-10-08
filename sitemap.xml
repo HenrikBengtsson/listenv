@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://listenv.futureverse.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://listenv.futureverse.org/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://listenv.futureverse.org/OVERVIEW.html</loc>
+  </url>
+  <url>
+    <loc>https://listenv.futureverse.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://listenv.futureverse.org/articles/listenv.html</loc>
+  </url>
+  <url>
+    <loc>https://listenv.futureverse.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://listenv.futureverse.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://listenv.futureverse.org/news/index.html</loc>
   </url>
   <url>
     <loc>https://listenv.futureverse.org/reference/aperm.listenv.html</loc>
@@ -22,6 +43,9 @@
     <loc>https://listenv.futureverse.org/reference/get_variable.html</loc>
   </url>
   <url>
+    <loc>https://listenv.futureverse.org/reference/index.html</loc>
+  </url>
+  <url>
     <loc>https://listenv.futureverse.org/reference/length.listenv.html</loc>
   </url>
   <url>
@@ -38,8 +62,5 @@
   </url>
   <url>
     <loc>https://listenv.futureverse.org/reference/undim.html</loc>
-  </url>
-  <url>
-    <loc>https://listenv.futureverse.org/articles/listenv.html</loc>
   </url>
 </urlset>

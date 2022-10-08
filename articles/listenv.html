@@ -33,6 +33,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -45,17 +47,14 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">listenv</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.8.0-9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.8.0-9001</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/listenv.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -63,76 +62,73 @@
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
-<li>
-  <a href="../articles/listenv.html">Get started</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://www.futureverse.org/">
+  <a href="https://www.futureverse.org/" class="external-link">
     <span class="fas fa-fast-backward"></span>
      
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Packages
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="https://BiocParallel.FutureParam.futureverse.org">BiocParallel.FutureParam</a>
+      <a href="https://BiocParallel.FutureParam.futureverse.org" class="external-link">BiocParallel.FutureParam</a>
     </li>
     <li>
-      <a href="https://doFuture.futureverse.org">doFuture</a>
+      <a href="https://doFuture.futureverse.org" class="external-link">doFuture</a>
     </li>
     <li>
-      <a href="https://furrr.futureverse.org">furrr</a>
+      <a href="https://furrr.futureverse.org" class="external-link">furrr</a>
     </li>
     <li>
-      <a href="https://future.futureverse.org">future</a>
+      <a href="https://future.futureverse.org" class="external-link">future</a>
     </li>
     <li>
-      <a href="https://future.apply.futureverse.org">future.apply</a>
+      <a href="https://future.apply.futureverse.org" class="external-link">future.apply</a>
     </li>
     <li>
-      <a href="https://future.batchtools.futureverse.org">future.batchtools</a>
+      <a href="https://future.batchtools.futureverse.org" class="external-link">future.batchtools</a>
     </li>
     <li>
-      <a href="https://future.callr.futureverse.org">future.callr</a>
+      <a href="https://future.callr.futureverse.org" class="external-link">future.callr</a>
     </li>
     <li>
-      <a href="https://future.tests.futureverse.org">future.tests</a>
+      <a href="https://future.tests.futureverse.org" class="external-link">future.tests</a>
     </li>
     <li>
-      <a href="https://globals.futureverse.org">globals</a>
+      <a href="https://globals.futureverse.org" class="external-link">globals</a>
     </li>
     <li>
       <a href="https://listenv.futureverse.org">listenv</a>
     </li>
     <li>
-      <a href="https://parallelly.futureverse.org">parallelly</a>
+      <a href="https://parallelly.futureverse.org" class="external-link">parallelly</a>
     </li>
     <li>
-      <a href="https://progressr.futureverse.org">progressr</a>
+      <a href="https://progressr.futureverse.org" class="external-link">progressr</a>
     </li>
     <li>
-      <a href="https://future.mapreduce.futureverse.org">future.mapreduce (experimental)</a>
+      <a href="https://future.mapreduce.futureverse.org" class="external-link">future.mapreduce (experimental)</a>
     </li>
     <li>
-      <a href="https://marshal.futureverse.org">marshal (experimental)</a>
+      <a href="https://marshal.futureverse.org" class="external-link">marshal (experimental)</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="https://cloud.r-project.org/package=listenv">
+  <a href="https://cloud.r-project.org/package=listenv" class="external-link">
     <span class="fab fa-r-project"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/HenrikBengtsson/listenv/">
+  <a href="https://github.com/HenrikBengtsson/listenv/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -157,26 +153,30 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>List Environments</h1>
-                        <h4 class="author">Henrik Bengtsson</h4>
+                        <h4 data-toc-skip class="author">Henrik
+Bengtsson</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/listenv/blob/master/vignettes/listenv.md.rsp"><code>vignettes/listenv.md.rsp</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/HenrikBengtsson/listenv/blob/HEAD/vignettes/listenv.md.rsp" class="external-link"><code>vignettes/listenv.md.rsp</code></a></small>
       <div class="hidden name"><code>listenv.md.rsp</code></div>
 
     </div>
 
     
     
-<div id="summary" class="section level2">
-<h2 class="hasAnchor">
-<a href="#summary" class="anchor"></a>Summary</h2>
-<p><em>List environments</em> are environments that have list-like properties. They are implemented by the <a href="https://cran.r-project.org/package=listenv">listenv</a> package. The main features of a list environment are summarized in the below table:</p>
+<div class="section level2">
+<h2 id="summary">Summary<a class="anchor" aria-label="anchor" href="#summary"></a>
+</h2>
+<p><em>List environments</em> are environments that have list-like
+properties. They are implemented by the <a href="https://cran.r-project.org/package=listenv" class="external-link">listenv</a> package.
+The main features of a list environment are summarized in the below
+table:</p>
 <table class="table">
 <colgroup>
-<col width="64%">
-<col width="16%">
-<col width="7%">
-<col width="12%">
+<col width="65%">
+<col width="15%">
+<col width="6%">
+<col width="11%">
 </colgroup>
 <thead><tr class="header">
 <th>Property</th>
@@ -186,14 +186,15 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Number of elements, e.g. <code><a href="https://rdrr.io/r/base/length.html">length()</a></code>
+<td>Number of elements, e.g. <code><a href="https://rdrr.io/r/base/length.html" class="external-link">length()</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 </tr>
 <tr class="even">
-<td>Named elements, e.g. <code><a href="https://rdrr.io/r/base/names.html">names()</a></code>, <code>x$a</code> and <code>x[["a"]]</code>
+<td>Named elements, e.g. <code><a href="https://rdrr.io/r/base/names.html" class="external-link">names()</a></code>, <code>x$a</code> and
+<code>x[["a"]]</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
@@ -212,35 +213,38 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Indexed elements, e.g. <code>x[[4]]</code>
+<td>Indexed elements, e.g. <code>x[[4]]</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td>Dimensions, e.g. <code><a href="https://rdrr.io/r/base/dim.html">dim(x)</a></code>, <code><a href="https://rdrr.io/r/base/t.html">t(x)</a></code>, and <code><a href="https://rdrr.io/r/base/aperm.html">aperm(x, c(3,1,2))</a></code>
+<td>Dimensions, e.g. <code>dim(x)</code>, <code>t(x)</code>, and
+<code>aperm(x, c(3,1,2))</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Names of dimensions, e.g. <code><a href="https://rdrr.io/r/base/dimnames.html">dimnames(x)</a></code>
+<td>Names of dimensions, e.g. <code>dimnames(x)</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td>Indexing by dimensions, e.g. <code>x[[2, 4]]</code> and <code>x[[2, "D"]]</code>
+<td>Indexing by dimensions, e.g. <code>x[[2, 4]]</code> and
+<code>x[[2, "D"]]</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Multi-element subsetting, e.g. <code>x[c("a", "c")]</code>, <code>x[-1]</code> and <code>x[2:1, , 3]</code>
+<td>Multi-element subsetting, e.g. <code>x[c("a", "c")]</code>,
+<code>x[-1]</code> and <code>x[2:1, , 3]</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
@@ -253,35 +257,40 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Resizing, e.g. <code>length(x) &lt;- 6</code>
+<td>Resizing, e.g. <code>length(x) &lt;- 6</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td>Removing elements by assigning NULL, e.g. <code>x$c &lt;- NULL</code> and <code>x[1:3] &lt;- NULL</code>
+<td>Removing elements by assigning NULL,
+e.g. <code>x$c &lt;- NULL</code> and <code>x[1:3] &lt;- NULL</code>
 </td>
 <td align="center">yes</td>
 <td align="center">yes</td>
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td>Removing parts of dimensions by assigning NULL, e.g. <code>x[,2] &lt;- NULL</code>
+<td>Removing parts of dimensions by assigning NULL,
+e.g. <code>x[,2] &lt;- NULL</code>
 </td>
 <td align="center">yes</td>
 <td align="center"></td>
 <td align="center"></td>
 </tr>
 <tr class="even">
-<td>Mutable, e.g. <code>y &lt;- x; y$a &lt;- 3; identical(y, x)</code>
+<td>Mutable,
+e.g. <code>y &lt;- x; y$a &lt;- 3; identical(y, x)</code>
 </td>
 <td align="center">yes</td>
 <td align="center"></td>
 <td align="center">yes</td>
 </tr>
 <tr class="odd">
-<td>Compatible* with <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code>, <code><a href="https://rdrr.io/r/base/delayedAssign.html">delayedAssign()</a></code>, <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> and <code><a href="https://rdrr.io/r/base/exists.html">exists()</a></code>
+<td>Compatible* with <code><a href="https://rdrr.io/r/base/assign.html" class="external-link">assign()</a></code>,
+<code><a href="https://rdrr.io/r/base/delayedAssign.html" class="external-link">delayedAssign()</a></code>, <code><a href="https://rdrr.io/r/base/get.html" class="external-link">get()</a></code> and
+<code><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists()</a></code>
 </td>
 <td align="center">yes</td>
 <td align="center"></td>
@@ -290,307 +299,348 @@
 </tbody>
 </table>
 <p>For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="st">"hello"</span>)
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">3</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>).
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(x)
-[<span class="dv">1</span>] <span class="dv">3</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(x)
-[<span class="dv">1</span>] <span class="st">"a"</span> <span class="st">"b"</span> <span class="st">"c"</span>
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">3</span>]] &lt;-<span class="st"> </span><span class="kw">toupper</span>(x[[<span class="dv">3</span>]])
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>c
-[<span class="dv">1</span>] <span class="st">"HELLO"</span>
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span>x
-<span class="op">&gt;</span><span class="st"> </span>y<span class="op">$</span>d &lt;-<span class="st"> </span>y<span class="op">$</span>a <span class="op">+</span><span class="st"> </span>y[[<span class="st">"b"</span>]]
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(y)[<span class="dv">2</span>] &lt;-<span class="st"> "a"</span>
-<span class="op">&gt;</span><span class="st"> </span>y<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>y
-A <span class="st">'listenv'</span> vector with <span class="dv">4</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>).
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">identical</span>(y, x)
-[<span class="dv">1</span>] <span class="ot">TRUE</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (ii <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
-<span class="op">+</span><span class="st">     </span><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">"Element %d (%s): %s</span><span class="ch">\n</span><span class="st">"</span>, ii, <span class="kw">sQuote</span>(<span class="kw">names</span>(x)[ii]), 
-<span class="op">+</span><span class="st">         </span>x[[ii]]))
-<span class="op">+</span><span class="st"> </span>}
-Element <span class="dv">1</span> (<span class="st">'a'</span>)<span class="op">:</span><span class="st"> </span><span class="dv">1</span>
-Element <span class="dv">2</span> (<span class="st">'a'</span>)<span class="op">:</span><span class="st"> </span><span class="dv">2</span>
-Element <span class="dv">3</span> (<span class="st">'c'</span>)<span class="op">:</span><span class="st"> </span>HELLO
-Element <span class="dv">4</span> (<span class="st">'d'</span>)<span class="op">:</span><span class="st"> </span><span class="dv">3</span>
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">2</span>, <span class="st">"Hello world!"</span>)
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">4</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>).
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">as.list</span>(x)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(y)
-List of <span class="dv">4</span>
- <span class="op">$</span><span class="st"> </span>a<span class="op">:</span><span class="st"> </span>num <span class="dv">2</span>
- <span class="op">$</span><span class="st"> </span>a<span class="op">:</span><span class="st"> </span>num <span class="dv">2</span>
- <span class="op">$</span><span class="st"> </span>c<span class="op">:</span><span class="st"> </span>chr <span class="st">"Hello world!"</span>
- <span class="op">$</span><span class="st"> </span>d<span class="op">:</span><span class="st"> </span>num <span class="dv">3</span>
-<span class="op">&gt;</span><span class="st"> </span>z &lt;-<span class="st"> </span><span class="kw">as.listenv</span>(y)
-<span class="op">&gt;</span><span class="st"> </span>z
-A <span class="st">'listenv'</span> vector with <span class="dv">4</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>).
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">identical</span>(z, x)
-[<span class="dv">1</span>] <span class="ot">FALSE</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">all.equal</span>(z, x)
-[<span class="dv">1</span>] <span class="ot">TRUE</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="st">"hello"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">3</span> <span class="fu">elements</span> (‘a’, ‘b’, ‘c’).</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">length</span>(x)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(x)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"a"</span> <span class="st">"b"</span> <span class="st">"c"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">3</span>]] <span class="ot">&lt;-</span> <span class="fu">toupper</span>(x[[<span class="dv">3</span>]])</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>c</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"HELLO"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> x</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y<span class="sc">$</span>d <span class="ot">&lt;-</span> y<span class="sc">$</span>a <span class="sc">+</span> y[[<span class="st">"b"</span>]]</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(y)[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="st">"a"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y<span class="sc">$</span>a</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">4</span> <span class="fu">elements</span> (‘a’, ‘a’, ‘c’, ‘d’).</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">identical</span>(y, x)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="cf">for</span> (ii <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Element %d (%s): %s</span><span class="sc">\n</span><span class="st">"</span>, ii, <span class="fu">sQuote</span>(<span class="fu">names</span>(x)[ii]), </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>         x[[ii]]))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">1</span> (‘a’)<span class="sc">:</span> <span class="dv">1</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">2</span> (‘a’)<span class="sc">:</span> <span class="dv">2</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">3</span> (‘c’)<span class="sc">:</span> HELLO</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">4</span> (‘d’)<span class="sc">:</span> <span class="dv">3</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">2</span>, <span class="st">"Hello world!"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">4</span> <span class="fu">elements</span> (‘a’, ‘a’, ‘c’, ‘d’).</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">4</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> a<span class="sc">:</span> num <span class="dv">2</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> a<span class="sc">:</span> num <span class="dv">2</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> c<span class="sc">:</span> chr <span class="st">"Hello world!"</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> d<span class="sc">:</span> num <span class="dv">3</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z <span class="ot">&lt;-</span> <span class="fu">as.listenv</span>(y)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">4</span> <span class="fu">elements</span> (‘a’, ‘a’, ‘c’, ‘d’).</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">identical</span>(z, x)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">all.equal</span>(z, x)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
 </div>
-<div id="creating-list-environments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-list-environments" class="anchor"></a>Creating list environments</h2>
-<p>List environments are created similarly to lists but also similarly to environments. To create an empty list environment, use</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>()
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">0</span> <span class="kw">elements</span> (unnamed).</code></pre></div>
+<div class="section level2">
+<h2 id="creating-list-environments">Creating list environments<a class="anchor" aria-label="anchor" href="#creating-list-environments"></a>
+</h2>
+<p>List environments are created similarly to lists but also similarly
+to environments. To create an empty list environment, use</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">0</span> <span class="fu">elements</span> (unnamed).</span></code></pre></div>
 <p>This can later can be populated using named assignments,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">1</span> <span class="kw">element</span> (<span class="st">'a'</span>).</code></pre></div>
-<p>comparable to how both lists and environments work. Similarly to lists, they can also be populated using indices, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">2</span>]] &lt;-<span class="st"> </span><span class="dv">2</span>
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>c &lt;-<span class="st"> </span><span class="dv">3</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">3</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">''</span>, <span class="st">'c'</span>).</code></pre></div>
-<p>Just as for lists, a list environment is expanded with <code>NULL</code> elements whenever a new element is added that is beyond the current length plus one, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">5</span>]] &lt;-<span class="st"> </span><span class="dv">5</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">5</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">''</span>, <span class="st">'c'</span>, <span class="st">''</span>, <span class="st">''</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">4</span>]]
-<span class="ot">NULL</span></code></pre></div>
-<p>As with lists, the above list environment can also be created from the start, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dv">3</span>, <span class="dt">c =</span> <span class="dv">4</span>, <span class="ot">NULL</span>, <span class="dv">5</span>)
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">5</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">''</span>, <span class="st">'c'</span>, <span class="st">''</span>, <span class="st">''</span>).</code></pre></div>
-<p>As for lists, the length of a list environment can at any time be increased or decreased by assigning it a new length. If decreased, elements are dropped, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">5</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">''</span>, <span class="st">'c'</span>, <span class="st">''</span>, <span class="st">''</span>).
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(x) &lt;-<span class="st"> </span><span class="dv">2</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">2</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">''</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">1</span>]]
-[<span class="dv">1</span>] <span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">2</span>]]
-[<span class="dv">1</span>] <span class="dv">3</span></code></pre></div>
-<p>If increased, new elements are populated with unnamed elements of <code>NULL</code>, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(x) &lt;-<span class="st"> </span><span class="dv">4</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">4</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">''</span>, <span class="st">''</span>, <span class="st">''</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">3</span>]]
-<span class="ot">NULL</span>
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">4</span>]]
-<span class="ot">NULL</span></code></pre></div>
-<p>To allocate an "empty" list environment (with all <code>NULL</code>:s) of a given length, do</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>()
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">length</span>(x) &lt;-<span class="st"> </span><span class="dv">4</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">4</span> <span class="kw">elements</span> (unnamed).</code></pre></div>
-<p><em>Note</em>: Unfortunately, it is <em>not</em> possible to use <code>x &lt;- vector("listenv", length = 4)</code>; that construct is only supported for the basic data types.</p>
-<p>Elements can be dropped by assigning <code>NULL</code>, e.g. to drop the first and third element of a list environment, do:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] &lt;-<span class="st"> </span><span class="ot">NULL</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">2</span> <span class="kw">elements</span> (unnamed).</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">1</span> <span class="fu">element</span> (‘a’).</span></code></pre></div>
+<p>comparable to how both lists and environments work. Similarly to
+lists, they can also be populated using indices, e.g.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">2</span>]] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>c <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">3</span> <span class="fu">elements</span> (‘a’, ‘’, ‘c’).</span></code></pre></div>
+<p>Just as for lists, a list environment is expanded with
+<code>NULL</code> elements whenever a new element is added that is
+beyond the current length plus one, e.g.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">5</span>]] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">5</span> <span class="fu">elements</span> (‘a’, ‘’, ‘c’, ‘’, ‘’).</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">4</span>]]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div>
+<p>As with lists, the above list environment can also be created from
+the start, e.g.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="dv">3</span>, <span class="at">c =</span> <span class="dv">4</span>, <span class="cn">NULL</span>, <span class="dv">5</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">5</span> <span class="fu">elements</span> (‘a’, ‘’, ‘c’, ‘’, ‘’).</span></code></pre></div>
+<p>As for lists, the length of a list environment can at any time be
+increased or decreased by assigning it a new length. If decreased,
+elements are dropped, e.g.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">5</span> <span class="fu">elements</span> (‘a’, ‘’, ‘c’, ‘’, ‘’).</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">length</span>(x) <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">2</span> <span class="fu">elements</span> (‘a’, ‘’).</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">1</span>]]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">2</span>]]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span></code></pre></div>
+<p>If increased, new elements are populated with unnamed elements of
+<code>NULL</code>, e.g.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">length</span>(x) <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">4</span> <span class="fu">elements</span> (‘a’, ‘’, ‘’, ‘’).</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">3</span>]]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">4</span>]]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div>
+<p>To allocate an “empty” list environment (with all
+<code>NULL</code>:s) of a given length, do</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">length</span>(x) <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">4</span> <span class="fu">elements</span> (unnamed).</span></code></pre></div>
+<p><em>Note</em>: Unfortunately, it is <em>not</em> possible to use
+<code>x &lt;- vector("listenv", length = 4)</code>; that construct is
+only supported for the basic data types.</p>
+<p>Elements can be dropped by assigning <code>NULL</code>, e.g. to drop
+the first and third element of a list environment, do:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">2</span> <span class="fu">elements</span> (unnamed).</span></code></pre></div>
 </div>
-<div id="iterating-over-elements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#iterating-over-elements" class="anchor"></a>Iterating over elements</h2>
-<div id="iterating-over-elements-by-names" class="section level3">
-<h3 class="hasAnchor">
-<a href="#iterating-over-elements-by-names" class="anchor"></a>Iterating over elements by names</h3>
-<p>Analogously to lists and plain environments, it is possible to iterate over elements of list environments by the element names. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (name <span class="cf">in</span> <span class="kw">names</span>(x)) {
-<span class="op">+</span><span class="st">     </span><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">"Element %s: %s</span><span class="ch">\n</span><span class="st">"</span>, <span class="kw">sQuote</span>(name), x[[name]]))
-<span class="op">+</span><span class="st"> </span>}
-Element <span class="st">'a'</span><span class="op">:</span><span class="st"> </span><span class="dv">1</span>
-Element <span class="st">'b'</span><span class="op">:</span><span class="st"> </span><span class="dv">2</span>
-Element <span class="st">'c'</span><span class="op">:</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
+<div class="section level2">
+<h2 id="iterating-over-elements">Iterating over elements<a class="anchor" aria-label="anchor" href="#iterating-over-elements"></a>
+</h2>
+<div class="section level3">
+<h3 id="iterating-over-elements-by-names">Iterating over elements by names<a class="anchor" aria-label="anchor" href="#iterating-over-elements-by-names"></a>
+</h3>
+<p>Analogously to lists and plain environments, it is possible to
+iterate over elements of list environments by the element names. For
+example,</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="cf">for</span> (name <span class="cf">in</span> <span class="fu">names</span>(x)) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Element %s: %s</span><span class="sc">\n</span><span class="st">"</span>, <span class="fu">sQuote</span>(name), x[[name]]))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>Element ‘a’<span class="sc">:</span> <span class="dv">1</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>Element ‘b’<span class="sc">:</span> <span class="dv">2</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>Element ‘c’<span class="sc">:</span> <span class="dv">3</span></span></code></pre></div>
 </div>
-<div id="iterating-over-elements-by-indices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#iterating-over-elements-by-indices" class="anchor"></a>Iterating over elements by indices</h3>
-<p>Analogously to lists, but contrary to plain environments, it is also possible to iterate over elements by their indices. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">1</span>, <span class="dt">b =</span> <span class="dv">2</span>, <span class="dt">c =</span> <span class="dv">3</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="cf">for</span> (ii <span class="cf">in</span> <span class="kw">seq_along</span>(x)) {
-<span class="op">+</span><span class="st">     </span><span class="kw">cat</span>(<span class="kw">sprintf</span>(<span class="st">"Element %d: %s</span><span class="ch">\n</span><span class="st">"</span>, ii, x[[ii]]))
-<span class="op">+</span><span class="st"> </span>}
-Element <span class="dv">1</span><span class="op">:</span><span class="st"> </span><span class="dv">1</span>
-Element <span class="dv">2</span><span class="op">:</span><span class="st"> </span><span class="dv">2</span>
-Element <span class="dv">3</span><span class="op">:</span><span class="st"> </span><span class="dv">3</span></code></pre></div>
+<div class="section level3">
+<h3 id="iterating-over-elements-by-indices">Iterating over elements by indices<a class="anchor" aria-label="anchor" href="#iterating-over-elements-by-indices"></a>
+</h3>
+<p>Analogously to lists, but contrary to plain environments, it is also
+possible to iterate over elements by their indices. For example,</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">2</span>, <span class="at">c =</span> <span class="dv">3</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="cf">for</span> (ii <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"Element %d: %s</span><span class="sc">\n</span><span class="st">"</span>, ii, x[[ii]]))</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">1</span><span class="sc">:</span> <span class="dv">1</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">2</span><span class="sc">:</span> <span class="dv">2</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>Element <span class="dv">3</span><span class="sc">:</span> <span class="dv">3</span></span></code></pre></div>
 </div>
 </div>
-<div id="coercion-to-and-from-list-environments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#coercion-to-and-from-list-environments" class="anchor"></a>Coercion to and from list environments</h2>
-<div id="coercing-to-lists-and-vectors" class="section level3">
-<h3 class="hasAnchor">
-<a href="#coercing-to-lists-and-vectors" class="anchor"></a>Coercing to lists and vectors</h3>
+<div class="section level2">
+<h2 id="coercion-to-and-from-list-environments">Coercion to and from list environments<a class="anchor" aria-label="anchor" href="#coercion-to-and-from-list-environments"></a>
+</h2>
+<div class="section level3">
+<h3 id="coercing-to-lists-and-vectors">Coercing to lists and vectors<a class="anchor" aria-label="anchor" href="#coercing-to-lists-and-vectors"></a>
+</h3>
 <p>Coercing a list environment to a list:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">2</span>, <span class="dt">b =</span> <span class="dv">3</span>, <span class="dt">c =</span> <span class="st">"hello"</span>)
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> vector with <span class="dv">3</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>).
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">as.list</span>(x)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">str</span>(y)
-List of <span class="dv">3</span>
- <span class="op">$</span><span class="st"> </span>a<span class="op">:</span><span class="st"> </span>num <span class="dv">2</span>
- <span class="op">$</span><span class="st"> </span>b<span class="op">:</span><span class="st"> </span>num <span class="dv">3</span>
- <span class="op">$</span><span class="st"> </span>c<span class="op">:</span><span class="st"> </span>chr <span class="st">"hello"</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">3</span>, <span class="at">c =</span> <span class="st">"hello"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">3</span> <span class="fu">elements</span> (‘a’, ‘b’, ‘c’).</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(y)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>List of <span class="dv">3</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> a<span class="sc">:</span> num <span class="dv">2</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> b<span class="sc">:</span> num <span class="dv">3</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> c<span class="sc">:</span> chr <span class="st">"hello"</span></span></code></pre></div>
 <p>Coercing a list to a list environment:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>z &lt;-<span class="st"> </span><span class="kw">as.listenv</span>(y)
-<span class="op">&gt;</span><span class="st"> </span>z
-A <span class="st">'listenv'</span> vector with <span class="dv">3</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>).
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">identical</span>(z, x)
-[<span class="dv">1</span>] <span class="ot">FALSE</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">all.equal</span>(z, x)
-[<span class="dv">1</span>] <span class="ot">TRUE</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z <span class="ot">&lt;-</span> <span class="fu">as.listenv</span>(y)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> z</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">3</span> <span class="fu">elements</span> (‘a’, ‘b’, ‘c’).</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">identical</span>(z, x)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">FALSE</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">all.equal</span>(z, x)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="cn">TRUE</span></span></code></pre></div>
 <p>Unlisting:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(x)
-      a       b       c 
-    <span class="st">"2"</span>     <span class="st">"3"</span> <span class="st">"hello"</span> 
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(x[<span class="op">-</span><span class="dv">3</span>])
-a b 
-<span class="dv">2</span> <span class="dv">3</span> 
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(x[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">use.names =</span> <span class="ot">FALSE</span>)
-[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">3</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unlist</span>(x)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>      a       b       c </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"2"</span>     <span class="st">"3"</span> <span class="st">"hello"</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unlist</span>(x[<span class="sc">-</span><span class="dv">3</span>])</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>a b </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="dv">3</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unlist</span>(x[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">use.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">2</span> <span class="dv">3</span></span></code></pre></div>
 </div>
 </div>
-<div id="multi-dimensional-list-environments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#multi-dimensional-list-environments" class="anchor"></a>Multi-dimensional list environments</h2>
-<p>Analogously to lists, and contrary to plain environments, list environments can have dimensions with corresponding names. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">as.listenv</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">dimnames</span>(x) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span class="kw">elements</span> (unnamed) arranged <span class="cf">in</span> 2x3 <span class="kw">rows</span> (<span class="st">'a'</span>, <span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>).</code></pre></div>
-<p>An easy way to quickly get an overview is to coerce to a list, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">as.list</span>(x)
-  A B C
-a <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span>
-b <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span></code></pre></div>
-<p>Individual elements of a list environment can be accessed using standard subsetting syntax, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[[<span class="st">"a"</span>, <span class="st">"B"</span>]]
-[<span class="dv">1</span>] <span class="dv">3</span>
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">1</span>, <span class="dv">2</span>]]
-[<span class="dv">1</span>] <span class="dv">3</span>
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="dv">1</span>, <span class="st">"B"</span>]]
-[<span class="dv">1</span>] <span class="dv">3</span></code></pre></div>
+<div class="section level2">
+<h2 id="multi-dimensional-list-environments">Multi-dimensional list environments<a class="anchor" aria-label="anchor" href="#multi-dimensional-list-environments"></a>
+</h2>
+<p>Analogously to lists, and contrary to plain environments, list
+environments can have dimensions with corresponding names. For
+example,</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">as.listenv</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(x) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dimnames</span>(x) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">6</span> <span class="fu">elements</span> (unnamed) arranged <span class="cf">in</span> 2x3 <span class="fu">rows</span> (‘a’, ‘b’) and <span class="fu">columns</span> (‘A’, ‘B’, ‘C’).</span></code></pre></div>
+<p>An easy way to quickly get an overview is to coerce to a list,
+e.g.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  A B C</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>a <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>b <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span></span></code></pre></div>
+<p>Individual elements of a list environment can be accessed using
+standard subsetting syntax, e.g.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="st">"a"</span>, <span class="st">"B"</span>]]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">1</span>, <span class="dv">2</span>]]</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="dv">1</span>, <span class="st">"B"</span>]]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">3</span></span></code></pre></div>
 <p>We can assign individual elements similarly, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[[<span class="st">"b"</span>, <span class="st">"B"</span>]] &lt;-<span class="st"> </span><span class="op">-</span>x[[<span class="st">"b"</span>, <span class="st">"B"</span>]]
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">as.list</span>(x)
-  A B  C
-a <span class="dv">1</span> <span class="dv">3</span>  <span class="dv">5</span>
-b <span class="dv">2</span> <span class="dv">-4</span> <span class="dv">6</span></code></pre></div>
-<p>We can also assign multiple elements through dimensional subsetting, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[<span class="dv">2</span>, <span class="dv">-1</span>] &lt;-<span class="st"> </span><span class="dv">98</span><span class="op">:</span><span class="dv">99</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">as.list</span>(x)
-  A B  C 
-a <span class="dv">1</span> <span class="dv">3</span>  <span class="dv">5</span> 
-b <span class="dv">2</span> <span class="dv">98</span> <span class="dv">99</span>
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="st">"a"</span>, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dv">97</span>, <span class="st">"foo"</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">as.list</span>(x)
-  A  B  C    
-a <span class="dv">97</span> <span class="dv">3</span>  <span class="st">"foo"</span>
-b <span class="dv">2</span>  <span class="dv">98</span> <span class="dv">99</span>   
-<span class="op">&gt;</span><span class="st"> </span>x[] &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">6</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">as.list</span>(x)
-  A B C
-a <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span>
-b <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span></code></pre></div>
-<p>Concurrently with dimensional names it is possible to have names of the individual elements just as for list environments without dimensions. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(x) &lt;-<span class="st"> </span>letters[<span class="kw">seq_along</span>(x)]
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, ..., <span class="st">'f'</span>) arranged <span class="cf">in</span> 2x3 <span class="kw">rows</span> (<span class="st">'a'</span>, <span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="st">"a"</span>]]
-[<span class="dv">1</span>] <span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>x[[<span class="st">"f"</span>]]
-[<span class="dv">1</span>] <span class="dv">6</span>
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="kw">c</span>(<span class="st">"a"</span>, <span class="st">"f"</span>)]
-A <span class="st">'listenv'</span> vector with <span class="dv">2</span> <span class="kw">elements</span> (<span class="st">'a'</span>, <span class="st">'f'</span>).
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">unlist</span>(x)
-a b c d e f 
-<span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> 
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">as.list</span>(x)
-  A B C
-a <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span>
-b <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span>
-<span class="kw">attr</span>(,<span class="st">"names"</span>)
-[<span class="dv">1</span>] <span class="st">"a"</span> <span class="st">"b"</span> <span class="st">"c"</span> <span class="st">"d"</span> <span class="st">"e"</span> <span class="st">"f"</span></code></pre></div>
-<p>Contrary to lists, element names are preserved also with multi-dimensional subsetting, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[<span class="dv">1</span>, <span class="dv">2</span>]
-A <span class="st">'listenv'</span> vector with <span class="dv">1</span> <span class="kw">element</span> (<span class="st">'c'</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="dv">1</span>, <span class="dv">2</span>, drop =<span class="st"> </span><span class="ot">FALSE</span>]
-A <span class="st">'listenv'</span> matrix with <span class="dv">1</span> <span class="kw">element</span> (<span class="st">'c'</span>) arranged <span class="cf">in</span> 1x1 <span class="kw">rows</span> (<span class="st">'a'</span>) and <span class="kw">columns</span> (<span class="st">'B'</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">1</span>]
-A <span class="st">'listenv'</span> matrix with <span class="dv">4</span> <span class="kw">elements</span> (<span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>) arranged <span class="cf">in</span> 2x2 <span class="kw">rows</span> (<span class="st">'a'</span>, <span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'B'</span>, <span class="st">'A'</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="dv">2</span>, ]
-A <span class="st">'listenv'</span> vector with <span class="dv">3</span> <span class="kw">elements</span> (<span class="st">'b'</span>, <span class="st">'d'</span>, <span class="st">'f'</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="dv">2</span>, , drop =<span class="st"> </span><span class="ot">FALSE</span>]
-A <span class="st">'listenv'</span> matrix with <span class="dv">3</span> <span class="kw">elements</span> (<span class="st">'b'</span>, <span class="st">'d'</span>, <span class="st">'f'</span>) arranged <span class="cf">in</span> 1x3 <span class="kw">rows</span> (<span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>).
-<span class="op">&gt;</span><span class="st"> </span>x[<span class="st">"b"</span>, <span class="dv">-2</span>, drop =<span class="st"> </span><span class="ot">FALSE</span>]
-A <span class="st">'listenv'</span> matrix with <span class="dv">2</span> <span class="kw">elements</span> (<span class="st">'b'</span>, <span class="st">'f'</span>) arranged <span class="cf">in</span> 1x2 <span class="kw">rows</span> (<span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'A'</span>, <span class="st">'C'</span>).</code></pre></div>
-<p>Note, whenever dimensions are set using <code>dim(x) &lt;- dims</code> both the dimensional names and the element names are removed, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="ot">NULL</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">names</span>(x)
-<span class="ot">NULL</span></code></pre></div>
-<p>This behavior is by design, cf. <code><a href="https://rdrr.io/r/base/dim.html">help("dim", package="base")</a></code>.</p>
-<p>To allocate an "empty" list environment array (with all <code>NULL</code>:s) of a given dimension, do</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>()
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">dimnames</span>(x) &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="kw">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span class="kw">elements</span> (unnamed) arranged <span class="cf">in</span> 2x3 <span class="kw">rows</span> (<span class="st">'a'</span>, <span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>).</code></pre></div>
-<p>Rows and columns can be dropped by assigning <code>NULL</code>, e.g. to drop the first and third column of a list-environment matrix, do:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] &lt;-<span class="st"> </span><span class="ot">NULL</span>
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> matrix with <span class="dv">2</span> <span class="kw">elements</span> (unnamed) arranged <span class="cf">in</span> 2x1 <span class="kw">rows</span> (<span class="st">'a'</span>, <span class="st">'b'</span>) and <span class="kw">columns</span> (<span class="st">'B'</span>).</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="st">"b"</span>, <span class="st">"B"</span>]] <span class="ot">&lt;-</span> <span class="sc">-</span>x[[<span class="st">"b"</span>, <span class="st">"B"</span>]]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  A B  C</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>a <span class="dv">1</span> <span class="dv">3</span>  <span class="dv">5</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>b <span class="dv">2</span> <span class="sc">-</span><span class="dv">4</span> <span class="dv">6</span></span></code></pre></div>
+<p>We can also assign multiple elements through dimensional subsetting,
+e.g.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">98</span><span class="sc">:</span><span class="dv">99</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  A B  C </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>a <span class="dv">1</span> <span class="dv">3</span>  <span class="dv">5</span> </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>b <span class="dv">2</span> <span class="dv">98</span> <span class="dv">99</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="st">"a"</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">97</span>, <span class="st">"foo"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  A  B  C    </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>a <span class="dv">97</span> <span class="dv">3</span>  <span class="st">"foo"</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>b <span class="dv">2</span>  <span class="dv">98</span> <span class="dv">99</span>   </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[] <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  A B C</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>a <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>b <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span></span></code></pre></div>
+<p>Concurrently with dimensional names it is possible to have names of
+the individual elements just as for list environments without
+dimensions. For example,</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(x) <span class="ot">&lt;-</span> letters[<span class="fu">seq_along</span>(x)]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">6</span> <span class="fu">elements</span> (‘a’, ‘b’, ‘c’, ..., ‘f’) arranged <span class="cf">in</span> 2x3 <span class="fu">rows</span> (‘a’, ‘b’) and <span class="fu">columns</span> (‘A’, ‘B’, ‘C’).</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="st">"a"</span>]]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[[<span class="st">"f"</span>]]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">6</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"f"</span>)]</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">2</span> <span class="fu">elements</span> (‘a’, ‘f’).</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">unlist</span>(x)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>a b c d e f </span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">2</span> <span class="dv">3</span> <span class="dv">4</span> <span class="dv">5</span> <span class="dv">6</span> </span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">as.list</span>(x)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>  A B C</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>a <span class="dv">1</span> <span class="dv">3</span> <span class="dv">5</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>b <span class="dv">2</span> <span class="dv">4</span> <span class="dv">6</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"names"</span>)</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"a"</span> <span class="st">"b"</span> <span class="st">"c"</span> <span class="st">"d"</span> <span class="st">"e"</span> <span class="st">"f"</span></span></code></pre></div>
+<p>Contrary to lists, element names are preserved also with
+multi-dimensional subsetting, e.g.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">1</span> <span class="fu">element</span> (‘c’).</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="dv">1</span>, <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">1</span> <span class="fu">element</span> (‘c’) arranged <span class="cf">in</span> 1x1 <span class="fu">rows</span> (‘a’) and <span class="fu">columns</span> (‘B’).</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">4</span> <span class="fu">elements</span> (‘c’, ‘d’, ‘a’, ‘b’) arranged <span class="cf">in</span> 2x2 <span class="fu">rows</span> (‘a’, ‘b’) and <span class="fu">columns</span> (‘B’, ‘A’).</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="dv">2</span>, ]</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ vector with <span class="dv">3</span> <span class="fu">elements</span> (‘b’, ‘d’, ‘f’).</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="dv">2</span>, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">3</span> <span class="fu">elements</span> (‘b’, ‘d’, ‘f’) arranged <span class="cf">in</span> 1x3 <span class="fu">rows</span> (‘b’) and <span class="fu">columns</span> (‘A’, ‘B’, ‘C’).</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[<span class="st">"b"</span>, <span class="sc">-</span><span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">2</span> <span class="fu">elements</span> (‘b’, ‘f’) arranged <span class="cf">in</span> 1x2 <span class="fu">rows</span> (‘b’) and <span class="fu">columns</span> (‘A’, ‘C’).</span></code></pre></div>
+<p>Note, whenever dimensions are set using
+<code>dim(x) &lt;- dims</code> both the dimensional names and the
+element names are removed, e.g.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(x) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">names</span>(x)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code></pre></div>
+<p>This behavior is by design,
+cf. <code><a href="https://rdrr.io/r/base/dim.html" class="external-link">help("dim", package="base")</a></code>.</p>
+<p>To allocate an “empty” list environment array (with all
+<code>NULL</code>:s) of a given dimension, do</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>()</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(x) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dimnames</span>(x) <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>))</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">6</span> <span class="fu">elements</span> (unnamed) arranged <span class="cf">in</span> 2x3 <span class="fu">rows</span> (‘a’, ‘b’) and <span class="fu">columns</span> (‘A’, ‘B’, ‘C’).</span></code></pre></div>
+<p>Rows and columns can be dropped by assigning <code>NULL</code>,
+e.g. to drop the first and third column of a list-environment matrix,
+do:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)] <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">2</span> <span class="fu">elements</span> (unnamed) arranged <span class="cf">in</span> 2x1 <span class="fu">rows</span> (‘a’, ‘b’) and <span class="fu">columns</span> (‘B’).</span></code></pre></div>
 </div>
-<div id="important-about-environments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#important-about-environments" class="anchor"></a>Important about environments</h2>
-<p>List environments are as their name suggests <em>environments</em>. Whenever working with environments in R, it is important to understand that <em>environments are mutable</em> whereas all other of the basic data types in R are immutable. For example, consider the following function that assigns zero to element <code>a</code> of object <code>x</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>setA &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
-<span class="op">+</span><span class="st">     </span>x<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">0</span>
-<span class="op">+</span><span class="st">     </span>x
-<span class="op">+</span><span class="st"> </span>}</code></pre></div>
+<div class="section level2">
+<h2 id="important-about-environments">Important about environments<a class="anchor" aria-label="anchor" href="#important-about-environments"></a>
+</h2>
+<p>List environments are as their name suggests <em>environments</em>.
+Whenever working with environments in R, it is important to understand
+that <em>environments are mutable</em> whereas all other of the basic
+data types in R are immutable. For example, consider the following
+function that assigns zero to element <code>a</code> of object
+<code>x</code>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> setA <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     x<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span>     x</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> }</span></code></pre></div>
 <p>If we pass a regular list to this function,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">1</span>)
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">setA</span>(x)
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>y<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">0</span></code></pre></div>
-<p>we see that <code>x</code> is unaffected by the assignment. This is because <em>lists are immutable</em> in R. However, if we pass an environment instead,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">new.env</span>()
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>a &lt;-<span class="st"> </span><span class="dv">1</span>
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">setA</span>(x)
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">0</span>
-<span class="op">&gt;</span><span class="st"> </span>y<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">0</span></code></pre></div>
-<p>we find that <code>x</code> was affected by the assignment. This is because <em>environments are mutable</em> in R. Since list environments inherits from environments, this also goes for them, e.g.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">1</span>)
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span><span class="kw">setA</span>(x)
-<span class="op">&gt;</span><span class="st"> </span>x<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">0</span>
-<span class="op">&gt;</span><span class="st"> </span>y<span class="op">$</span>a
-[<span class="dv">1</span>] <span class="dv">0</span></code></pre></div>
-<p>What is also important to understand is that it is not just the <em>content</em> of an environment that is mutable but also its <em>attributes</em>. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">listenv</span>(<span class="dt">a =</span> <span class="dv">1</span>)
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span>x
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">attr</span>(y, <span class="st">"foo"</span>) &lt;-<span class="st"> "Hello!"</span>
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">attr</span>(x, <span class="st">"foo"</span>)
-[<span class="dv">1</span>] <span class="st">"Hello!"</span></code></pre></div>
-<p>More importantly, since dimensions and their names are also attributes, this also means they are mutable. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="op">&gt;</span><span class="st"> </span>x &lt;-<span class="st"> </span><span class="kw">as.listenv</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(x) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span class="kw">elements</span> (unnamed) arranged <span class="cf">in</span> 2x3 unnamed rows and columns.
-<span class="op">&gt;</span><span class="st"> </span>y &lt;-<span class="st"> </span>x
-<span class="op">&gt;</span><span class="st"> </span><span class="kw">dim</span>(y) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>)
-<span class="op">&gt;</span><span class="st"> </span>x
-A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span class="kw">elements</span> (unnamed) arranged <span class="cf">in</span> 3x2 unnamed rows and columns.</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">setA</span>(x)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">1</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y<span class="sc">$</span>a</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span></code></pre></div>
+<p>we see that <code>x</code> is unaffected by the assignment. This is
+because <em>lists are immutable</em> in R. However, if we pass an
+environment instead,</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">new.env</span>()</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">setA</span>(x)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y<span class="sc">$</span>a</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span></code></pre></div>
+<p>we find that <code>x</code> was affected by the assignment. This is
+because <em>environments are mutable</em> in R. Since list environments
+inherits from environments, this also goes for them, e.g.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">1</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> <span class="fu">setA</span>(x)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x<span class="sc">$</span>a</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y<span class="sc">$</span>a</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">0</span></span></code></pre></div>
+<p>What is also important to understand is that it is not just the
+<em>content</em> of an environment that is mutable but also its
+<em>attributes</em>. For example,</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">listenv</span>(<span class="at">a =</span> <span class="dv">1</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> x</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(y, <span class="st">"foo"</span>) <span class="ot">&lt;-</span> <span class="st">"Hello!"</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">attr</span>(x, <span class="st">"foo"</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"Hello!"</span></span></code></pre></div>
+<p>More importantly, since dimensions and their names are also
+attributes, this also means they are mutable. For example,</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x <span class="ot">&lt;-</span> <span class="fu">as.listenv</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(x) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">6</span> <span class="fu">elements</span> (unnamed) arranged <span class="cf">in</span> 2x3 unnamed rows and columns.</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> y <span class="ot">&lt;-</span> x</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">dim</span>(y) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> x</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>A ‘listenv’ matrix with <span class="dv">6</span> <span class="fu">elements</span> (unnamed) arranged <span class="cf">in</span> 3x2 unnamed rows and columns.</span></code></pre></div>
 <hr>
 <p>Copyright Henrik Bengtsson, 2015-2018</p>
 </div>
@@ -607,11 +657,13 @@ A <span class="st">'listenv'</span> matrix with <span class="dv">6</span> <span 
 
 
       <footer><div class="copyright">
-  <p>Developed by Henrik Bengtsson.</p>
+  <p></p>
+<p>Developed by Henrik Bengtsson.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1 and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9002.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6</p> and <a href="https://github.com/HenrikBengtsson/pkgdown.extras/">pkgdown.extras</a> 0.0.0.9004.</p>
 </div>
 
       </footer>
