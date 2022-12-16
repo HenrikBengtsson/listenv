@@ -1,55 +1,88 @@
-# CRAN submission listenv 0.8.0
+# CRAN submission listenv 0.9.0
 
-on 2019-12-05
+on 2022-12-15
 
-I've verified that this submission does not cause issues for any of the 10 reverse package dependencies available on CRAN and Bioconductor.
+I've verified this submission has no negative impact on any of the 12 reverse package dependencies available on CRAN (n = 11) and Bioconductor (n = 1).
 
-Thanks in advance
+Thank you
 
 
 ## Notes not sent to CRAN
 
-### R CMD check --as-cran validation
+### R CMD check validation
 
 The package has been verified using `R CMD check --as-cran` on:
 
-* Platform x86_64-apple-darwin15.6.0 (64-bit) [Travis CI]:
-  - R version 3.5.3 (2019-03-11)
-  - R version 3.6.1 (2019-07-05)
+| R version | GitHub | R-hub  | mac/win-builder |
+| --------- | ------ | ------ | --------------- |
+| 3.4.x     | L      |        |                 |
+| 3.6.x     | L      |        |                 |
+| 4.0.x     | L      |        |                 |
+| 4.1.x     | L M W  |   M    |                 |
+| 4.2.x     | L M W  | L   W  | M1 W            |
+| devel     | L M W  | L      | M1 W            |
 
-* Platform x86_64-unknown-linux-gnu (64-bit) [Travis CI]:
-  - R version 3.5.3 (2017-01-27) [sic!]
-  - R version 3.6.1 (2017-01-27) [sic!]
-  - R Under development (unstable) (2019-12-03 r77509)
+_Legend: OS: L = Linux, M = macOS, M1 = macOS M1, W = Windows_
 
-* Platform x86_64-pc-linux-gnu (64-bit):
-  - R version 3.1.2 (2014-10-31)
-  - R version 3.2.0 (2015-04-16)
-  - R version 3.4.0 (2017-04-21)
-  - R version 3.6.0 (2019-04-26)
-  - R version 3.6.1 (2019-07-05)
 
-* Platform x86_64-pc-linux-gnu (64-bit) [r-hub]:
-  - R version 3.6.1 (2019-07-05)
-  - R Under development (unstable) (2019-12-01 r77489)
+R-hub checks:
 
-* Platform i686-pc-linux-gnu (32-bit):
-  - R version 3.4.4 (2018-03-15)
-  - R version 3.6.1 (2019-07-05)
+```r
+res <- rhub::check(platforms = c(
+  "debian-clang-devel", 
+  "fedora-gcc-devel",
+  "debian-gcc-patched", 
+  "macos-highsierra-release-cran",
+  "windows-x86_64-release"
+))
+print(res)
+```
 
-* Platform i386-pc-solaris2.10 (32-bit) [r-hub]:
-  - R version 3.6.0 (2019-04-26)
+gives
 
-* Platform x86_64-w64-mingw32 (64-bit) [r-hub]:
-  - R Under development (unstable) (2019-11-08 r77393)
+```
+── listenv 0.9.0: OK
 
-* Platform i386-w64-mingw32 (32-bit) [Appveyor CI]:
-  - R Under development (unstable) (2019-12-02 r77499)
+  Build ID:   listenv_0.9.0.tar.gz-356a259e31d9443bad573242d36c654e
+  Platform:   Debian Linux, R-devel, clang, ISO-8859-15 locale
+  Submitted:  14m 23.9s ago
+  Build time: 14m 19.9s
 
-* Platform x86_64-w64-mingw32/x64 (64-bit) [Appveyor CI]:
-  - R version 3.6.1 (2019-07-05)
-  - R Under development (unstable) (2019-12-02 r77499)
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
-* Platform x86_64-w64-mingw32/x64 (64-bit) [win-builder]:
-  - R version 3.6.1 (2019-07-05)
-  - R Under development (unstable) (2019-12-02 r77499)
+── listenv 0.9.0: OK
+
+  Build ID:   listenv_0.9.0.tar.gz-aebda834c36644c788e89d6a7912bc36
+  Platform:   Fedora Linux, R-devel, GCC
+  Submitted:  14m 24s ago
+  Build time: 9m 28.1s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+── listenv 0.9.0: OK
+
+  Build ID:   listenv_0.9.0.tar.gz-b767e683e28d41a18da2e84adb2240ee
+  Platform:   Debian Linux, R-patched, GCC
+  Submitted:  14m 24s ago
+  Build time: 13m 47.5s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+── listenv 0.9.0: OK
+
+  Build ID:   listenv_0.9.0.tar.gz-5193cf31830b48c28f8fcc14739d3694
+  Platform:   macOS 10.13.6 High Sierra, R-release, CRAN's setup
+  Submitted:  14m 24s ago
+  Build time: 1m 40s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+
+── listenv 0.9.0: OK
+
+  Build ID:   listenv_0.9.0.tar.gz-ee73618b5f5a4b2c89033e6443f3cf17
+  Platform:   Windows Server 2022, R-release, 32/64 bit
+  Submitted:  14m 24s ago
+  Build time: 1m 41.6s
+
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+```
