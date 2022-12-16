@@ -170,7 +170,11 @@ mapping <- function(x, ...) {
 #' @export
 #' @keywords internal
 map <- function(x, ...) {
-  .Deprecated("mapping()", package = .packageName)
+  dfcn <- switch(Sys.getenv("R_LISTENV_MAP_DEPRECATED", "deprecated"),
+    defunct = .Defunct,
+              .Deprecated
+  )
+  dfcn(new = "listenv::mapping()", package = .packageName)
   mapping(x)
 }
 
