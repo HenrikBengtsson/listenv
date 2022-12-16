@@ -20,6 +20,129 @@ Run `revdep_details(, "aroma.core")` for more info
       'sfit', 'expectile', 'HaarSeg', 'mpcbs'
     ```
 
+# future.apply
+
+<details>
+
+* Version: 1.10.0
+* GitHub: https://github.com/HenrikBengtsson/future.apply
+* Source code: https://github.com/cran/future.apply
+* Date/Publication: 2022-11-05 08:50:02 UTC
+* Number of recursive dependencies: 15
+
+Run `revdep_details(, "future.apply")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ...
+    ```
+      Running ‘fold.R’
+      Running ‘future_apply.R’
+      Running ‘future_by.R’
+      Running ‘future_eapply.R’
+      Running ‘future_lapply,RNG.R’
+      Running ‘future_lapply,globals.R’
+      Running ‘future_lapply.R’
+     ERROR
+    Running the tests in ‘tests/future_lapply.R’ failed.
+    Last 50 lines of output:
+    ...
+      A 'listenv' vector with 1 element ('A').
+      
+      $b
+      A 'listenv' vector with 2 elements ('A', 'B').
+      
+      > y_c <- lapply(x_c, FUN = listenv::map)
+      Error: 'FUN' is defunct.
+      Use 'listenv::mapping()' instead.
+      See help("Defunct") and help("listenv-defunct").
+      Execution halted
+    ```
+
+# future.batchtools
+
+<details>
+
+* Version: 0.11.0
+* GitHub: https://github.com/HenrikBengtsson/future.batchtools
+* Source code: https://github.com/cran/future.batchtools
+* Date/Publication: 2022-12-14 21:40:03 UTC
+* Number of recursive dependencies: 38
+
+Run `revdep_details(, "future.batchtools")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ...
+    ```
+      Running ‘BatchtoolsFuture,gc.R’
+      Running ‘BatchtoolsFuture.R’
+      Running ‘BatchtoolsFutureError.R’
+      Running ‘batchtools_custom.R’
+      Running ‘batchtools_hpc.R’
+      Running ‘batchtools_interactive.R’
+      Running ‘batchtools_local.R’
+      Running ‘batchtools_multicore.R’
+      Running ‘batchtools_ssh.R’
+      Running ‘batchtools_template.R’
+    ...
+      
+      $b
+      A 'listenv' vector with 2 elements ('A', 'B').
+      
+      > 
+      > y0 <- lapply(x, FUN = listenv::map)
+      Error: 'FUN' is defunct.
+      Use 'listenv::mapping()' instead.
+      See help("Defunct") and help("listenv-defunct").
+      Execution halted
+    ```
+
+# future.callr
+
+<details>
+
+* Version: 0.8.1
+* GitHub: https://github.com/HenrikBengtsson/future.callr
+* Source code: https://github.com/cran/future.callr
+* Date/Publication: 2022-12-14 17:10:09 UTC
+* Number of recursive dependencies: 20
+
+Run `revdep_details(, "future.callr")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ...
+    ```
+      Running ‘CallrFuture.R’
+      Running ‘callr,launch-failure.R’
+      Running ‘callr.R’
+      Running ‘demo.R’
+      Running ‘dotdotdot.R’
+      Running ‘future,labels.R’
+      Running ‘future,lazy.R’
+      Running ‘globals,formulas.R’
+      Running ‘globals,manual.R’
+      Running ‘globals,subassignment.R’
+    ...
+      
+      $b
+      A 'listenv' vector with 2 elements ('A', 'B').
+      
+      > 
+      > y0 <- lapply(x, FUN = listenv::map)
+      Error: 'FUN' is defunct.
+      Use 'listenv::mapping()' instead.
+      See help("Defunct") and help("listenv-defunct").
+      Execution halted
+    ```
+
 # greed
 
 <details>

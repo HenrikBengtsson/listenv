@@ -295,8 +295,13 @@ stopifnot(inherits(res, "error"))
 res <- try(target <- parse_env_subset(x[[0]], substitute = TRUE), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
 
+## Invalid variable name
 res <- try(target <- parse_env_subset("_a", substitute = TRUE), silent = TRUE)
 stopifnot(inherits(res, "try-error"))
+
+## Don't check variable name
+target <- parse_env_subset("_a", substitute = TRUE, is_variable = FALSE)
+stopifnot(is.list(target))
 
 res <- try(target <- parse_env_subset(1:10, envir = x, substitute = FALSE),
            silent = TRUE)

@@ -1,37 +1,40 @@
 # Platform
 
-|field    |value                        |
-|:--------|:----------------------------|
-|version  |R version 3.6.1 (2019-07-05) |
-|os       |Ubuntu 18.04.3 LTS           |
-|system   |x86_64, linux-gnu            |
-|ui       |X11                          |
-|language |en                           |
-|collate  |en_US.UTF-8                  |
-|ctype    |en_US.UTF-8                  |
-|tz       |America/Los_Angeles          |
-|date     |2019-12-05                   |
+|field    |value                                                       |
+|:--------|:-----------------------------------------------------------|
+|version  |R version 4.2.2 (2022-10-31)                                |
+|os       |CentOS Linux 7 (Core)                                       |
+|system   |x86_64, linux-gnu                                           |
+|ui       |X11                                                         |
+|language |en                                                          |
+|collate  |en_US.UTF-8                                                 |
+|ctype    |en_US.UTF-8                                                 |
+|tz       |America/Los_Angeles                                         |
+|date     |2022-12-15                                                  |
+|pandoc   |2.19.2 @ /software/c4/cbi/software/pandoc-2.19.2/bin/pandoc |
 
 # Dependencies
 
-|package |old   |new   |Δ  |
-|:-------|:-----|:-----|:--|
-|listenv |0.7.0 |0.8.0 |*  |
+|package |old   |new        |Δ  |
+|:-------|:-----|:----------|:--|
+|listenv |0.8.0 |0.8.0-9003 |*  |
 
 # Revdeps
 
-## All (10)
+## All (12)
 
-|package                                         |version |error |warning |note |
-|:-----------------------------------------------|:-------|:-----|:-------|:----|
-|[aroma.affymetrix](problems.md#aromaaffymetrix) |3.2.0   |      |        |2    |
-|[aroma.core](problems.md#aromacore)             |3.2.0   |      |        |2    |
-|furrr                                           |0.1.0   |      |        |     |
-|future                                          |1.15.1  |      |        |     |
-|future.apply                                    |1.3.0   |      |        |     |
-|future.BatchJobs                                |0.16.2  |      |        |     |
-|future.batchtools                               |0.8.1   |      |        |     |
-|future.callr                                    |0.5.0   |      |        |     |
-|origami                                         |1.0.1   |      |        |     |
-|PSCBS                                           |0.65.0  |      |        |     |
+|package           |version |error |warning |note |
+|:-----------------|:-------|:-----|:-------|:----|
+|aroma.affymetrix  |3.2.1   |      |        |     |
+|[aroma.core](problems.md#aromacore)|3.3.0   |      |        |1    |
+|furrr             |0.3.1   |      |        |     |
+|future            |1.30.0  |      |        |     |
+|future.apply      |1.10.0  |      |        |     |
+|future.batchtools |0.11.0  |      |        |     |
+|future.callr      |0.8.1   |      |        |     |
+|[greed](problems.md#greed)|0.6.1   |      |        |2    |
+|origami           |1.0.7   |      |        |     |
+|PCRedux           |1.1-2   |      |        |     |
+|PSCBS             |0.66.0  |      |        |     |
+|[signeR](problems.md#signer)|2.0.1   |      |        |3    |
 

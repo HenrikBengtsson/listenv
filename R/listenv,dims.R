@@ -53,7 +53,7 @@ dim.listenv <- function(x) attr(x, "dim.", exact = TRUE)
     nas <- which(is.na(value))
     if (length(nas) > 0) {
       if (length(nas) > 1) {
-        stop("Argument 'value' may only have one NA: ",
+        stopf("Argument 'value' may only have one NA: %s",
              sprintf("c(%s)", paste(value, collapse = ", ")))
       }
       value[nas] <- as.integer(length(x) / prod(value[-nas]))

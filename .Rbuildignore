@@ -3,11 +3,15 @@
 #----------------------------
 ^.svn
 ^.git
+^.github
 ^.make
 ^INSTALL[.]md$
 ^OVERVIEW[.]md$
 ^README[.]md$
 ^CONDUCT[.]md$
+^CONTRIBUTING[.]md$
+^docs
+^pkgdown
 
 #----------------------------
 # devtools
@@ -53,6 +57,6 @@ Rplots.pdf$
 #----------------------------
 # Miscellaneous
 #----------------------------
-^.ghi
-^.issues
-
+^[.]ghi
+^[.]issues
+^[.]local

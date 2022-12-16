@@ -2,7 +2,6 @@ library("listenv")
 
 ovars <- ls(envir = globalenv())
 oopts <- options(warn = 1)
-map <- listenv:::map
 
 message("* get_variable() - multi-dimensional list environments ...")
 

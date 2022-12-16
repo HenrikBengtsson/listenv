@@ -1,0 +1,287 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: listenv 0.8.0-9000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-04 15:25-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: aperm.R:36
+msgid "Argument 'a' must be a matrix or an array"
+msgstr ""
+
+#: aperm.R:41
+msgid "Length of argument 'perm' does not match the dimension of 'a': %s != %s"
+msgstr ""
+
+#: aperm.R:45
+msgid "Argument 'perm' specified dimensions out of range"
+msgstr ""
+
+#: aperm.R:49
+msgid "Argument 'perm' must not contain duplicates"
+msgstr ""
+
+#: aperm.R:93
+msgid "Argument 'x' is not a matrix"
+msgstr ""
+
+#: get_variable.R:24
+msgid "Subscript must be a name or an index: %s"
+msgstr ""
+
+#: get_variable.R:30
+msgid "Subscript must be a scalar: %s"
+msgstr ""
+
+#: get_variable.R:35
+msgid ""
+"Subscript must be a scalar or of equal length to the number of dimension ("
+"%d): %d"
+msgstr ""
+
+#: get_variable.R:42
+msgid "Unknown (NA) index detected"
+msgstr ""
+
+#: get_variable.R:46
+msgid "Index #%d out of range [1,%d]: %s"
+msgstr ""
+
+#: get_variable.R:62
+msgid "No such %s element: %s"
+msgstr ""
+
+#: listenv,dims.R:15
+msgid ""
+"Cannot set dimension to c(%s) because its length do not match the length of "
+"the object: %d != %s"
+msgstr ""
+
+#: listenv,dims.R:56
+msgid "Argument 'value' may only have one NA: %s"
+msgstr ""
+
+#: listenv,dims.R:74
+msgid "'dimnames' applied to non-array"
+msgstr ""
+
+#: listenv,dims.R:81
+msgid ""
+"Length of 'dimnames' for dimension #%d not equal to array extent: %d != %d"
+msgstr ""
+
+#: listenv.R:211
+msgid "Cannot set a negative length: %s"
+msgstr ""
+
+#: listenv.R:252
+msgid "The number of names does not match the number of elements: %s != %s"
+msgstr ""
+
+#: listenv.R:356
+msgid "Incorrect number of dimensions: %d != %d"
+msgstr ""
+
+#: listenv.R:374 parse_env_subset.R:185
+msgid "Unknown names for dimension #%d: %s"
+msgstr ""
+
+#: listenv.R:381
+msgid "Logical subscript for dimension #%d too long: %d > %d"
+msgstr ""
+
+#: listenv.R:389
+msgid "Subscript for dimension #%d out of bounds [%d,%d]"
+msgstr ""
+
+#: listenv.R:394 parse_env_subset.R:205
+msgid "Only 0's may be mixed with negative subscripts (dimension #%d)"
+msgstr ""
+
+#: listenv.R:402
+msgid "Invalid subscript type for dimension #%d: %s"
+msgstr ""
+
+#: listenv.R:424
+msgid "INTERNAL ERROR: Incompatible dimensions: %d != %d"
+msgstr ""
+
+#: listenv.R:459
+msgid ""
+"Subsetting of more than one element at the time is not allowed for "
+"listenv's: %s"
+msgstr ""
+
+#: listenv.R:463
+msgid "Subscript out of bounds [%d,%d]: %d"
+msgstr ""
+
+#: listenv.R:488 listenv.R:843
+msgid "Incorrect subsetting. Expected %d dimensions but got %d"
+msgstr ""
+
+#: listenv.R:540 parse_env_subset.R:246
+msgid "Only 0's may be mixed with negative subscripts"
+msgstr ""
+
+#: listenv.R:627
+msgid "Cannot assign value. Zero-length name."
+msgstr ""
+
+#: listenv.R:629
+msgid "Cannot assign value. More than one name specified: %s"
+msgstr ""
+
+#: listenv.R:632
+msgid "Cannot assign value. Empty name specified: %s"
+msgstr ""
+
+#: listenv.R:669
+msgid "Cannot assign value. Zero-length index."
+msgstr ""
+
+#: listenv.R:671
+msgid "Cannot assign value. More than one index specified: %s"
+msgstr ""
+
+#: listenv.R:674
+msgid "Cannot assign value. Non-finite index: %s"
+msgstr ""
+
+#: listenv.R:676
+msgid "Cannot assign value. Non-positive index: %s"
+msgstr ""
+
+#: listenv.R:709
+msgid "Cannot remove element. Zero-length name."
+msgstr ""
+
+#: listenv.R:711
+msgid "Cannot remove element. More than one name specified: %s"
+msgstr ""
+
+#: listenv.R:714
+msgid "Cannot remove element. Empty name specified: %s"
+msgstr ""
+
+#: listenv.R:745
+msgid "Cannot remove element. Zero-length index."
+msgstr ""
+
+#: listenv.R:747
+msgid "Cannot remove element. More than one index specified: %s"
+msgstr ""
+
+#: listenv.R:750
+msgid "Cannot remove element. Non-finite index: %s"
+msgstr ""
+
+#: listenv.R:752
+msgid "Cannot remove element. Non-positive index: %s"
+msgstr ""
+
+#: listenv.R:825
+msgid ""
+"Subsetted [[<- assignment to listenv's is only supported for names and "
+"indices, not %s"
+msgstr ""
+
+#: listenv.R:855
+msgid "Only one dimension at the time can be dropped when assigning NULL"
+msgstr ""
+
+#: listenv.R:930
+msgid ""
+"Subsetted [<- assignment to listenv's is only supported for names and "
+"indices, not %s"
+msgstr ""
+
+#: listenv.R:946
+msgid "Replacement has zero length"
+msgstr ""
+
+#: listenv.R:950
+msgid ""
+"Number of items to replace is not a multiple of replacement length: %d != %d"
+msgstr ""
+
+#: parse_env_subset.R:41
+msgid "Does not specify a single name, but %d: %s"
+msgstr ""
+
+#: parse_env_subset.R:48
+msgid "Does not specify a single index, but %d: %s"
+msgstr ""
+
+#: parse_env_subset.R:61 parse_env_subset.R:63
+msgid "Invalid syntax: %s"
+msgstr ""
+
+#: parse_env_subset.R:69 parse_env_subset.R:98
+msgid "Object %s not found: %s"
+msgstr ""
+
+#: parse_env_subset.R:75
+msgid "Subsetting can not be done on a %s; only to an environment: %s"
+msgstr ""
+
+#: parse_env_subset.R:122
+msgid "Not a valid variable name: %s"
+msgstr ""
+
+#: parse_env_subset.R:131
+msgid "INTERNAL ERROR (expected 'subset' to be a list): %s"
+msgstr ""
+
+#: parse_env_subset.R:135
+msgid "Subsetting of at least on element is required: %s"
+msgstr ""
+
+#: parse_env_subset.R:143
+msgid ""
+"Invalid subsetting for dimension #%d. Subset must not contain missing "
+"values: %s"
+msgstr ""
+
+#: parse_env_subset.R:147
+msgid ""
+"Invalid subset for dimension #%d. Subset must not contain empty names: %s"
+msgstr ""
+
+#: parse_env_subset.R:152
+msgid "Invalid subset for dimension #%d of type %s: %s"
+msgstr ""
+
+#: parse_env_subset.R:172
+msgid "Multi-dimensional subsetting on list environment without dimensions: %s"
+msgstr ""
+
+#: parse_env_subset.R:202
+msgid "Invalid (negative) indices for dimension #%d: %s"
+msgstr ""
+
+#: parse_env_subset.R:231
+msgid "INTERNAL ERROR: Subset for dimension #%d should already be an index:"
+msgstr ""
+
+#: parse_env_subset.R:244
+msgid "Invalid (negative) indices: %s"
+msgstr ""
+
+#: parse_env_subset.R:254
+msgid "Invalid (zero) indices: %s"
+msgstr ""
+
+#: parse_env_subset.R:270 parse_env_subset.R:302
+msgid "Invalid subset: %s"
+msgstr ""
+
+#: parse_env_subset.R:274 parse_env_subset.R:278
+msgid "Wrong arguments for subsetting an environment: %s"
+msgstr ""

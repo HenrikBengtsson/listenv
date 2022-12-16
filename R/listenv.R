@@ -18,11 +18,6 @@ listenv <- function(...) {
   metaenv <- new.env(parent = parent.frame())
   env <- new.env(parent = metaenv)
 
-  ## Defunct call?
-  if (nargs == 1L && identical(names[1L], "length")) {
-    .Defunct(msg = "Use of x <- listenv(length = n) to allocate a list environment of length n is defunct. Use x <- listenv(); length(x) <- n instead.")  #nolint
-  }
-
   ## Allocate internal variables
   maps <- sprintf(".listenv_var_%d", seq_len(nargs))
   names(maps) <- names
@@ -122,7 +117,7 @@ print.listenv <- function(x, ...) {
 
     if (ndim == 2) {
       if (is.null(dimnames)) {
-        s <- sprintf("%s unnamed rows and columns", s, dimstr)
+        s <- sprintf("%s unnamed rows and columns", s)
       } else {
         if (all(has_dimnames)) {
           s <- sprintf("%s rows (%s) and columns (%s)", s,
@@ -132,7 +127,7 @@ print.listenv <- function(x, ...) {
         } else if (has_dimnames[2]) {
           s <- sprintf("%s unnamed rows and columns (%s)", s, dimnames_tmp[2L])
         } else {
-          s <- sprintf("%s unnamed rows and columns", s, dimstr)
+          s <- sprintf("%s unnamed rows and columns", s)
         }
       }
     } else {
@@ -158,19 +153,13 @@ print.listenv <- function(x, ...) {
   cat(s)
 }
 
-#' Variable name map for elements of list environment
+#' Name map for elements of list environment
 #'
 #' @param x A list environment.
 #'
 #' @return A named character vector
 #'
-#' @details
-#' _Functions `map()` and `map<-()` have been renamed to `mapping()` and
-#' `mapping<-()`. The former will soon become deprecated and eventually
-#' defunct. Please update accordingly._
-#' 
 #' @aliases mapping.listenv
-#' @aliases map.listenv
 #' @export
 #' @keywords internal
 mapping <- function(x, ...) {
@@ -180,7 +169,14 @@ mapping <- function(x, ...) {
 #' @rdname mapping
 #' @export
 #' @keywords internal
-map <- mapping
+map <- function(x, ...) {
+  dfcn <- switch(Sys.getenv("R_LISTENV_MAP_DEPRECATED", "deprecated"),
+    defunct = .Defunct,
+              .Deprecated
+  )
+  dfcn(new = "listenv::mapping()", package = .packageName)
+  mapping(x)
+}
 
 `mapping<-` <- function(x, value) {
   stop_if_not(is.character(value))
@@ -216,7 +212,7 @@ if (!exists("lengths", mode = "function")) {
   n <- length(map)
   value <- as.numeric(value)
 
-  if (value < 0) stop("Cannot set a negative length")
+  if (value < 0) stopf("Cannot set a negative length: %s", value)
 
   ## Nothing to do?
   if (value == n) return(invisible(x))
@@ -227,7 +223,7 @@ if (!exists("lengths", mode = "function")) {
     extra <- rep(NA_character_, times = value - n)
     map <- c(map, extra)
   } else {
-    ## Drop existing variables
+    ## Drop existing elements
     drop <- (value + 1):n
     var <- map[drop]
     ## Some may be internal place holders
@@ -276,7 +272,7 @@ lengths.listenv <- function(x, use.names = TRUE) {  #nolint
 #'
 #' @param x A list environment.
 #' 
-#' @param all.names If `TRUE`, variable names starting with a period are
+#' @param all.names If `TRUE`, element names starting with a period are
 #' included, otherwise not.
 #' 
 #' @param sorted If `TRUE`, elements are ordered by their names before being
@@ -346,7 +342,7 @@ as.list.listenv <- function(x, all.names = TRUE, sorted = FALSE, ...) {
   map <- mapping(x)
   var <- map[name]
 
-  # Non-existing variable?
+  # Non-existing element?
   if (is.na(var)) return(NULL)
 
   get(var, envir = x, inherits = FALSE)
@@ -464,7 +460,7 @@ to_index <- function(x, idxs) {
     }
 
     if (length(i) != 1L) {
-      stop("Subsetting of more than one element at the time is not allowed for listenv's: ", length(i))  #nolint
+      stopf("Subsetting of more than one element at the time is not allowed for listenv's: %s", length(i))  #nolint
     }
 
     if (i < 1L || i > n) {
@@ -634,10 +630,10 @@ assign_by_name <- function(x, name, value) {
   if (length(name) == 0L) {
     stop("Cannot assign value. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
-    stop("Cannot assign value. More than one name specified: ",
+    stopf("Cannot assign value. More than one name specified: %s",
          hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot assign value. Empty name specific: ", sQuote(name), call. = FALSE)
+    stopf("Cannot assign value. Empty name specified: %s", sQuote(name), call. = FALSE)
   }
 
   map <- mapping(x)
@@ -647,7 +643,7 @@ assign_by_name <- function(x, name, value) {
   if (is.element(name, names)) {
     var <- map[name]
 
-    ## A new variable?
+    ## A new element?
     if (is.na(var)) {
       var <- name
       map[name] <- name
@@ -676,21 +672,21 @@ assign_by_index <- function(x, i, value) {
   if (length(i) == 0L) {
     stop("Cannot assign value. Zero-length index.", call. = FALSE)
   } else if (length(i) > 1L) {
-    stop("Cannot assign value. More than one index specified: ", hpaste(i),
+    stopf("Cannot assign value. More than one index specified: %s", hpaste(i),
          call. = FALSE)
   } else if (!is.finite(i)) {
-    stop("Cannot assign value. Non-finite index: ", i, call. = FALSE)
+    stopf("Cannot assign value. Non-finite index: %s", i, call. = FALSE)
   } else if (i < 1L) {
-    stop("Cannot assign value. Non-positive index: ", i, call. = FALSE)
+    stopf("Cannot assign value. Non-positive index: %s", i, call. = FALSE)
   }
 
   map <- mapping(x)
   n <- length(map)
 
-  ## Variable name
+  ## Element name
   var <- map[i]
 
-  ## Non-existing variable?
+  ## Non-existing element?
   if (is.na(var)) {
     ## Expand map?
     if (i > n) {
@@ -716,10 +712,10 @@ remove_by_name <- function(x, name) {
   if (length(name) == 0L) {
     stop("Cannot remove element. Zero-length name.", call. = FALSE)
   } else if (length(name) > 1L) {
-    stop("Cannot remove element. More than one name specified: ",
+    stopf("Cannot remove element. More than one name specified: %s",
          hpaste(sQuote(name)), call. = FALSE)
   } else if (nchar(name) == 0L) {
-    stop("Cannot remove element. Empty name specific: ",
+    stopf("Cannot remove element. Empty name specified: %s",
          sQuote(name), call. = FALSE)
   }
 
@@ -752,12 +748,12 @@ remove_by_index <- function(x, i) {
   if (length(i) == 0L) {
     stop("Cannot remove element. Zero-length index.", call. = FALSE)
   } else if (length(i) > 1L) {
-    stop("Cannot remove element. More than one index specified: ", hpaste(i),
+    stopf("Cannot remove element. More than one index specified: %s", hpaste(i),
          call. = FALSE)
   } else if (!is.finite(i)) {
-    stop("Cannot remove element. Non-finite index: ", i, call. = FALSE)
+    stopf("Cannot remove element. Non-finite index: %s", i, call. = FALSE)
   } else if (i < 1L) {
-    stop("Cannot remove element. Non-positive index: ", i, call. = FALSE)
+    stopf("Cannot remove element. Non-positive index: %s", i, call. = FALSE)
   }
 
   map <- mapping(x)
