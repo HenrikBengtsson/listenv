@@ -20,47 +20,6 @@ Run `revdep_details(, "aroma.core")` for more info
       'sfit', 'expectile', 'HaarSeg', 'mpcbs'
     ```
 
-# future
-
-<details>
-
-* Version: 1.29.0
-* GitHub: https://github.com/HenrikBengtsson/future
-* Source code: https://github.com/cran/future
-* Date/Publication: 2022-11-06 17:40:06 UTC
-* Number of recursive dependencies: 15
-
-Run `revdep_details(, "future")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-      Running ‘000.sessionDetails.R’
-      Running ‘ClusterRegistry.R’
-      Running ‘Future-class.R’
-      Running ‘FutureError.R’
-      Running ‘FutureGlobals.R’
-      Running ‘FutureRegistry.R’
-      Running ‘adhoc_native_to_utf8.R’
-      Running ‘backtrace.R’
-     ERROR
-    Running the tests in ‘tests/backtrace.R’ failed.
-    ...
-      [17:15:01.203]  - resignal = FALSE
-      [17:15:01.203]  - Number of conditions: 1
-      [17:15:01.204] signalConditions() ... done
-      [17:15:01.204] - Launch lazy future ... done
-      [17:15:01.204] run() for 'SequentialFuture' ... done
-      > calls <- backtrace(lenv[[2]])
-      Error: 'map' is defunct.
-      Use 'listenv::mapping()' instead.
-      See help("Defunct") and help("listenv-defunct").
-      Execution halted
-    ```
-
 # future.apply
 
 <details>
@@ -124,20 +83,20 @@ Run `revdep_details(, "future.batchtools")` for more info
       Running ‘BatchtoolsFuture.R’
       Running ‘BatchtoolsFutureError.R’
       Running ‘batchtools_custom.R’
-     ERROR
-    Running the tests in ‘tests/batchtools_custom.R’ failed.
-    Last 50 lines of output:
-      Environment: R_GlobalEnv
-      Capture standard output: TRUE
-      Capture condition classes: 'condition' (excluding 'nothing')
+      Running ‘batchtools_hpc.R’
+      Running ‘batchtools_interactive.R’
+      Running ‘batchtools_local.R’
+      Running ‘batchtools_multicore.R’
+      Running ‘batchtools_ssh.R’
+      Running ‘batchtools_template.R’
     ...
-      *** batchtools_custom()  w/ 'cluster.functions' with globals (tricky)
-      > x <- listenv()
-      > for (ii in 1:2) {
-      +   x[[ii]] <- batchtools_custom({ ii }, globals = TRUE, cluster.functions = cf)
-      + }
-      > v <- unlist(value(x))
-      Error: 'map' is defunct.
+      
+      $b
+      A 'listenv' vector with 2 elements ('A', 'B').
+      
+      > 
+      > y0 <- lapply(x, FUN = listenv::map)
+      Error: 'FUN' is defunct.
       Use 'listenv::mapping()' instead.
       See help("Defunct") and help("listenv-defunct").
       Execution halted
@@ -225,55 +184,6 @@ Run `revdep_details(, "greed")` for more info
 Run `revdep_details(, "signeR")` for more info
 
 </details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘signeR-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: FuzzyClustExp
-    > ### Title: Fuzzy Clustering of exposure data
-    > ### Aliases: FuzzyClustExp FuzzyClustExp,SignExp-method
-    > ###   FuzzyClustExp,SignExp,numeric-method
-    > 
-    > ### ** Examples
-    > 
-    ...
-    > ## End(Don't show)
-    > # Limits to number of goups:
-    > cl <- c(2,4)
-    > 
-    > FuzClust <- FuzzyClustExp(signatures$SignExposures, Clim = cl)
-    Evaluating models with the number of groups ranging from 2 to 4, please be patient.
-    Error: 'map' is defunct.
-    Use 'listenv::mapping()' instead.
-    See help("Defunct") and help("listenv-defunct").
-    Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... ERROR
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘signeRFlow.Rmd’ using rmarkdown
-    --- finished re-building ‘signeRFlow.Rmd’
-    
-    --- re-building ‘signeR-vignette.Rhtml’ using knitr
-    Quitting from lines 678-679 (signeR-vignette.Rhtml) 
-    Error: processing vignette 'signeR-vignette.Rhtml' failed with diagnostics:
-    'map' is defunct.
-    Use 'listenv::mapping()' instead.
-    See help("Defunct") and help("listenv-defunct").
-    --- failed re-building ‘signeR-vignette.Rhtml’
-    
-    SUMMARY: processing the following file failed:
-      ‘signeR-vignette.Rhtml’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
 
 ## In both
 

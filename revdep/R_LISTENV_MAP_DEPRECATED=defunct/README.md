@@ -21,15 +21,13 @@
 
 # Revdeps
 
-## New problems (5)
+## New problems (3)
 
 |package           |version |error  |warning |note |
 |:-----------------|:-------|:------|:-------|:----|
-|[future](problems.md#future)|1.29.0  |__+1__ |        |     |
 |[future.apply](problems.md#futureapply)|1.10.0  |__+1__ |        |     |
 |[future.batchtools](problems.md#futurebatchtools)|0.11.0  |__+1__ |        |     |
 |[future.callr](problems.md#futurecallr)|0.8.1   |__+1__ |        |     |
-|[signeR](problems.md#signer)|2.0.1   |__+2__ |        |3    |
 
 ## All (12)
 
@@ -38,7 +36,7 @@
 |aroma.affymetrix  |3.2.1   |       |        |     |
 |[aroma.core](problems.md#aromacore)|3.3.0   |       |        |1    |
 |furrr             |0.3.1   |       |        |     |
-|[future](problems.md#future)|1.29.0  |__+1__ |        |     |
+|future            |1.30.0  |       |        |     |
 |[future.apply](problems.md#futureapply)|1.10.0  |__+1__ |        |     |
 |[future.batchtools](problems.md#futurebatchtools)|0.11.0  |__+1__ |        |     |
 |[future.callr](problems.md#futurecallr)|0.8.1   |__+1__ |        |     |
@@ -46,5 +44,5 @@
 |origami           |1.0.7   |       |        |     |
 |PCRedux           |1.1-2   |       |        |     |
 |PSCBS             |0.66.0  |       |        |     |
-|[signeR](problems.md#signer)|2.0.1   |__+2__ |        |3    |
+|[signeR](problems.md#signer)|2.0.1   |       |        |3    |
 
