@@ -17,15 +17,9 @@
 
 |package |old   |new        |Δ  |
 |:-------|:-----|:----------|:--|
-|listenv |0.8.0 |0.8.0-9002 |*  |
+|listenv |0.8.0 |0.8.0-9003 |*  |
 
 # Revdeps
-
-## New problems (1)
-
-|package |version |error |warning |note |
-|:-------|:-------|:-----|:-------|:----|
-|[signeR](problems.md#signer)|2.0.1   |      |__+1__  |3    |
 
 ## All (12)
 
@@ -34,7 +28,7 @@
 |aroma.affymetrix  |3.2.1   |      |        |     |
 |[aroma.core](problems.md#aromacore)|3.3.0   |      |        |1    |
 |furrr             |0.3.1   |      |        |     |
-|future            |1.29.0  |      |        |     |
+|future            |1.30.0  |      |        |     |
 |future.apply      |1.10.0  |      |        |     |
 |future.batchtools |0.11.0  |      |        |     |
 |future.callr      |0.8.1   |      |        |     |
@@ -42,5 +36,5 @@
 |origami           |1.0.7   |      |        |     |
 |PCRedux           |1.1-2   |      |        |     |
 |PSCBS             |0.66.0  |      |        |     |
-|[signeR](problems.md#signer)|2.0.1   |      |__+1__  |3    |
+|[signeR](problems.md#signer)|2.0.1   |      |        |3    |
 

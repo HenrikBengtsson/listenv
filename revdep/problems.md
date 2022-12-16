@@ -62,29 +62,6 @@ Run `revdep_details(, "signeR")` for more info
 
 </details>
 
-## Newly broken
-
-*   checking examples ... WARNING
-    ```
-    Found the following significant warnings:
-    
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-      Warning: 'map' is deprecated.
-    Deprecated functions may be defunct as soon as of the next release of
-    R.
-    See ?Deprecated.
-    ```
-
 ## In both
 
 *   checking installed package size ... NOTE
