@@ -15,6 +15,8 @@
 #' @keywords internal
 get_variable <- function(...) UseMethod("get_variable")
 
+
+#' @rdname get_variable
 #' @export
 get_variable.listenv <- function(x, name, mustExist = FALSE,
                                  create = !mustExist, ...) {

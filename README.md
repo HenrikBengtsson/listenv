@@ -32,7 +32,7 @@ For example,
 ```r
 > x <- listenv(a = 1, b = 2, c = "hello")
 > x
-A 'listenv' vector with 3 elements ('a', 'b', 'c').
+A ‘listenv’ vector with 3 elements (‘a’, ‘b’, ‘c’).
 > length(x)
 [1] 3
 > names(x)
@@ -48,20 +48,20 @@ A 'listenv' vector with 3 elements ('a', 'b', 'c').
 > y$a
 [1] 1
 > y
-A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+A ‘listenv’ vector with 4 elements (‘a’, ‘a’, ‘c’, ‘d’).
 > identical(y, x)
 [1] TRUE
 > for (ii in seq_along(x)) {
 +     cat(sprintf("Element %d (%s): %s\n", ii, sQuote(names(x)[ii]), 
 +         x[[ii]]))
 + }
-Element 1 ('a'): 1
-Element 2 ('a'): 2
-Element 3 ('c'): HELLO
-Element 4 ('d'): 3
+Element 1 (‘a’): 1
+Element 2 (‘a’): 2
+Element 3 (‘c’): HELLO
+Element 4 (‘d’): 3
 > x[c(1, 3)] <- list(2, "Hello world!")
 > x
-A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+A ‘listenv’ vector with 4 elements (‘a’, ‘a’, ‘c’, ‘d’).
 > y <- as.list(x)
 > str(y)
 List of 4
@@ -71,7 +71,7 @@ List of 4
  $ d: num 3
 > z <- as.listenv(y)
 > z
-A 'listenv' vector with 4 elements ('a', 'a', 'c', 'd').
+A ‘listenv’ vector with 4 elements (‘a’, ‘a’, ‘c’, ‘d’).
 > identical(z, x)
 [1] FALSE
 > all.equal(z, x)
@@ -83,26 +83,26 @@ List environments are created similarly to lists but also similarly to environme
 ```r
 > x <- listenv()
 > x
-A 'listenv' vector with 0 elements (unnamed).
+A ‘listenv’ vector with 0 elements (unnamed).
 ```
 This can later can be populated using named assignments,
 ```r
 > x$a <- 1
 > x
-A 'listenv' vector with 1 element ('a').
+A ‘listenv’ vector with 1 element (‘a’).
 ```
 comparable to how both lists and environments work.  Similarly to lists, they can also be populated using indices, e.g.
 ```r
 > x[[2]] <- 2
 > x$c <- 3
 > x
-A 'listenv' vector with 3 elements ('a', '', 'c').
+A ‘listenv’ vector with 3 elements (‘a’, ‘’, ‘c’).
 ```
 Just as for lists, a list environment is expanded with `NULL` elements whenever a new element is added that is beyond the current length plus one, e.g.
 ```r
 > x[[5]] <- 5
 > x
-A 'listenv' vector with 5 elements ('a', '', 'c', '', '').
+A ‘listenv’ vector with 5 elements (‘a’, ‘’, ‘c’, ‘’, ‘’).
 > x[[4]]
 NULL
 ```
@@ -111,7 +111,7 @@ As with lists, the above list environment can also be created from the start, e.
 ```r
 > x <- listenv(a = 1, 3, c = 4, NULL, 5)
 > x
-A 'listenv' vector with 5 elements ('a', '', 'c', '', '').
+A ‘listenv’ vector with 5 elements (‘a’, ‘’, ‘c’, ‘’, ‘’).
 ```
 
 
@@ -119,10 +119,10 @@ As for lists, the length of a list environment can at any time be increased or d
 If decreased, elements are dropped, e.g.
 ```r
 > x
-A 'listenv' vector with 5 elements ('a', '', 'c', '', '').
+A ‘listenv’ vector with 5 elements (‘a’, ‘’, ‘c’, ‘’, ‘’).
 > length(x) <- 2
 > x
-A 'listenv' vector with 2 elements ('a', '').
+A ‘listenv’ vector with 2 elements (‘a’, ‘’).
 > x[[1]]
 [1] 1
 > x[[2]]
@@ -132,7 +132,7 @@ If increased, new elements are populated with unnamed elements of `NULL`, e.g.
 ```r
 > length(x) <- 4
 > x
-A 'listenv' vector with 4 elements ('a', '', '', '').
+A ‘listenv’ vector with 4 elements (‘a’, ‘’, ‘’, ‘’).
 > x[[3]]
 NULL
 > x[[4]]
@@ -144,7 +144,7 @@ To allocate an "empty" list environment (with all `NULL`:s) of a given length, d
 > x <- listenv()
 > length(x) <- 4
 > x
-A 'listenv' vector with 4 elements (unnamed).
+A ‘listenv’ vector with 4 elements (unnamed).
 ```
 _Note_: Unfortunately, it is _not_ possible to use `x <- vector("listenv", length = 4)`; that construct is only supported for the basic data types.
 
@@ -152,7 +152,7 @@ Elements can be dropped by assigning `NULL`, e.g. to drop the first and third el
 ```r
 > x[c(1, 3)] <- NULL
 > x
-A 'listenv' vector with 2 elements (unnamed).
+A ‘listenv’ vector with 2 elements (unnamed).
 ```
 
 
@@ -165,9 +165,9 @@ Analogously to lists and plain environments, it is possible to iterate over elem
 > for (name in names(x)) {
 +     cat(sprintf("Element %s: %s\n", sQuote(name), x[[name]]))
 + }
-Element 'a': 1
-Element 'b': 2
-Element 'c': 3
+Element ‘a’: 1
+Element ‘b’: 2
+Element ‘c’: 3
 ```
 
 ### Iterating over elements by indices
@@ -191,7 +191,7 @@ Coercing a list environment to a list:
 ```r
 > x <- listenv(a = 2, b = 3, c = "hello")
 > x
-A 'listenv' vector with 3 elements ('a', 'b', 'c').
+A ‘listenv’ vector with 3 elements (‘a’, ‘b’, ‘c’).
 > y <- as.list(x)
 > str(y)
 List of 3
@@ -204,7 +204,7 @@ Coercing a list to a list environment:
 ```r
 > z <- as.listenv(y)
 > z
-A 'listenv' vector with 3 elements ('a', 'b', 'c').
+A ‘listenv’ vector with 3 elements (‘a’, ‘b’, ‘c’).
 > identical(z, x)
 [1] FALSE
 > all.equal(z, x)
@@ -232,7 +232,7 @@ Analogously to lists, and contrary to plain environments, list environments can 
 > dim(x) <- c(2, 3)
 > dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
 > x
-A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+A ‘listenv’ matrix with 6 elements (unnamed) arranged in 2x3 rows (‘a’, ‘b’) and columns (‘A’, ‘B’, ‘C’).
 ```
 An easy way to quickly get an overview is to coerce to a list, e.g.
 ```r
@@ -281,13 +281,13 @@ Concurrently with dimensional names it is possible to have names of the individu
 ```r
 > names(x) <- letters[seq_along(x)]
 > x
-A 'listenv' matrix with 6 elements ('a', 'b', 'c', ..., 'f') arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+A ‘listenv’ matrix with 6 elements (‘a’, ‘b’, ‘c’, ..., ‘f’) arranged in 2x3 rows (‘a’, ‘b’) and columns (‘A’, ‘B’, ‘C’).
 > x[["a"]]
 [1] 1
 > x[["f"]]
 [1] 6
 > x[c("a", "f")]
-A 'listenv' vector with 2 elements ('a', 'f').
+A ‘listenv’ vector with 2 elements (‘a’, ‘f’).
 > unlist(x)
 a b c d e f 
 1 2 3 4 5 6 
@@ -301,17 +301,17 @@ attr(,"names")
 Contrary to lists, element names are preserved also with multi-dimensional subsetting, e.g.
 ```r
 > x[1, 2]
-A 'listenv' vector with 1 element ('c').
+A ‘listenv’ vector with 1 element (‘c’).
 > x[1, 2, drop = FALSE]
-A 'listenv' matrix with 1 element ('c') arranged in 1x1 rows ('a') and columns ('B').
+A ‘listenv’ matrix with 1 element (‘c’) arranged in 1x1 rows (‘a’) and columns (‘B’).
 > x[1:2, 2:1]
-A 'listenv' matrix with 4 elements ('c', 'd', 'a', 'b') arranged in 2x2 rows ('a', 'b') and columns ('B', 'A').
+A ‘listenv’ matrix with 4 elements (‘c’, ‘d’, ‘a’, ‘b’) arranged in 2x2 rows (‘a’, ‘b’) and columns (‘B’, ‘A’).
 > x[2, ]
-A 'listenv' vector with 3 elements ('b', 'd', 'f').
+A ‘listenv’ vector with 3 elements (‘b’, ‘d’, ‘f’).
 > x[2, , drop = FALSE]
-A 'listenv' matrix with 3 elements ('b', 'd', 'f') arranged in 1x3 rows ('b') and columns ('A', 'B', 'C').
+A ‘listenv’ matrix with 3 elements (‘b’, ‘d’, ‘f’) arranged in 1x3 rows (‘b’) and columns (‘A’, ‘B’, ‘C’).
 > x["b", -2, drop = FALSE]
-A 'listenv' matrix with 2 elements ('b', 'f') arranged in 1x2 rows ('b') and columns ('A', 'C').
+A ‘listenv’ matrix with 2 elements (‘b’, ‘f’) arranged in 1x2 rows (‘b’) and columns (‘A’, ‘C’).
 ```
 
 
@@ -330,13 +330,13 @@ To allocate an "empty" list environment array (with all `NULL`:s) of a given dim
 > dim(x) <- c(2, 3)
 > dimnames(x) <- list(c("a", "b"), c("A", "B", "C"))
 > x
-A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 rows ('a', 'b') and columns ('A', 'B', 'C').
+A ‘listenv’ matrix with 6 elements (unnamed) arranged in 2x3 rows (‘a’, ‘b’) and columns (‘A’, ‘B’, ‘C’).
 ```
 Rows and columns can be dropped by assigning `NULL`, e.g. to drop the first and third column of a list-environment matrix, do:
 ```r
 > x[, c(1, 3)] <- NULL
 > x
-A 'listenv' matrix with 2 elements (unnamed) arranged in 2x1 rows ('a', 'b') and columns ('B').
+A ‘listenv’ matrix with 2 elements (unnamed) arranged in 2x1 rows (‘a’, ‘b’) and columns (‘B’).
 ```
 
 
@@ -392,11 +392,11 @@ More importantly, since dimensions and their names are also attributes, this als
 > x <- as.listenv(1:6)
 > dim(x) <- c(2, 3)
 > x
-A 'listenv' matrix with 6 elements (unnamed) arranged in 2x3 unnamed rows and columns.
+A ‘listenv’ matrix with 6 elements (unnamed) arranged in 2x3 unnamed rows and columns.
 > y <- x
 > dim(y) <- c(3, 2)
 > x
-A 'listenv' matrix with 6 elements (unnamed) arranged in 3x2 unnamed rows and columns.
+A ‘listenv’ matrix with 6 elements (unnamed) arranged in 3x2 unnamed rows and columns.
 ```
 
 
