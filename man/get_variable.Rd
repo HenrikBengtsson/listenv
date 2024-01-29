@@ -6,6 +6,8 @@
 \title{Get name of variable for a specific element of list environment}
 \usage{
 get_variable(...)
+
+\method{get_variable}{listenv}(x, name, mustExist = FALSE, create = !mustExist, ...)
 }
 \arguments{
 \item{x}{A list environment.}
