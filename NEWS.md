@@ -1,6 +1,8 @@
-# Version (development version)
+# Version 0.9.1 [2024-01-28]
 
- * ...
+## Documentation
+
+ * Fix minor syntax issues in help pages.
 
  
 # Version 0.9.0 [2022-12-15]
